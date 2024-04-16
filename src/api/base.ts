@@ -1,9 +1,10 @@
 import axios from "axios";
+import { productionAPIUrl } from "@/api/api_url";
 
 const getBaseAPIUrl = () => {
     return process.env.NEXT_PUBLIC_NODE_ENV === "development"
         ? "http://127.0.0.1:8000"
-        : process.env.NEXT_PUBLIC_API_URL;
+        : productionAPIUrl;
 };
 
 const instance = axios.create({
