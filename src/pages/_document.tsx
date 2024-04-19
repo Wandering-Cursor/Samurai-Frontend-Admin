@@ -35,6 +35,8 @@ Document.getInitialProps = async (ctx: any) => {
                     display: flex;
                     margin: 0;
                     padding: 0;
+                    justify-content: center;
+                    align-items: center;
                 }
             `}</style>
         </>

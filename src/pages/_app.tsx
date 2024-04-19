@@ -5,6 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Roboto } from "next/font/google";
 import Head from "next/head";
 import { AdminPageName } from "@/components/misc/AdminPageName";
+import MainPage from "@/pages/layout";
 
 const roboto = Roboto({
     weight: ["300", "400", "500", "700"],
@@ -25,7 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Head>
                     <title>{AdminPageName}</title>
                 </Head>
-                <Component {...pageProps} />
+                <MainPage>
+                    <Component {...pageProps} />
+                </MainPage>
             </ThemeProvider>
         </AppCacheProvider>
     );
