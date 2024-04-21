@@ -25,5 +25,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+        # http://127.0.0.1:8000
+        VITE_API_URL: ${{ vars.API_URL }}
+        # production | development | test
+        VITE_APP_TITLE: "Admin Page"
     - run: npm ci
     - run: npm run build --if-present
