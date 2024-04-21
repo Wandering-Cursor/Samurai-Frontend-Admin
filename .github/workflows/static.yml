@@ -40,15 +40,15 @@ jobs:
           npm run build
         env:
           # http://127.0.0.1:8000
-          API_URL: ${{ vars.API_URL }}
+          VITE_API_URL: ${{ vars.API_URL }}
           # production | development | test
-          NODE_ENV: ${{ vars.NODE_ENV }}
+          VITE_APP_TITLE: "Admin Page"
 
       # Create an artifact, and upload it to github-pg branch
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: out/
+          path: dist/
       
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
