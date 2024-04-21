@@ -20,6 +20,11 @@ jobs:
         node-version: [20.x]
     steps:
     - uses: actions/checkout@v3
+    - name: Load .env file
+      uses: SpicyPizza/create-envfile@v2
+      with:
+        envkey_VITE_APP_TITLE: "Admin Page"
+        envkey_VITE_API_URL: ${{ vars.API_URL }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
