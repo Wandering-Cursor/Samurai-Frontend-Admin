@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+import { useToast } from "primevue/usetoast";
+</script>
+
 <template>
   <div>
     <component :is="WrappedComponent" v-bind="props" v-if="isTokenValid" />
@@ -7,7 +11,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {jwtDecode} from "jwt-decode";
-import { showToast } from 'vant';
 
 export default defineComponent({
   props: {
@@ -33,7 +36,7 @@ export default defineComponent({
       const decodedToken = jwtDecode(accessToken);
 
       if (decodedToken.exp == null) {
-        throw new Error("Token has no expiration date");
+        return false;
       }
       if (decodedToken.exp * 1000 < Date.now()) {
         return false;
@@ -46,12 +49,8 @@ export default defineComponent({
     this.isTokenValid = this.validateAccessToken();
 
     if (!this.isTokenValid) {
-      showToast({
-        message: "You need to be logged in to access this page.",
-        type: "fail",
-        duration: 2000,
-        closeOnClick: true,
-      });
+      const toast = useToast();
+      toast.add({severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page."});
       this.$router.push("/login");
     }
   },

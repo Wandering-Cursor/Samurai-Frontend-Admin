@@ -1,6 +1,4 @@
 <template>
-  <van-config-provider>
-    <router-view></router-view>
-  </van-config-provider>
-  <VanToast style="padding: 0"/>
+  <router-view class="h-full w-full">
+  </router-view>
 </template>

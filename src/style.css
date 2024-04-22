@@ -1,36 +1,6 @@
-body{
-  padding: 0;
-  margin: 0;
-  height: 100vh;
-  width: 100vw;
-}
-
-.van-theme-dark body {
-  color: #f5f5f5;
-  background-color: black;
-}
-
-.fullPageHeight{
-  height: 100vh;
-}
-.justifyCenter{
-  display: flex;
-  justify-content: center;
-}
-
-.centeredText{
-  text-align: center;
-}
-
-.stretch{
-  flex-grow: 1;
-}
-
-.van-space-item{
-  display: flex;
-  justify-content: center;
-}
-
-.van-popup{
-  min-width: fit-content;
+#app, body{
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
 }

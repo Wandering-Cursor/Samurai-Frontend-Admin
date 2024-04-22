@@ -8,15 +8,17 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AuthenticationRequired: typeof import('./src/components/AuthenticationRequired.vue')['default']
+    Button: typeof import('primevue/button')['default']
+    Card: typeof import('primevue/card')['default']
+    Column: typeof import('primevue/column')['default']
+    Fieldset: typeof import('primevue/fieldset')['default']
+    FilterPanel: typeof import('./src/components/Search/FilterPanel/FilterPanel.vue')['default']
+    InputText: typeof import('primevue/inputtext')['default']
     LoginForm: typeof import('./src/components/login/LoginForm.vue')['default']
+    Menu: typeof import('primevue/menu')['default']
+    Password: typeof import('primevue/password')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    VanButton: typeof import('vant/es')['Button']
-    VanCell: typeof import('vant/es')['Cell']
-    VanCellGroup: typeof import('vant/es')['CellGroup']
-    VanConfigProvider: typeof import('vant/es')['ConfigProvider']
-    VanField: typeof import('vant/es')['Field']
-    VanSpace: typeof import('vant/es')['Space']
-    VanToast: typeof import('vant/es')['Toast']
+    SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
   }
 }

@@ -1,64 +1,85 @@
-<template>
-    <VanSpace direction="vertical" fill>
-        <h2 class="centeredText">Log In</h2>
-        <VanCellGroup inset>
-            <VanCell>
-                <VanField v-model="username" label-align="left" label="Username" placeholder="john@doe.com"/>
-            </VanCell>
-            <VanCell>
-                <VanField v-model="password" type="password" label="Password" placeholder="Your password"/>
-            </VanCell>
-        </VanCellGroup>
-        <van-button type="primary" round @click="login" class="stretch">Log In</van-button>
-    </VanSpace>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { ToastType, showToast } from 'vant'
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast";
+import FloatLabel from 'primevue/floatlabel';
 import {sendLoginRequest} from '@/api/auth/login';
 import { AxiosError } from 'axios';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const toast = useToast();
 
-function displayToast(message: string = "Logging in...", type: ToastType = "loading", duration: number = 1000) {
-    showToast({
-        message: message,
-        type: type,
-        duration: duration,
-        closeOnClick: true,
+const displayToast = (message: string, type: 'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast', duration: number = 1000) => {
+    toast.add({
+        severity: type,
+        summary: message,
+        life: duration
     });
 }
 
-function onError(error: AxiosError){
+const onError = (error: AxiosError) => {
     console.error(error);
 
     displayToast(
-        "An error occurred while logging in.",
-        "fail",
-        2000
+        `An error occurred while logging in.\n Details: ${error.response?.status || 'Status code unknown'} - ${error.message}`,
+        "error",
+        5000
     )
 }
 
-export default defineComponent({
-    data() {
-        return {
-            username: '',
-            password: ''
-        };
-    },
-    methods: {
-        login() {
-            displayToast();
-            if (this.username.trim() === '' || this.password.trim() === '') {
-                displayToast("Please fill in all fields.", "fail", 1000);
-                return;
-            }
-            sendLoginRequest(this.username, this.password, this.goToRoot, onError)
-        },
-        goToRoot() {
-            displayToast("Logged in successfully.", "success", 500);
-            this.$router.push("/");
-        }
+const username = ref('');
+const password = ref('');
+
+const login = () => {
+    displayToast("Logging in...", "info", 1000);
+    if (username.value.trim() === '' || password.value.trim() === '') {
+        displayToast("Please fill in all fields.", "error", 1000);
+        return;
     }
+    sendLoginRequest(username.value, password.value, goToRoot, onError)
+}
+
+const goToRoot = () => {
+    displayToast("Logged in successfully.", "success", 500);
+    router.push('/');
+}
+
+defineExpose({
+    username,
+    password,
+    login
 });
 </script>
+
+<template>
+    <Toast />
+    <Card>
+        <template #header>
+            <div class="flex justify-content-center">
+                <h1>Login</h1>
+            </div>
+        </template>
+        <template #content>
+            <div class="flex flex-column gap-6 p-4">
+                <div class="flex justify-content-center">
+                    <FloatLabel>
+                        <InputText id="email" v-model="username" />
+                        <label for="email">Email/Username</label>
+                    </FloatLabel>
+                </div>
+                <div class="flex justify-content-center">
+                    <FloatLabel>
+                        <Password id="password" v-model="password" :feedback="false" />
+                        <label for="password">Password</label>
+                    </FloatLabel>
+                </div>
+        </div>
+        </template>
+        <template #footer>
+            <div class="flex justify-content-center">
+                <Button label="Log In" @click="login" class="flex-grow-1"/>
+            </div>
+        </template>
+    </Card>
+</template>
