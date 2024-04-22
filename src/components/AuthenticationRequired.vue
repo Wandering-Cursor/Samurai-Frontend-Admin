@@ -33,7 +33,7 @@ export default defineComponent({
       const decodedToken = jwtDecode(accessToken);
 
       if (decodedToken.exp == null) {
-        throw new Error("Token has no expiration date");
+        return false;
       }
       if (decodedToken.exp * 1000 < Date.now()) {
         return false;
@@ -47,7 +47,7 @@ export default defineComponent({
 
     if (!this.isTokenValid) {
       showToast({
-        message: "You need to be logged in to access this page.",
+        message: "Please log in.",
         type: "fail",
         duration: 2000,
         closeOnClick: true,

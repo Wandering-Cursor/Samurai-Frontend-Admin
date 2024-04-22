@@ -8,14 +8,22 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AuthenticationRequired: typeof import('./src/components/AuthenticationRequired.vue')['default']
+    FilterPanel: typeof import('./src/components/Search/FilterPanel/FilterPanel.vue')['default']
+    FilterPannel: typeof import('./src/components/Search/FilterPanel/FilterPannel.vue')['default']
     LoginForm: typeof import('./src/components/login/LoginForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
+    SidePannel: typeof import('./src/components/sidePanel/SidePannel.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
+    VanDivider: typeof import('vant/es')['Divider']
+    VanDropdownItem: typeof import('vant/es')['DropdownItem']
+    VanDropdownMenu: typeof import('vant/es')['DropdownMenu']
     VanField: typeof import('vant/es')['Field']
+    VanList: typeof import('vant/es')['List']
     VanSpace: typeof import('vant/es')['Space']
     VanToast: typeof import('vant/es')['Toast']
   }

@@ -12,6 +12,7 @@
     "@vant/auto-import-resolver": "^1.1.0",
     "axios": "^1.6.8",
     "jwt-decode": "^4.0.0",
+    "ts-data-class": "^0.10.0",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",
     "vant": "^4.8.11",
