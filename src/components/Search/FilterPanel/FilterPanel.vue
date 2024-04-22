@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { SearchFilter } from '@/api/types/common/Search';
 import { defineProps, reactive, watch } from 'vue';
-import { showToast } from 'vant';
+import { useToast } from "primevue/usetoast";
+import Dropdown from 'primevue/dropdown';
+
+
+const toast = useToast();
 
 const props = defineProps({
     title: {
@@ -12,9 +16,9 @@ const props = defineProps({
         type: Array as () => SearchFilter[],
         default: () => []
     },
-    onFilter: {
+    filterHandler: {
         type: Function,
-        default: (filterValues: object) => {console.log("Filtering...", filterValues);}
+        default: () => { }
     },
     searchName: {
         type: String,
@@ -22,7 +26,7 @@ const props = defineProps({
     }
 });
 
-const filterValues = reactive<{ [key: string]: any }>({});
+let filterValues = reactive<{ [key: string]: any }>({});
 
 watch(() => props.filters.length, () => {
     props.filters.forEach(filter => {
@@ -33,25 +37,58 @@ watch(() => props.filters.length, () => {
 }, { immediate: true });
 
 const forwardFilter = () => {
-    showToast({
-        type: 'loading',
-        message: 'Filtering...',
-        duration: 500,
-        closeOnClick: true,
+    toast.add({
+        severity: "info",
+        detail: 'Filtering...',
+        life: 500,
     })
-    props.onFilter(filterValues);
+    let original = { ...filterValues };
+
+    for (const key in filterValues) {
+        if (filterValues[key] === null) {
+            delete filterValues[key];
+        }
+        if (typeof (filterValues[key]) === 'object') {
+            if (filterValues[key].value === null) {
+                delete filterValues[key];
+            }
+            filterValues[key] = filterValues[key].value;
+        }
+    }
+    props.filterHandler(filterValues);
+
+    filterValues = reactive(original);
 }
 
 </script>
 
 <template>
-    <div style="display: grid;">
-        <h2 class="centeredText">{{ title }}</h2>
-        <VanCellGroup>
-            <VanCell center v-for="filter in props.filters" :key="filter.propertyName" :title="filter.title">
-                <VanField v-model="filterValues[filter.propertyName]" placeholder="Filter value" />
-            </VanCell>
-        </VanCellGroup>
-        <VanButton class="stretch" @click="forwardFilter">Filter {{props.searchName}}</VanButton>
-    </div>
+    <Fieldset :legend="title">
+        <div class="flex flex-column gap-4">
+            <div class="flex flex-column gap-2" v-for="filter in props.filters">
+                <label :for="filter.propertyName">{{ filter.title }}</label>
+                <Dropdown v-if="filter.options" :id="filter.propertyName" v-model="filterValues[filter.propertyName]"
+                    :options="filter.options" optionLabel="label" :placeholder="filter.placeholder">
+                    <template #value="slotProps">
+                        <div v-if="slotProps.value" class="flex align-items-center">
+                            <div>{{ slotProps.value.visibleName }}</div>
+                        </div>
+                        <span v-else>
+                            {{ slotProps.placeholder }}
+                        </span>
+                    </template>
+                    <template #option="slotProps">
+                        <div class="flex flex-row gap-2">
+                            <i :class="slotProps.option.value"></i>
+                            <span>{{ slotProps.option.visibleName }}</span>
+                        </div>
+                    </template>
+                </Dropdown>
+
+                <InputText v-if="!filter.options" :id="filter.propertyName" v-model="filterValues[filter.propertyName]"
+                    :placeholder="filter.placeholder" />
+            </div>
+            <Button @click="forwardFilter" :label="`Filter ${props.searchName}`" />
+        </div>
+    </Fieldset>
 </template>

@@ -1,44 +1,51 @@
 <template>
-    <VanSpace direction="vertical">
-        <h1>Menu</h1>
-        <VanButton type="default" plain icon="/home_FILL1_wght400_GRAD0_opsz24.svg" @click="navigateHome">Home</VanButton>
-        <VanButton type="default" plain icon="/account_circle_FILL1_wght400_GRAD0_opsz24.svg" @click="navigateAccounts">Accounts</VanButton>
-        <VanButton type="default" plain icon="/school_FILL1_wght400_GRAD0_opsz24.svg" @click="navigateOrganization">Organization</VanButton>
-        <VanButton type="default" plain icon="/work_FILL1_wght400_GRAD0_opsz24.svg" @click="navigateProjects">Projects</VanButton>
-        <VanButton type="default" plain icon="/construction_FILL1_wght400_GRAD0_opsz24.svg" @click="navigateOtherSettings">Other</VanButton>
-        <p>By <a href="https://github.com/Wandering-Cursor/">Wandering-Cursor</a> team</p>
-    </VanSpace>
+    <div class="card flex justify-content-center w-full">
+        <Menu :model="items" class="flex-grow-1">
+            <template #item="{ item, props }">
+                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                    <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </router-link>
+                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                    <span :class="item.icon" />
+                    <span class="ml-2">{{ item.label }}</span>
+                </a>
+            </template>
+        </Menu>
+    </div>
 </template>
 
-<style scoped>
-.van-space{
-    max-width: 10vw;
-    height: 100%;
-}
-.van-button{
-    width: 100%;
-}
-</style>
-
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { ref } from 'vue';
 
-const router = useRouter()
-
-const navigateHome = () => {
-    router.push('/')
-}
-const navigateAccounts = () => {
-    router.push('/accounts')
-}
-const navigateOrganization = () => {
-    router.push('/organization')
-}
-const navigateProjects = () => {
-    router.push('/projects')
-}
-const navigateOtherSettings = () => {
-    router.push('/other')
-}
+const items = ref([
+    {
+        label: 'Home',
+        icon: 'pi pi-palette',
+        route: '/'
+    },
+    {
+        label: 'Accounts',
+        icon: 'pi pi-link',
+        route: "/accounts"
+    },
+    {
+        label: 'Organization',
+        icon: 'pi pi-users',
+        route: "/organization"
+    },
+    {
+        label: 'Projects',
+        icon: 'pi pi-folder',
+        route: "/projects"
+    },
+    {
+        label: 'Other Settings',
+        icon: 'pi pi-cog',
+        route: "/other"
+    }
+]);
 
 </script>

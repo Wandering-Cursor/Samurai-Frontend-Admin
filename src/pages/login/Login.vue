@@ -3,9 +3,9 @@ import LoginForm from "@/components/login/LoginForm.vue";
 </script>
 
 <template>
-    <VanSpace direction="vertical" fill align="center" class="fullPageHeight justifyCenter">
+    <div class="shadow-6 w-full h-full flex justify-content-center align-items-center">
         <LoginForm/>
-    </VanSpace>
+    </div>
 </template>
 
 <script lang="ts">

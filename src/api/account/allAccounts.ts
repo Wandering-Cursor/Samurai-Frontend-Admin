@@ -1,14 +1,19 @@
 import apiClient from "@/api/base";
 import { AxiosError } from "axios";
-import { AllAccountsResponse } from "../types/account/allAccounts";
+import {
+  AllAccountsQuery,
+  AllAccountsResponse,
+} from "../types/account/allAccounts";
 
 export function getAllAccounts(
-  queryParams: { [key: string]: string } | undefined,
+  queryParams: AllAccountsQuery | undefined,
   successCallback: (data: AllAccountsResponse) => void,
   errorCallback: (error: AxiosError) => void
 ) {
+  console.log("getAllAccounts");
+  console.log(queryParams?.toObject());
   return apiClient
-    .get("/admin/account", { params: queryParams })
+    .get("/admin/account", { params: queryParams?.toObject() })
     .then((response) => {
       successCallback(response.data);
     })

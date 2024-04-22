@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import { getAllAccounts } from "@/api/account/allAccounts";
-import { AllAccountsResponse } from "@/api/types/account/allAccounts";
+import { AllAccountsQuery, AllAccountsResponse } from "@/api/types/account/allAccounts";
+import { SearchFilter } from "@/api/types/common/Search";
 import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
+import DataTable from "primevue/datatable";
 import { AxiosError } from 'axios';
 import { Ref, ref } from 'vue';
+import Paginator, { PageState } from 'primevue/paginator';
+import { AccountRepresentation } from "@/api/types/account/Account";
+import { Meta } from "@/api/types/common/paginatedResponse";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
 
-let list: Ref<Array<string>> = ref([]);
-let loading = ref(false);
-let finished = ref(false);
+
+let list: Ref<Array<AccountRepresentation>> = ref([]);
+let metaInfo: Ref<Meta> = ref(new Meta());
+let pageFilters: Ref<AllAccountsQuery> = ref(new AllAccountsQuery(1, 10, {}));
+
+const toast = useToast();
 
 const showError = (error: AxiosError) => {
     console.error(error);
@@ -15,90 +25,146 @@ const showError = (error: AxiosError) => {
 
 const gotAccounts = (data: AllAccountsResponse) => {
     list.value = [];
-    list.value.push(...data.content.map((account) => account.username));
-    loading.value = false;
-    finished.value = true;
+    list.value.push(...data.content.map((account) => new AccountRepresentation(account)));
+    metaInfo.value = data.meta;
 };
 
 const onLoad = () => {
-    loading.value = true;
-    getAllAccounts(undefined, gotAccounts, showError);
+    getAllAccounts(pageFilters.value, gotAccounts, showError);
 };
 
-const onFilter = (filterValues: { [key: string]: string }) => {
-    loading.value = true;
-    finished.value = false;
+const onFilter = (filters: { [key: string]: any }) => {
+    pageFilters.value = new AllAccountsQuery(pageFilters.value.page, pageFilters.value.page_size, filters);
+    getAllAccounts(pageFilters.value, gotAccounts, showError);
+};
 
-    Object.keys(filterValues).forEach(key => {
-        if (filterValues[key] === "") {
-            delete filterValues[key];
-        }
+const changePage = (event: PageState) => {
+    pageFilters.value.page = event.page + 1;
+    pageFilters.value.page_size = event.rows;
+    getAllAccounts(pageFilters.value, gotAccounts, showError);
+};
+
+const copyToClipboard = (value: string) => {
+    navigator.clipboard.writeText(value).then(() => {
+        toast.add(
+            {
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Copied to clipboard',
+                life: 1000
+            }
+        );
+    }).catch(err => {
+        toast.add(
+            {
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not copy text',
+                life: 2000
+            }
+        );
+        console.error(err);
     });
-    getAllAccounts(filterValues, gotAccounts, showError);
-};
+}
 
-const filters = [
+onLoad();
+
+const filters: SearchFilter[] = [
     {
-        title: "Username",
-        propertyName: "username"
+        title: "Account ID",
+        propertyName: "account_id",
+        placeholder: "0399b33d-4c87-485a-8257-18a0fb7c8c7c",
     },
     {
         title: "Email",
-        propertyName: "email"
+        propertyName: "email",
+        placeholder: "user@mail.com",
     },
     {
-        title: "First Name",
-        propertyName: "firstName"
+        title: "Username",
+        propertyName: "username",
+        placeholder: "username",
     },
     {
-        title: "Last Name",
-        propertyName: "lastName"
+        title: "Account Type",
+        propertyName: "account_type",
+        options: [
+            {
+                visibleName: "Admin",
+                value: "admin"
+            },
+            {
+                visibleName: "Student",
+                value: "student"
+            },
+            {
+                visibleName: "Teacher",
+                value: "teacher"
+            },
+            {
+                visibleName: "Overseer",
+                value: "overseer"
+            },
+            {
+                visibleName: "Clear",
+                value: undefined,
+            }
+        ],
+        placeholder: "Select an option"
     },
     {
-        title: "Role",
-        propertyName: "role"
-    },
-    {
-        title: "Status",
-        propertyName: "status"
+        title: "Registration Code",
+        propertyName: "registration_code",
+        placeholder: "student_12345",
     }
 ];
+
 </script>
 
 <template>
-    <div class="container">
-        <div class="item"><h1>Empty/Info</h1></div>
-        <div class="item"><h1>Controls</h1></div>
-        <van-list
-            v-model:loading="loading"
-            :finished="finished"
-            loading-text="Loading..."
-            finished-text="Finished"
-            @load="onLoad"
-            class="item"
-        >
-            <van-cell v-for="item in list" :key="item" :title="item" />
-        </van-list>
-        <FilterPanel class="item" :filters="filters" :on-filter="onFilter"/>
+    <Toast />
+    <div class="grid w-full m-1">
+        <div class="col">
+            <div>
+                <p class="text-4xl font-bold text-center">Accounts Control</p>
+            </div>
+            <div>
+                <DataTable :value="list">
+                    <template #header>
+                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                            <span class="text-xl font-normal">Accounts</span>
+                        </div>
+                    </template>
+                    <Column key="email" field="email" header="Email">
+                        <template #body="slotProps">
+                            <RouterLink :to="`/accounts/${slotProps.data.account_id}`">
+                                <Button :to="`/accounts/${slotProps.data.account_id}`" link>
+                                    {{ slotProps.data.email }}
+                                </Button>
+                            </RouterLink>
+                        </template>
+                    </Column>
+                    <Column key="first_name" field="first_name" header="First Name"></Column>
+                    <Column key="last_name" field="last_name" header="Last Name"></Column>
+                    <Column key="account_type" field="account_type" header="Account Type"></Column>
+                    <Column header="Actions">
+                        <template #body="slotProps">
+                            <Button v-tooltip="'Copy Account ID'"
+                                class="p-button p-button-rounded p-button-text p-button-plain"
+                                @click="() => { copyToClipboard(slotProps.data.account_id) }">
+                                <i class="pi pi-copy"></i>
+                            </Button>
+                        </template>
+                    </Column>
+                </DataTable>
+                <Paginator :rows="metaInfo.page_size" :totalRecords="metaInfo.total" v-on:page="changePage"
+                    template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+                    :rowsPerPageOptions="[1, 5, 10, 20, 30]" />
+            </div>
+        </div>
+        <div class="col-2">
+            <p class="text-4xl font-bold text-center">Controls</p>
+            <FilterPanel :filters="filters" :filterHandler="onFilter" :search-name="'Accounts'" />
+        </div>
     </div>
 </template>
-
-<style scoped>
-.container {
-    scroll-behavior: smooth;
-    width: 100%;
-    overflow: auto;
-    padding: 0.5em;
-    border: 1em solid #f0f0f0;
-    background: gray;
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr 4fr;
-    gap: 1em;
-}
-.item{
-    border: 0.2em solid #f0f0f0;
-    border-radius: 0.5em;
-    padding: 0.5em;
-}
-</style>
