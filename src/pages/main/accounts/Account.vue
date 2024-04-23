@@ -42,6 +42,9 @@ const capitalize = (str: string) => {
             <Fieldset legend="Email">
                 <p>{{ account.email }}</p>
             </Fieldset>
+            <Fieldset legend="Registration code">
+                <p>{{ account.registration_code }}</p>
+            </Fieldset>
             <Fieldset legend="Username">
                 <p>{{ account.username }}</p>
             </Fieldset>
@@ -82,7 +85,7 @@ const capitalize = (str: string) => {
                     <p>No connections</p>
                 </div>
             </Fieldset>
-            <Fieldset legend="Registration Code">
+            <Fieldset legend="Email confirmation code">
                 <RegistrationCode :account="account" />
             </Fieldset>
         </div>
