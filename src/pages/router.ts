@@ -14,7 +14,20 @@ const routes = [
       },
       {
         path: "accounts",
-        component: () => import("@/pages/main/accounts/Accounts.vue"),
+        children: [
+          {
+            path: "",
+            component: () => import("@/pages/main/accounts/Accounts.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/pages/main/accounts/AccountCreate.vue"),
+          },
+          {
+            path: ":id",
+            component: () => import("@/pages/main/accounts/Account.vue"),
+          },
+        ],
       },
     ],
   },

@@ -10,7 +10,8 @@ import { useToast } from "primevue/usetoast";
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { ExtendedAuthToken } from "@/api/types/common/Auth";
 
 export default defineComponent({
   props: {
@@ -33,12 +34,19 @@ export default defineComponent({
         return false;
       }
 
-      const decodedToken = jwtDecode(accessToken);
+      const decodedToken: ExtendedAuthToken = jwtDecode(accessToken);
 
       if (decodedToken.exp == null) {
         return false;
       }
       if (decodedToken.exp * 1000 < Date.now()) {
+        return false;
+      }
+      if (decodedToken.scopes == null) {
+        return false;
+      }
+      // Check if the user has the admin scope
+      if (!decodedToken.scopes.includes("admin")) {
         return false;
       }
 
@@ -50,7 +58,7 @@ export default defineComponent({
 
     if (!this.isTokenValid) {
       const toast = useToast();
-      toast.add({severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page."});
+      toast.add({ severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page." });
       this.$router.push("/login");
     }
   },

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getAllAccounts } from "@/api/account/allAccounts";
-import { AllAccountsQuery, AllAccountsResponse } from "@/api/types/account/allAccounts";
+import { AllAccountsQuery, AllAccountsResponse } from "@/api/types/account/api/allAccounts";
 import { SearchFilter } from "@/api/types/common/Search";
 import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
 import DataTable from "primevue/datatable";
@@ -9,7 +9,6 @@ import { Ref, ref } from 'vue';
 import Paginator, { PageState } from 'primevue/paginator';
 import { AccountRepresentation } from "@/api/types/account/Account";
 import { Meta } from "@/api/types/common/paginatedResponse";
-import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 
 
@@ -122,7 +121,6 @@ const filters: SearchFilter[] = [
 </script>
 
 <template>
-    <Toast />
     <div class="grid w-full m-1">
         <div class="col">
             <div>
@@ -130,6 +128,14 @@ const filters: SearchFilter[] = [
             </div>
             <div>
                 <DataTable :value="list" showGridlines stripedRows>
+                    <template #header>
+                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                            <div></div>
+                            <RouterLink to="/accounts/create">
+                                <Button icon="pi pi-plus" v-tooltip="'Create new account'" label="New" raised link />
+                            </RouterLink>
+                        </div>
+                    </template>
                     <Column key="email" field="email" header="Email">
                         <template #body="slotProps">
                             <RouterLink :to="`/accounts/${slotProps.data.account_id}`">

@@ -2,7 +2,7 @@ import {
   BasePaginatedQuery,
   BasePaginatedResponse,
 } from "@/api/types/common/paginatedResponse";
-import { Account } from "@/api/types/account/Account";
+import { ShortAccountInfo } from "@/api/types/account/Account";
 
 export class AllAccountsQuery extends BasePaginatedQuery {
   account_id: string | undefined;
@@ -37,5 +37,5 @@ export class AllAccountsQuery extends BasePaginatedQuery {
 }
 
 export class AllAccountsResponse extends BasePaginatedResponse {
-  content: Array<Account> = [];
+  content: Array<ShortAccountInfo> = [];
 }

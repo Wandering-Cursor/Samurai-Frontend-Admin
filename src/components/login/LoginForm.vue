@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useToast } from "primevue/usetoast";
-import Toast from "primevue/toast";
 import FloatLabel from 'primevue/floatlabel';
-import {sendLoginRequest} from '@/api/auth/login';
+import { sendLoginRequest } from '@/api/auth/login';
 import { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 
@@ -53,7 +52,6 @@ defineExpose({
 </script>
 
 <template>
-    <Toast />
     <Card>
         <template #header>
             <div class="flex justify-content-center">
@@ -74,11 +72,11 @@ defineExpose({
                         <label for="password">Password</label>
                     </FloatLabel>
                 </div>
-        </div>
+            </div>
         </template>
         <template #footer>
             <div class="flex justify-content-center">
-                <Button label="Log In" @click="login" class="flex-grow-1"/>
+                <Button label="Log In" @click="login" class="flex-grow-1" />
             </div>
         </template>
     </Card>
