@@ -1,4 +1,25 @@
-export class Account {
+import { DBObject } from "../common/Object";
+import { RegistrationEmailCode } from "./RegistrationEmailCode";
+import { Permission } from "./Permission";
+import { Connection } from "./Connection";
+
+export class AccountInfo extends DBObject {
+  account_id: string = "";
+  email: string = "";
+  username: string = "";
+  account_type: string = "";
+  first_name: string = "";
+  middle_name: string | undefined;
+  last_name: string = "";
+  registration_code: string = "";
+  is_active: boolean = false;
+  is_email_verified: boolean = false;
+  permissions: Permission[] = [];
+  connections?: Connection[] = [];
+  registration_email_code: RegistrationEmailCode | null | undefined;
+}
+
+export class ShortAccountInfo {
   account_id: string = "";
   email: string = "";
   username: string = "";
@@ -18,9 +39,9 @@ export class AccountRepresentation {
   last_name: string = "";
   is_active: boolean = false;
   account_type: string = "";
-  private _account: Account;
+  private _account: ShortAccountInfo;
 
-  constructor(account: Account) {
+  constructor(account: ShortAccountInfo) {
     this.account_id = account.account_id;
     this.email = account.email;
     this.username = account.username;
@@ -34,7 +55,7 @@ export class AccountRepresentation {
     this._account = account;
   }
 
-  get account(): Account {
+  get account(): ShortAccountInfo {
     return this._account;
   }
 }

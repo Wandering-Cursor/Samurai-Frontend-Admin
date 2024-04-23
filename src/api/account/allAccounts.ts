@@ -3,15 +3,13 @@ import { AxiosError } from "axios";
 import {
   AllAccountsQuery,
   AllAccountsResponse,
-} from "../types/account/allAccounts";
+} from "../types/account/api/allAccounts";
 
 export function getAllAccounts(
   queryParams: AllAccountsQuery | undefined,
   successCallback: (data: AllAccountsResponse) => void,
   errorCallback: (error: AxiosError) => void
 ) {
-  console.log("getAllAccounts");
-  console.log(queryParams?.toObject());
   return apiClient
     .get("/admin/account", { params: queryParams?.toObject() })
     .then((response) => {

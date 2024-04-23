@@ -2,9 +2,10 @@
     <div class="card flex justify-content-center w-full">
         <Menu :model="items" class="flex-grow-1">
             <template #start>
-                <span class="flex align-items-center justify-content-center gap-1 px-1 py-2">
+                <span class="flex align-items-center justify-content-between gap-1 px-1 py-2">
                     <span class="pi pi-graduation-cap text-2xl text-primary"></span>
                     <span class="font-medium text-2xl font-semibold">Admin Page</span>
+                    <LogOutButton />
                 </span>
                 <Divider />
             </template>
@@ -33,6 +34,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import { ref } from 'vue';
+import LogOutButton from '@/components/auth/LogOutButton.vue';
 
 const items = ref([
     {
