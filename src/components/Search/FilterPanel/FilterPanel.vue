@@ -68,7 +68,7 @@ const forwardFilter = () => {
             <div class="flex flex-column gap-2" v-for="filter in props.filters">
                 <label :for="filter.propertyName">{{ filter.title }}</label>
                 <Dropdown v-if="filter.options" :id="filter.propertyName" v-model="filterValues[filter.propertyName]"
-                    :options="filter.options" optionLabel="label" :placeholder="filter.placeholder">
+                    :options="filter.options" :placeholder="filter.placeholder">
                     <template #value="slotProps">
                         <div v-if="slotProps.value" class="flex align-items-center">
                             <div>{{ slotProps.value.visibleName }}</div>

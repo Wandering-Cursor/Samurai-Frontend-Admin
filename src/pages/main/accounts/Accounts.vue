@@ -129,12 +129,7 @@ const filters: SearchFilter[] = [
                 <p class="text-4xl font-bold text-center">Accounts Control</p>
             </div>
             <div>
-                <DataTable :value="list">
-                    <template #header>
-                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                            <span class="text-xl font-normal">Accounts</span>
-                        </div>
-                    </template>
+                <DataTable :value="list" showGridlines stripedRows>
                     <Column key="email" field="email" header="Email">
                         <template #body="slotProps">
                             <RouterLink :to="`/accounts/${slotProps.data.account_id}`">
@@ -152,7 +147,7 @@ const filters: SearchFilter[] = [
                             <Button v-tooltip="'Copy Account ID'"
                                 class="p-button p-button-rounded p-button-text p-button-plain"
                                 @click="() => { copyToClipboard(slotProps.data.account_id) }">
-                                <i class="pi pi-copy"></i>
+                                <i class="pi pi-id-card"></i>
                             </Button>
                         </template>
                     </Column>
@@ -163,7 +158,6 @@ const filters: SearchFilter[] = [
             </div>
         </div>
         <div class="col-2">
-            <p class="text-4xl font-bold text-center">Controls</p>
             <FilterPanel :filters="filters" :filterHandler="onFilter" :search-name="'Accounts'" />
         </div>
     </div>
