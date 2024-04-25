@@ -1,9 +1,9 @@
-# Vue 3 + TypeScript + Vite
+# Samurai Admin (frontend)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This repsoitory contains the admin site for [Samurai-Backend](https://github.com/Wandering-Cursor/Samurai-Backend/).
+To deploy it, you can use [npm](https://www.npmjs.com/) and deploy it as either, static site, or a [Node.js](https://nodejs.org/en) application.
+For local development, you can also use Run and Debug in Visual Studio Code ([launch.json](.vscode/launch.json)).
 
-## Recommended Setup
+## Useful links
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
-
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+This frontend uses [PrimeVue](https://primevue.org/) and [PrimeFlex](https://primeflex.org/) for components.
