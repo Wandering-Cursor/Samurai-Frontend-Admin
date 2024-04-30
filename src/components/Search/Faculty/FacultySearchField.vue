@@ -1,0 +1,51 @@
+<script setup lang="ts">
+import searchFaculties from '@/api/organization/searchFaculties';
+import { FacultySearchRequest } from '@/api/types/organization/Faculty';
+import SearchField from '@/components/Search/SearchField.vue';
+import { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
+import { defineProps } from 'vue';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+
+const props = defineProps({
+    id: {
+        type: String,
+        default: 'faculty-search'
+    },
+    label: {
+        type: String,
+        default: 'Faculty'
+    },
+    placeholder: {
+        type: String,
+        default: 'Enter a name to search for a faculty',
+    },
+    onItemSelect: {
+        type: (Function as unknown as () => (event: AutoCompleteItemSelectEvent) => void),
+        required: true,
+    },
+});
+
+const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: object[]) => void) => {
+    let request = new FacultySearchRequest();
+    request.name = event.query;
+
+    searchFaculties(
+        request,
+        (data) => {
+            callback(data.content);
+        },
+        (error) => {
+            console.error(error);
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search faculties' });
+        }
+    )
+};
+
+</script>
+
+<template>
+    <SearchField :id="props.id" :label="props.label" :placeholder="props.placeholder" :search-method="searchMethod"
+        :on-item-select="props.onItemSelect" :option-label="'name'" />
+</template>

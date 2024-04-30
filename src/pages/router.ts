@@ -25,6 +25,11 @@ const routes = [
             path: ":id",
             component: () => import("@/pages/main/accounts/Account.vue"),
           },
+          {
+            path: ":id/connections",
+            component: () =>
+              import("@/pages/main/accounts/AccountConnections.vue"),
+          },
         ],
       },
       {
