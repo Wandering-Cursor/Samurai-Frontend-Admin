@@ -15,7 +15,7 @@ export class AllAccountsQuery extends BasePaginatedQuery {
    * toObject
    */
   public toObject() {
-    let val = super.toObject();
+    const val = super.toObject();
     return {
       ...val,
       account_id: this.account_id,

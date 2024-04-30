@@ -1,23 +1,21 @@
 import { createRouter } from "vue-router";
 import { RouterHistory } from "vue-router";
-import Login from "./login/Login.vue";
-import MainWithAuthentication from "./main/MainWithAuthentication.vue";
 
 const routes = [
   {
     path: "/",
-    component: MainWithAuthentication,
+    component: () => import("@/pages/main/MainWithAuthentication.vue"),
     children: [
       {
         path: "",
-        component: () => import("@/pages/main/blank/Blank.vue"),
+        component: () => import("@/pages/main/blank/BlankPage.vue"),
       },
       {
         path: "accounts",
         children: [
           {
             path: "",
-            component: () => import("@/pages/main/accounts/Accounts.vue"),
+            component: () => import("@/pages/main/accounts/AccountsPage.vue"),
           },
           {
             path: "create",
@@ -25,15 +23,24 @@ const routes = [
           },
           {
             path: ":id",
-            component: () => import("@/pages/main/accounts/Account.vue"),
+            component: () => import("@/pages/main/accounts/AccountPage.vue"),
+          },
+          {
+            path: ":id/connections",
+            component: () =>
+              import("@/pages/main/accounts/AccountConnections.vue"),
           },
         ],
+      },
+      {
+        path: "/:pathMatch(.*)*",
+        component: () => import("@/pages/main/NotFound.vue"),
       },
     ],
   },
   {
     path: "/login",
-    component: Login,
+    component: () => import("@/pages/login/LoginPage.vue"),
   },
 ];
 

@@ -20,7 +20,7 @@ const onError = (error: AxiosError) => {
 
 <template>
     <div class="flex justify-content-end">
-        <Button icon="pi pi-sign-out" v-tooltip.focus.bottom="'Logout'" aria-label="Logout"
+        <Button icon="pi pi-sign-out" v-tooltip.bottom="'Logout'" aria-label="Logout"
             @click="() => { sendLogoutRequest(onLogout, onError) }">
         </Button>
     </div>

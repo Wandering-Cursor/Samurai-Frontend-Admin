@@ -1,40 +1,40 @@
 <template>
-    <div class="card flex justify-content-center w-full">
-        <Menu :model="items" class="flex-grow-1">
-            <template #start>
-                <span class="flex align-items-center justify-content-between gap-1 px-1 py-2">
-                    <span class="pi pi-graduation-cap text-2xl text-primary"></span>
-                    <span class="font-medium text-2xl font-semibold">Admin Page</span>
-                    <LogOutButton />
-                </span>
-                <Divider />
-            </template>
-            <template #item="{ item, props }">
-                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-                    <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-                        <span :class="item.icon" />
-                        <span class="ml-2">{{ item.label }}</span>
-                    </a>
-                </router-link>
-            </template>
-            <template #end>
-                <Divider />
-                <span class="flex align-items-center justify-content-center">
-                    <span class="font-medium text-xs font-light">By
-                        <a href="https://github.com/Wandering-Cursor/">
-                            <Button link label="Wandering-Cursor" class="font-medium text-xs font-light p-0 m-0" />
-                        </a>
-                        team</span>
-                </span>
-            </template>
-        </Menu>
-    </div>
+  <div class="card flex justify-content-center w-full">
+    <Menu
+      :model="items"
+      class="flex-grow-1"
+    >
+      <template #start>
+        <AppHeader />
+        <Divider />
+      </template>
+      <template #item="{ item, props }">
+        <SidePanelRouterLink
+          :item="item"
+          :props="props"
+        />
+      </template>
+      <template #end>
+        <Divider />
+        <div class="flex justify-content-center">
+          <a href="https://github.com/Wandering-Cursor/">
+            <Button
+              link
+              label="By Wandering-Cursor team"
+              class="font-medium text-xs font-light p-0 m-0"
+            />
+          </a>
+        </div>
+      </template>
+    </Menu>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import { ref } from 'vue';
-import LogOutButton from '@/components/auth/LogOutButton.vue';
+import AppHeader from '@/components/SidePanel/AppHeader.vue';
+import SidePanelRouterLink from './SidePanelRouterLink.vue';
 
 const items = ref([
     {

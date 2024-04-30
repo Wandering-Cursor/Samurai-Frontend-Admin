@@ -5,6 +5,12 @@ const props = defineProps({
 </script>
 
 <template>
-    <i class="pi pi-check" v-if="props.value" />
-    <i class="pi pi-times" v-else />
+  <i
+    v-if="props.value"
+    class="pi pi-check"
+  />
+  <i
+    v-else
+    class="pi pi-times"
+  />
 </template>

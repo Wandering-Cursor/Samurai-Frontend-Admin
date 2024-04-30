@@ -15,7 +15,7 @@ export class AccountInfo extends DBObject {
   is_active: boolean = false;
   is_email_verified: boolean = false;
   permissions: Permission[] = [];
-  connections?: Connection[] = [];
+  connections: Connection[] = [];
   registration_email_code: RegistrationEmailCode | null | undefined;
 }
 

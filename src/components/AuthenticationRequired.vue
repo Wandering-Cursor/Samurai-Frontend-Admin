@@ -4,7 +4,7 @@ import { useToast } from "primevue/usetoast";
 
 <template>
   <div>
-    <component :is="WrappedComponent" v-bind="props" v-if="isTokenValid" />
+    <component :is="wrapped" v-bind="props" v-if="isTokenValid" />
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import { ExtendedAuthToken } from "@/api/types/common/Auth";
 
 export default defineComponent({
   props: {
-    WrappedComponent: {
+    wrapped: {
       type: Object as () => any,
       required: true
     }
@@ -63,7 +63,7 @@ export default defineComponent({
     }
   },
   render(h: Function) {
-    return this.isTokenValid ? h(this.WrappedComponent, { props: this.props }) : null;
+    return this.isTokenValid ? h(this.wrapped, { props: this.props }) : null;
   }
 });
 </script>

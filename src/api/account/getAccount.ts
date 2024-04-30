@@ -7,7 +7,7 @@ import {
 
 export function getAccount(
   params: GetAccountRequest | undefined,
-  successCallback: (data: GetAccountResponse) => void,
+  successCallback: (data: GetAccountResponse) => any | void,
   errorCallback: (error: AxiosError) => void
 ) {
   return apiClient
