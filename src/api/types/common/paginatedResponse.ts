@@ -3,6 +3,16 @@ export class Meta {
   page: number = NaN;
   page_size: number = NaN;
   total_pages: number = NaN;
+
+  /**
+   * fromMeta
+   */
+  public fromMeta(otherMeta: Meta) {
+    this.total = otherMeta.total;
+    this.page = otherMeta.page;
+    this.page_size = otherMeta.page_size;
+    this.total_pages = otherMeta.total_pages;
+  }
 }
 
 export class BasePaginatedQuery {

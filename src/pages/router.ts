@@ -1,12 +1,10 @@
 import { createRouter } from "vue-router";
 import { RouterHistory } from "vue-router";
-import Login from "./login/Login.vue";
-import MainWithAuthentication from "./main/MainWithAuthentication.vue";
 
 const routes = [
   {
     path: "/",
-    component: MainWithAuthentication,
+    component: () => import("@/pages/main/MainWithAuthentication.vue"),
     children: [
       {
         path: "",
@@ -29,11 +27,15 @@ const routes = [
           },
         ],
       },
+      {
+        path: "/:pathMatch(.*)*",
+        component: () => import("@/pages/main/NotFound.vue"),
+      },
     ],
   },
   {
     path: "/login",
-    component: Login,
+    component: () => import("@/pages/login/Login.vue"),
   },
 ];
 

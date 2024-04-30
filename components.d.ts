@@ -7,6 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AccountsTable: typeof import('./src/components/Account/AccountsTable.vue')['default']
+    AppHeader: typeof import('./src/components/SidePanel/AppHeader.vue')['default']
+    AppTitle: typeof import('./src/components/SidePanel/AppTitle.vue')['default']
     AuthenticationRequired: typeof import('./src/components/AuthenticationRequired.vue')['default']
     AutoComplete: typeof import('primevue/autocomplete')['default']
     Button: typeof import('primevue/button')['default']
@@ -22,6 +25,8 @@ declare module 'vue' {
     LogOutButton: typeof import('./src/components/auth/LogOutButton.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     Panel: typeof import('primevue/panel')['default']
+    PanelHeader: typeof import('./src/components/SidePanel/PanelHeader.vue')['default']
+    PannelHeader: typeof import('./src/components/SidePanel/PannelHeader.vue')['default']
     Password: typeof import('primevue/password')['default']
     Permissions: typeof import('./src/components/Account/Permissions.vue')['default']
     RegistrationCode: typeof import('./src/components/Account/RegistrationCode.vue')['default']
@@ -29,5 +34,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     ScrollPanel: typeof import('primevue/scrollpanel')['default']
     SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
+    SidePanelRouterLink: typeof import('./src/components/SidePanel/SidePanelRouterLink.vue')['default']
+    SidePannelRouterLink: typeof import('./src/components/SidePanel/SidePannelRouterLink.vue')['default']
   }
 }

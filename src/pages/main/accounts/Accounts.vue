@@ -3,20 +3,17 @@ import { getAllAccounts } from "@/api/account/allAccounts";
 import { AllAccountsQuery, AllAccountsResponse } from "@/api/types/account/api/allAccounts";
 import { SearchFilter } from "@/api/types/common/Search";
 import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
-import DataTable from "primevue/datatable";
 import { AxiosError } from 'axios';
 import { Ref, ref } from 'vue';
-import Paginator, { PageState } from 'primevue/paginator';
 import { AccountRepresentation } from "@/api/types/account/Account";
 import { Meta } from "@/api/types/common/paginatedResponse";
-import { useToast } from "primevue/usetoast";
+import AccountsTable from "@/components/Account/AccountsTable.vue";
 
 
 let list: Ref<Array<AccountRepresentation>> = ref([]);
 let metaInfo: Ref<Meta> = ref(new Meta());
 let pageFilters: Ref<AllAccountsQuery> = ref(new AllAccountsQuery(1, 10, {}));
 
-const toast = useToast();
 
 const showError = (error: AxiosError) => {
     console.error(error);
@@ -28,45 +25,11 @@ const gotAccounts = (data: AllAccountsResponse) => {
     metaInfo.value = data.meta;
 };
 
-const onLoad = () => {
-    getAllAccounts(pageFilters.value, gotAccounts, showError);
-};
-
 const onFilter = (filters: { [key: string]: any }) => {
     pageFilters.value = new AllAccountsQuery(pageFilters.value.page, pageFilters.value.page_size, filters);
     getAllAccounts(pageFilters.value, gotAccounts, showError);
 };
 
-const changePage = (event: PageState) => {
-    pageFilters.value.page = event.page + 1;
-    pageFilters.value.page_size = event.rows;
-    getAllAccounts(pageFilters.value, gotAccounts, showError);
-};
-
-const copyToClipboard = (value: string) => {
-    navigator.clipboard.writeText(value).then(() => {
-        toast.add(
-            {
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Copied to clipboard',
-                life: 1000
-            }
-        );
-    }).catch(err => {
-        toast.add(
-            {
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Could not copy text',
-                life: 2000
-            }
-        );
-        console.error(err);
-    });
-}
-
-onLoad();
 
 const filters: SearchFilter[] = [
     {
@@ -127,40 +90,8 @@ const filters: SearchFilter[] = [
                 <p class="text-4xl font-bold text-center">Accounts Control</p>
             </div>
             <div>
-                <DataTable :value="list" showGridlines stripedRows>
-                    <template #header>
-                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                            <div></div>
-                            <RouterLink to="/accounts/create">
-                                <Button icon="pi pi-plus" v-tooltip="'Create new account'" label="New" raised link />
-                            </RouterLink>
-                        </div>
-                    </template>
-                    <Column key="email" field="email" header="Email">
-                        <template #body="slotProps">
-                            <RouterLink :to="`/accounts/${slotProps.data.account_id}`">
-                                <Button :to="`/accounts/${slotProps.data.account_id}`" link>
-                                    {{ slotProps.data.email }}
-                                </Button>
-                            </RouterLink>
-                        </template>
-                    </Column>
-                    <Column key="first_name" field="first_name" header="First Name"></Column>
-                    <Column key="last_name" field="last_name" header="Last Name"></Column>
-                    <Column key="account_type" field="account_type" header="Account Type"></Column>
-                    <Column header="Actions">
-                        <template #body="slotProps">
-                            <Button v-tooltip="'Copy Account ID'"
-                                class="p-button p-button-rounded p-button-text p-button-plain"
-                                @click="() => { copyToClipboard(slotProps.data.account_id) }">
-                                <i class="pi pi-id-card"></i>
-                            </Button>
-                        </template>
-                    </Column>
-                </DataTable>
-                <Paginator :rows="metaInfo.page_size" :totalRecords="metaInfo.total" v-on:page="changePage"
-                    template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
-                    :rowsPerPageOptions="[1, 5, 10, 20, 30]" />
+                <AccountsTable :list="list" :metaInfo="metaInfo" :pageFilters="pageFilters">
+                </AccountsTable>
             </div>
         </div>
         <div class="col-2">
