@@ -7,17 +7,15 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AccountInfo: typeof import('./src/components/Account/AccountInfo.vue')['default']
     AccountsTable: typeof import('./src/components/Account/AccountsTable.vue')['default']
     AppHeader: typeof import('./src/components/SidePanel/AppHeader.vue')['default']
-    AppTitle: typeof import('./src/components/SidePanel/AppTitle.vue')['default']
     AuthenticationRequired: typeof import('./src/components/AuthenticationRequired.vue')['default']
     AutoComplete: typeof import('primevue/autocomplete')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
     CheckOrX: typeof import('./src/components/visuals/CheckOrX.vue')['default']
     Column: typeof import('primevue/column')['default']
-    Connection: typeof import('./src/components/Account/Connection.vue')['default']
+    ConnectionRepresentation: typeof import('./src/components/Account/ConnectionRepresentation.vue')['default']
     DepartmentSearchField: typeof import('./src/components/Search/Department/DepartmentSearchField.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
     Divider: typeof import('primevue/divider')['default']
@@ -32,10 +30,8 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     Menubar: typeof import('primevue/menubar')['default']
     Panel: typeof import('primevue/panel')['default']
-    PanelHeader: typeof import('./src/components/SidePanel/PanelHeader.vue')['default']
-    PannelHeader: typeof import('./src/components/SidePanel/PannelHeader.vue')['default']
     Password: typeof import('primevue/password')['default']
-    Permissions: typeof import('./src/components/Account/Permissions.vue')['default']
+    PermissionRepresentation: typeof import('./src/components/Account/PermissionRepresentation.vue')['default']
     RegistrationCode: typeof import('./src/components/Account/RegistrationCode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -43,8 +39,5 @@ declare module 'vue' {
     SearchField: typeof import('./src/components/Search/SearchField.vue')['default']
     SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
     SidePanelRouterLink: typeof import('./src/components/SidePanel/SidePanelRouterLink.vue')['default']
-    SidePannelRouterLink: typeof import('./src/components/SidePanel/SidePannelRouterLink.vue')['default']
-    Splitter: typeof import('primevue/splitter')['default']
-    SplitterPanel: typeof import('primevue/splitterpanel')['default']
   }
 }

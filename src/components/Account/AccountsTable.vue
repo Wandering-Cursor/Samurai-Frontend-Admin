@@ -12,7 +12,7 @@ import { onMounted } from "vue";
 const toast = useToast();
 
 const props = defineProps<{
-    list: Array<AccountRepresentation>,
+    list: AccountRepresentation[];
     metaInfo: Meta;
     pageFilters: AllAccountsQuery;
 }>();

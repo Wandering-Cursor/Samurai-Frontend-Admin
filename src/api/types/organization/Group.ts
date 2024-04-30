@@ -27,7 +27,7 @@ export class SearchGroupsQuery extends BasePaginatedQuery {
   }
 
   public toObject() {
-    let val = super.toObject();
+    const val = super.toObject();
 
     if (this.faculty_id) {
       val.faculty_id = this.faculty_id;

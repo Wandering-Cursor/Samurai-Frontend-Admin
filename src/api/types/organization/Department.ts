@@ -24,7 +24,7 @@ export class DepartmentSearchRequest extends BasePaginatedQuery {
   }
 
   public toObject() {
-    let val = super.toObject();
+    const val = super.toObject();
     return {
       ...val,
       name: this.name,

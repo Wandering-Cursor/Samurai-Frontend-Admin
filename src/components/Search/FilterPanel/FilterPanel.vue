@@ -65,7 +65,7 @@ const forwardFilter = () => {
 <template>
     <Fieldset :legend="title">
         <div class="flex flex-column gap-4">
-            <div class="flex flex-column gap-2" v-for="filter in props.filters">
+            <div class="flex flex-column gap-2" v-for="filter in props.filters" v-bind:key="filter.title">
                 <label :for="filter.propertyName">{{ filter.title }}</label>
                 <Dropdown v-if="filter.options" :id="filter.propertyName" v-model="filterValues[filter.propertyName]"
                     :options="filter.options" :placeholder="filter.placeholder">

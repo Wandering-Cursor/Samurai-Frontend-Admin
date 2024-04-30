@@ -44,7 +44,7 @@ export class CreateAccountRequest {
    * toObject
    */
   public toObject() {
-    let data: { [key: string]: any } = {
+    const data: { [key: string]: any } = {
       first_name: this.first_name || null,
       last_name: this.last_name || null,
       middle_name: this.middle_name || null,

@@ -6,8 +6,8 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CheckOrX from '@/components/visuals/CheckOrX.vue';
 import RegistrationCode from '@/components/Account/RegistrationCode.vue';
-import Connection from '@/components/Account/Connection.vue';
-import Permissions from '@/components/Account/Permissions.vue';
+import Connection from '@/components/Account/ConnectionRepresentation.vue';
+import Permissions from '@/components/Account/PermissionRepresentation.vue';
 
 let account = ref<AccountInfo | null>(null);
 let route = useRoute();
@@ -68,7 +68,8 @@ const capitalize = (str: string) => {
                     content: { style: { display: 'flex', 'flex-direction': 'column', gap: '1em' } }
                 }
                     ">
-                    <Permissions v-for="permission in account.permissions" :permission="permission" />
+                    <Permissions v-for="permission in account.permissions" v-bind:key="permission.account_permission_id"
+                        :permission="permission" />
                 </ScrollPanel>
                 <div v-else>
                     <p>No permissions</p>
@@ -79,7 +80,8 @@ const capitalize = (str: string) => {
                     content: { style: { display: 'flex', 'flex-direction': 'column', gap: '1em' } }
                 }
                     ">
-                    <Connection v-for=" connection in account.connections" :connection="connection" />
+                    <Connection v-for=" connection in account.connections" :connection="connection"
+                        v-bind:key="connection.connection_id" />
                 </ScrollPanel>
                 <div v-else>
                     <p>No connections</p>

@@ -8,14 +8,14 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("@/pages/main/blank/Blank.vue"),
+        component: () => import("@/pages/main/blank/BlankPage.vue"),
       },
       {
         path: "accounts",
         children: [
           {
             path: "",
-            component: () => import("@/pages/main/accounts/Accounts.vue"),
+            component: () => import("@/pages/main/accounts/AccountsPage.vue"),
           },
           {
             path: "create",
@@ -23,7 +23,7 @@ const routes = [
           },
           {
             path: ":id",
-            component: () => import("@/pages/main/accounts/Account.vue"),
+            component: () => import("@/pages/main/accounts/AccountPage.vue"),
           },
           {
             path: ":id/connections",
@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: "/login",
-    component: () => import("@/pages/login/Login.vue"),
+    component: () => import("@/pages/login/LoginPage.vue"),
   },
 ];
 

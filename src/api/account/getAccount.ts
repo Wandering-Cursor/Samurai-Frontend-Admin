@@ -4,7 +4,6 @@ import {
   GetAccountRequest,
   GetAccountResponse,
 } from "../types/account/api/getAccount";
-import { useToast } from "primevue/usetoast";
 
 export function getAccount(
   params: GetAccountRequest | undefined,

@@ -1,23 +1,33 @@
 <template>
-    <div class="card flex justify-content-center w-full">
-        <Menu :model="items" class="flex-grow-1">
-            <template #start>
-                <AppHeader />
-                <Divider />
-            </template>
-            <template #item="{ item, props }">
-                <SidePanelRouterLink :item="item" :props="props" />
-            </template>
-            <template #end>
-                <Divider />
-                <div class="flex justify-content-center">
-                    <a href="https://github.com/Wandering-Cursor/">
-                        <Button link label="By Wandering-Cursor team" class="font-medium text-xs font-light p-0 m-0" />
-                    </a>
-                </div>
-            </template>
-        </Menu>
-    </div>
+  <div class="card flex justify-content-center w-full">
+    <Menu
+      :model="items"
+      class="flex-grow-1"
+    >
+      <template #start>
+        <AppHeader />
+        <Divider />
+      </template>
+      <template #item="{ item, props }">
+        <SidePanelRouterLink
+          :item="item"
+          :props="props"
+        />
+      </template>
+      <template #end>
+        <Divider />
+        <div class="flex justify-content-center">
+          <a href="https://github.com/Wandering-Cursor/">
+            <Button
+              link
+              label="By Wandering-Cursor team"
+              class="font-medium text-xs font-light p-0 m-0"
+            />
+          </a>
+        </div>
+      </template>
+    </Menu>
+  </div>
 </template>
 
 <script setup lang="ts">
