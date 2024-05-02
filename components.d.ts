@@ -32,6 +32,7 @@ declare module 'vue' {
     Panel: typeof import('primevue/panel')['default']
     Password: typeof import('primevue/password')['default']
     PermissionRepresentation: typeof import('./src/components/Account/PermissionRepresentation.vue')['default']
+    PermissionsSearchField: typeof import('./src/components/Search/Permissions/PermissionsSearchField.vue')['default']
     RegistrationCode: typeof import('./src/components/Account/RegistrationCode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

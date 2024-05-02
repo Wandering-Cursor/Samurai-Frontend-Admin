@@ -21,6 +21,10 @@ const props = defineProps({
         type: (Function as unknown as () => (event: AutoCompleteItemSelectEvent) => void),
         required: true,
     },
+    multiple: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const value = ref("");
@@ -38,7 +42,7 @@ const setItemsCallback = (newItems: object[]) => {
         <AutoComplete :id="props.id" v-model="value" :suggestions="items" class="flex-auto"
             :placeholder="props.placeholder"
             @complete="(event: AutoCompleteCompleteEvent) => searchMethod(event, setItemsCallback)"
-            @item-select="onItemSelect" :option-label="props.optionLabel" dropdown>
+            @item-select="onItemSelect" :option-label="props.optionLabel" dropdown :multiple="props.multiple">
         </AutoComplete>
     </div>
 </template>
