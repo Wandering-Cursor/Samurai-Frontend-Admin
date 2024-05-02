@@ -3,6 +3,10 @@ import { RouterHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/login",
+    component: () => import("@/pages/login/LoginPage.vue"),
+  },
+  {
     path: "/",
     component: () => import("@/pages/main/MainWithAuthentication.vue"),
     children: [
@@ -30,6 +34,11 @@ const routes = [
             component: () =>
               import("@/pages/main/accounts/AccountConnections.vue"),
           },
+          {
+            path: ":id/permissions",
+            component: () =>
+              import("@/pages/main/accounts/AccountPermissions.vue"),
+          },
         ],
       },
       {
@@ -37,10 +46,6 @@ const routes = [
         component: () => import("@/pages/main/NotFound.vue"),
       },
     ],
-  },
-  {
-    path: "/login",
-    component: () => import("@/pages/login/LoginPage.vue"),
   },
 ];
 

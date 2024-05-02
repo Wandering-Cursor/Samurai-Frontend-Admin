@@ -110,25 +110,30 @@ const saveAccountConnections = () => {
                 </div>
             </template>
         </Menubar>
-        <ScrollPanel>
-            <Card v-for="connection in allConnections" :key="connection.connection_id">
-                <template #header>
-                    <h3>Connection - {{ connection.connection_id }}</h3>
-                </template>
-                <template #content>
-                    <div>
-                        <p>Department - {{ connection.department_id }}</p>
-                        <p>Faculty - {{ connection.faculty_id }}</p>
-                        <p>Group - {{ connection.group_id }}</p>
-                    </div>
-                </template>
-                <template #footer>
-                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                        @click="removeItem(connection.connection_id)" />
-                </template>
-            </Card>
-        </ScrollPanel>
+        <Panel header="Connections List">
+            <div class="flex flex-column gap-4">
+                <Card v-for="connection in allConnections" :key="connection.connection_id">
+                    <template #header>
+                        <div class="text-center">
+                            <h3>Connection - {{ connection.connection_id }}</h3>
+                        </div>
+                    </template>
+                    <template #content>
+                        <div>
+                            <p>Department - {{ connection.department_id }}</p>
+                            <p>Faculty - {{ connection.faculty_id }}</p>
+                            <p>Group - {{ connection.group_id }}</p>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            @click="removeItem(connection.connection_id)" />
+                    </template>
+                </Card>
+            </div>
+        </Panel>
     </Panel>
+
 
     <Dialog v-model:visible="createConnectionDialogVisible" modal header="Create connection" :style="{ width: '50%' }">
         <span class="p-text-secondary block mb-5">Add new connection for {{ accountInfo?.email }}</span>
