@@ -1,5 +1,5 @@
 import { createRouter } from "vue-router";
-import { RouterHistory } from "vue-router";
+import { createWebHashHistory } from "vue-router";
 
 const routes = [
   {
@@ -49,9 +49,9 @@ const routes = [
   },
 ];
 
-export default function (history: RouterHistory) {
+export default function () {
   return createRouter({
-    history,
-    routes,
+    history: createWebHashHistory(),
+    routes: routes,
   });
 }
