@@ -1,5 +1,5 @@
 import { createRouter } from "vue-router";
-import { createWebHistory } from "vue-router";
+import { createWebHashHistory } from "vue-router";
 
 const routes = [
   {
@@ -47,15 +47,11 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/:pathMatch(.*)*",
-    redirect: "/",
-  },
 ];
 
 export default function () {
   return createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: routes,
   });
 }
