@@ -63,11 +63,6 @@ const routes = [
                   import("@/pages/Main/Organization/Faculty/FacultyCreate.vue"),
               },
               {
-                path: ":id",
-                component: () =>
-                  import("@/pages/Main/Organization/Faculty/FacultyView.vue"),
-              },
-              {
                 path: ":id/edit",
                 component: () =>
                   import("@/pages/Main/Organization/Faculty/FacultyEdit.vue"),

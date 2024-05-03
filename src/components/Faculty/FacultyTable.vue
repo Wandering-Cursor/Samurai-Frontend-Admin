@@ -85,9 +85,6 @@ const deleteFacultyAction = () => {
                 <div class="flex flex-wrap gap-2">
                     <CopyToClipboard :data="(slotProps.data as Faculty).faculty_id" tooltip="Copy ID"
                         icon="pi pi-copy" />
-                    <RouterLink :to="`/organization/faculty/${(slotProps.data as Faculty).faculty_id}`">
-                        <Button icon="pi pi-eye" v-tooltip="'View faculty'" />
-                    </RouterLink>
                     <RouterLink :to="`/organization/faculty/${(slotProps.data as Faculty).faculty_id}/edit`">
                         <Button icon="pi pi-pencil" v-tooltip="'Edit faculty'" />
                     </RouterLink>
