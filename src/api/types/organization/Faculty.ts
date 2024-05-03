@@ -2,13 +2,14 @@ import { DBObject } from "@/api/types/common/Object";
 import {
   BasePaginatedQuery,
   BasePaginatedResponse,
-} from "@/api/types/common/paginatedResponse";
+} from "@/api/types/common/Pagination";
 
-export default class Faculty extends DBObject {
+export class Faculty extends DBObject {
   department_id: String = "";
   faculty_id: String = "";
   name: String = "";
   description: String = "";
+  groups_count: Number = 0;
 }
 
 export class FacultySearchRequest extends BasePaginatedQuery {
@@ -18,12 +19,11 @@ export class FacultySearchRequest extends BasePaginatedQuery {
   constructor(
     page: number = 1,
     page_size: number = 10,
-    department_id: String = "",
-    name: String | undefined = undefined
+    filters: { department_id?: String; name?: String } = {}
   ) {
     super(page, page_size);
-    this.name = name;
-    this.department_id = department_id;
+    this.name = filters.name;
+    this.department_id = filters.department_id;
   }
 
   public toObject() {

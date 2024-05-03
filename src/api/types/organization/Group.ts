@@ -2,7 +2,7 @@ import { DBObject } from "@/api/types/common/Object";
 import {
   BasePaginatedQuery,
   BasePaginatedResponse,
-} from "@/api/types/common/paginatedResponse";
+} from "@/api/types/common/Pagination";
 
 export default class Group extends DBObject {
   faculty_id: String = "";

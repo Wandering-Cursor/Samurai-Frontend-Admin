@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticationRequired from "@/components/AuthenticationRequired.vue";
-import MainPage from "@/pages/main/MainPage.vue";
+import MainPage from "@/pages/Main/MainPage.vue";
 </script>
 
 <template>

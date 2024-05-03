@@ -10,7 +10,7 @@ import { AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
 import DepartmentSearchField from '@/components/Search/Department/DepartmentSearchField.vue';
 import FacultySearchField from '@/components/Search/Faculty/FacultySearchField.vue';
 import Department from '@/api/types/organization/Department';
-import Faculty from '@/api/types/organization/Faculty';
+import { Faculty } from '@/api/types/organization/Faculty';
 import GroupSearchField from '@/components/Search/Group/GroupSearchField.vue';
 import Group from '@/api/types/organization/Group';
 import createConnection from '@/api/organization/createConnection';

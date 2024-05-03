@@ -5,7 +5,7 @@ import {
   FacultySearchResponse,
 } from "@/api/types/organization/Faculty";
 
-export default function searchFaculties(
+export function searchFaculties(
   query: FacultySearchRequest,
   onSuccess: (response: FacultySearchResponse) => void,
   onError: (error: AxiosError) => void
