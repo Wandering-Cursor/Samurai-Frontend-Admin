@@ -4,10 +4,11 @@ import { Faculty, FacultySearchRequest, FacultySearchResponse } from "@/api/type
 import CopyToClipboard from "@/components/Visuals/CopyToClipboard.vue";
 import { PageState } from 'primevue/paginator';
 import { onMounted, ref } from 'vue';
-import { searchFaculties } from "@/api/organization/searchFaculties";
+import { searchFaculties } from "@/api/organization/faculty/searchFaculties";
 import { AxiosError } from 'axios';
 import { defineProps } from 'vue';
 import { useToast } from 'primevue/usetoast';
+import { deleteFaculty } from '@/api/organization/faculty/deleteFaculty';
 
 const toast = useToast();
 
@@ -28,7 +29,7 @@ const gotFaculties = (data: FacultySearchResponse) => {
 };
 
 const showError = (error: AxiosError) => {
-    toast.add({ severity: 'error', summary: 'Error', detail: error.message });
+    toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 });
     console.error(error);
 }
 
@@ -41,10 +42,19 @@ const showDeleteFacultyDialog = (faculty_id: string) => {
     deleteFacultyId.value = faculty_id;
 }
 
-const deleteFaculty = () => {
-    console.log('Delete faculty');
-    deleteDialogVisible.value = false;
-    searchFaculties(props.pageFilters, gotFaculties, showError);
+const deleteFacultyAction = () => {
+    deleteFaculty(
+        deleteFacultyId.value,
+        () => {
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Faculty deleted successfully' });
+            searchFaculties(props.pageFilters, gotFaculties, showError);
+            deleteDialogVisible.value = false;
+        },
+        (error: AxiosError) => {
+            showError(error);
+            deleteDialogVisible.value = false;
+        }
+    )
 }
 
 </script>
@@ -61,6 +71,7 @@ const deleteFaculty = () => {
             </div>
         </template>
         <Column key="name" field="name" header="Name" />
+        <Column key="description" field="description" header="Description" />
         <Column key="department_id" field="department_id" header="Department ID" />
         <Column key="groups_count" filed="groups_count" header="Groups Count">
             <template #body="slotProps">
@@ -93,8 +104,8 @@ const deleteFaculty = () => {
     <Dialog v-model:visible="deleteDialogVisible" modal header="Delete faculty" :style="{ width: '50%' }">
         <span class="p-text-secondary block mb-5">Are you sure you want to delete faculty {{ deleteFacultyId }}?</span>
         <div class="flex flex-row gap-2 justify-content-center">
-            <Button label="Yes" @click="deleteFaculty" />
-            <Button label="No" @click="deleteDialogVisible = false" />
+            <Button label="Yes" @click="deleteFacultyAction" />
+            <Button label="No" @click="deleteDialogVisible = false" severity="secondary" />
         </div>
     </Dialog>
 </template>

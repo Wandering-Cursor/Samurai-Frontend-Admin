@@ -2,7 +2,7 @@
 import FacultyTable from "@/components/Faculty/FacultyTable.vue";
 import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
 
-import { searchFaculties } from "@/api/organization/searchFaculties";
+import { searchFaculties } from "@/api/organization/faculty/searchFaculties";
 
 import { AxiosError } from "axios";
 
@@ -54,19 +54,19 @@ const filters: SearchFilter[] = [
 </script>
 
 <template>
-    <div class="grid w-full m-1">
-        <div class="col">
-            <div>
-                <p class="text-4xl font-bold text-center">Faculties Control</p>
-            </div>
-            <div>
+    <div class="flex flex-column w-full p-2">
+        <div class="w-full">
+            <p class="text-4xl font-bold text-center">Faculties Control</p>
+        </div>
+        <div class="grid w-full">
+            <div class="col-10 pt-4">
                 <FacultyTable :list="list" :metaInfo="metaInfo" :pageFilters="pageFilters"
                     :change-page-callback="onPageChange">
                 </FacultyTable>
             </div>
-        </div>
-        <div class="col-2">
-            <FilterPanel :filters="filters" :filterHandler="onFilter" :search-name="'Faculties'" />
+            <div class="col-2">
+                <FilterPanel :filters="filters" :filterHandler="onFilter" :search-name="'Faculties'" />
+            </div>
         </div>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { searchFaculties } from '@/api/organization/searchFaculties';
+import { searchFaculties } from '@/api/organization/faculty/searchFaculties';
 import { FacultySearchRequest } from '@/api/types/organization/Faculty';
 import SearchField from '@/components/Search/SearchField.vue';
 import { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete';

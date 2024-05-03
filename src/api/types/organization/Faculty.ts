@@ -9,7 +9,7 @@ export class Faculty extends DBObject {
   faculty_id: String = "";
   name: String = "";
   description: String = "";
-  groups_count: Number = 0;
+  groups_count: Number | null = null;
 }
 
 export class FacultySearchRequest extends BasePaginatedQuery {
@@ -42,4 +42,18 @@ export class FacultySearchRequest extends BasePaginatedQuery {
 
 export class FacultySearchResponse extends BasePaginatedResponse {
   content: Array<Faculty> = [];
+}
+
+export class FacultyCreateRequest {
+  department_id: String = "";
+  name: String = "";
+  description: String | null = null;
+
+  public toObject() {
+    return {
+      department_id: this.department_id,
+      name: this.name,
+      description: this.description,
+    };
+  }
 }
