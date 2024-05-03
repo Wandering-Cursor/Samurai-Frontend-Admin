@@ -10,10 +10,10 @@ import { AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
 import DepartmentSearchField from '@/components/Search/Department/DepartmentSearchField.vue';
 import FacultySearchField from '@/components/Search/Faculty/FacultySearchField.vue';
 import Department from '@/api/types/organization/Department';
-import Faculty from '@/api/types/organization/Faculty';
+import { Faculty } from '@/api/types/organization/Faculty';
 import GroupSearchField from '@/components/Search/Group/GroupSearchField.vue';
 import Group from '@/api/types/organization/Group';
-import createConnection from '@/api/organization/createConnection';
+import createConnection from '@/api/organization/connection/createConnection';
 import { setConnections } from '@/api/account/setConnections';
 
 const route = useRoute();
@@ -40,7 +40,7 @@ const fetchAccount = () => {
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info', life: 5000 });
         }
 
     )
@@ -67,7 +67,7 @@ const createConnectionClick = () => {
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create connection' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create connection', life: 5000 });
         }
     )
 }
@@ -81,12 +81,12 @@ const saveAccountConnections = () => {
         accountInfo.value?.account_id as string,
         setAccountConnectionsData,
         () => {
-            toast.add({ severity: 'success', summary: 'Success', detail: 'Connections saved' });
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Connections saved', life: 3000 });
             fetchAccount();
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to save connections' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to save connections', life: 5000 });
         }
     )
 

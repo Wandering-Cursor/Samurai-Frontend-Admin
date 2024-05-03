@@ -6,7 +6,7 @@ import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
 import { AxiosError } from 'axios';
 import { Ref, ref } from 'vue';
 import { AccountRepresentation } from "@/api/types/account/Account";
-import { Meta } from "@/api/types/common/paginatedResponse";
+import { Meta } from "@/api/types/common/Pagination";
 import AccountsTable from "@/components/Account/AccountsTable.vue";
 
 

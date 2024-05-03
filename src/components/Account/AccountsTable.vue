@@ -2,43 +2,19 @@
 import { getAllAccounts } from "@/api/account/allAccounts";
 import { AccountRepresentation } from "@/api/types/account/Account";
 import { AllAccountsQuery, AllAccountsResponse } from "@/api/types/account/api/allAccounts";
-import { Meta } from "@/api/types/common/paginatedResponse";
+import { Meta } from "@/api/types/common/Pagination";
 import { AxiosError } from "axios";
 import DataTable from "primevue/datatable";
 import Paginator, { PageState } from 'primevue/paginator';
-import { useToast } from "primevue/usetoast";
 import { onMounted } from "vue";
+import CopyToClipboard from "../Visuals/CopyToClipboard.vue";
 
-const toast = useToast();
 
 const props = defineProps<{
     list: AccountRepresentation[];
     metaInfo: Meta;
     pageFilters: AllAccountsQuery;
 }>();
-
-const copyToClipboard = (value: string) => {
-    navigator.clipboard.writeText(value).then(() => {
-        toast.add(
-            {
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Copied to clipboard',
-                life: 1000
-            }
-        );
-    }).catch(err => {
-        toast.add(
-            {
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Could not copy text',
-                life: 2000
-            }
-        );
-        console.error(err);
-    });
-}
 
 const gotAccounts = (data: AllAccountsResponse) => {
     props.list.splice(0, props.list.length);
@@ -86,18 +62,14 @@ onMounted(() => {
         <Column key="account_type" field="account_type" header="Account Type"></Column>
         <Column header="Actions">
             <template #body="slotProps">
-                <Button v-tooltip="'Copy Account ID'" class="p-button p-button-rounded p-button-text p-button-plain"
-                    @click="() => { copyToClipboard(slotProps.data.account_id) }">
-                    <i class="pi pi-id-card"></i>
-                </Button>
-                <Button v-tooltip="'Edit Connections'" class="p-button p-button-rounded p-button-text p-button-plain"
-                    @click="() => { $router.push(`/accounts/${slotProps.data.account_id}/connections`) }">
-                    <i class="pi pi-link"></i>
-                </Button>
-                <Button v-tooltip="'Edit Permissions'" class="p-button p-button-rounded p-button-text p-button-plain"
-                    @click="() => { $router.push(`/accounts/${slotProps.data.account_id}/permissions`) }">
-                    <i class="pi pi-lock"></i>
-                </Button>
+                <div class="flex flex-wrap gap-2">
+                    <CopyToClipboard :data="slotProps.data.account_id" tooltip="Copy Account ID" icon="pi pi-id-card" />
+                    <Button v-tooltip="'Edit Connections'" class="p-button" icon="pi pi-link"
+                        @click="() => { $router.push(`/accounts/${slotProps.data.account_id}/connections`) }" />
+                    <Button v-tooltip="'Edit Permissions'" class="p-button"
+                        @click="() => { $router.push(`/accounts/${slotProps.data.account_id}/permissions`) }"
+                        icon="pi pi-lock" />
+                </div>
             </template>
         </Column>
     </DataTable>

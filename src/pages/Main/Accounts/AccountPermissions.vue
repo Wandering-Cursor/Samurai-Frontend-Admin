@@ -29,7 +29,7 @@ const fetchAccount = () => {
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info', life: 5000 });
         }
     )
 }

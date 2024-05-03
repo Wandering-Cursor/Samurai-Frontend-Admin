@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { searchDepartments } from '@/api/organization/searchDepartments';
+import { searchDepartments } from '@/api/organization/department/searchDepartments';
 import { DepartmentSearchRequest } from '@/api/types/organization/Department';
 import SearchField from '@/components/Search/SearchField.vue';
 import { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search departments' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search departments', life: 5000 });
         }
     )
 };

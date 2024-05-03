@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import searchFaculties from '@/api/organization/searchFaculties';
+import { searchFaculties } from '@/api/organization/faculty/searchFaculties';
 import { FacultySearchRequest } from '@/api/types/organization/Faculty';
 import SearchField from '@/components/Search/SearchField.vue';
 import { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search faculties' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search faculties', life: 5000 });
         }
     )
 };

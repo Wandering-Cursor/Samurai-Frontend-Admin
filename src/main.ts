@@ -11,7 +11,7 @@ import Tooltip from "primevue/tooltip";
 
 const app = createApp(App);
 app.use(router);
-app.use(PrimeVue);
+app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.mount("#app");
 app.directive("tooltip", Tooltip);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import searchGroups from '@/api/organization/searchGroups';
+import searchGroups from '@/api/organization/group/searchGroups';
 import { SearchGroupsQuery } from '@/api/types/organization/Group';
 import SearchField from '@/components/Search/SearchField.vue';
 import { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search groups' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search groups', life: 5000 });
         }
     )
 };

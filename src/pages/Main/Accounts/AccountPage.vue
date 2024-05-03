@@ -4,7 +4,7 @@ import { AccountInfo } from '@/api/types/account/Account';
 import { GetAccountRequest } from '@/api/types/account/api/getAccount';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import CheckOrX from '@/components/visuals/CheckOrX.vue';
+import CheckOrX from '@/components/Visuals/CheckOrX.vue';
 import RegistrationCode from '@/components/Account/RegistrationCode.vue';
 import Connection from '@/components/Account/ConnectionRepresentation.vue';
 import Permissions from '@/components/Account/PermissionRepresentation.vue';

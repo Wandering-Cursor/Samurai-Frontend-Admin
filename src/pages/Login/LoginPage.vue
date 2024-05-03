@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoginForm from "@/components/login/LoginForm.vue";
+import LoginForm from "@/components/Login/LoginForm.vue";
 </script>
 
 <template>
@@ -12,12 +12,12 @@ import LoginForm from "@/components/login/LoginForm.vue";
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    components: {
-        LoginForm
-    },
-    data() {
-        return {
-        };
-    }
+  components: {
+    LoginForm
+  },
+  data() {
+    return {
+    };
+  }
 });
 </script>

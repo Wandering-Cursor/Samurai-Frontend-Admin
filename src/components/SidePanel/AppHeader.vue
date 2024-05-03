@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LogOutButton from '@/components/auth/LogOutButton.vue';
+import LogOutButton from '@/components/Auth/LogOutButton.vue';
 import { title } from "@/components/AppTitle";
 </script>
 

@@ -1,7 +1,7 @@
 import {
   BasePaginatedQuery,
   BasePaginatedResponse,
-} from "@/api/types/common/paginatedResponse";
+} from "@/api/types/common/Pagination";
 import { ShortAccountInfo } from "@/api/types/account/Account";
 
 export class AllAccountsQuery extends BasePaginatedQuery {
