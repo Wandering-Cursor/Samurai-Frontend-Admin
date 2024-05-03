@@ -46,7 +46,7 @@ const deleteFacultyAction = () => {
     deleteFaculty(
         deleteFacultyId.value,
         () => {
-            toast.add({ severity: 'success', summary: 'Success', detail: 'Faculty deleted successfully' });
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Faculty deleted successfully', life: 3000 });
             searchFaculties(props.pageFilters, gotFaculties, showError);
             deleteDialogVisible.value = false;
         },
@@ -97,7 +97,7 @@ const deleteFacultyAction = () => {
             </template>
         </Column>
     </DataTable>
-    <Paginator :rows="metaInfo.page_size" :totalRecords="metaInfo.total" v-on:page="changePageCallback"
+    <Paginator :rows="$props.metaInfo.page_size" :totalRecords="$props.metaInfo.total" v-on:page="changePageCallback"
         template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
         :rowsPerPageOptions="[1, 5, 10, 20, 30]" />
 

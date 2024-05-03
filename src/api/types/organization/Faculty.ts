@@ -45,9 +45,9 @@ export class FacultySearchResponse extends BasePaginatedResponse {
 }
 
 export class FacultyCreateRequest {
-  department_id: String = "";
-  name: String = "";
-  description: String | null = null;
+  department_id: string = "";
+  name: string = "";
+  description: string | null = null;
 
   public toObject() {
     return {

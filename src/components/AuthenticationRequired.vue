@@ -58,7 +58,7 @@ export default defineComponent({
 
     if (!this.isTokenValid) {
       const toast = useToast();
-      toast.add({ severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page." });
+      toast.add({ severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page.", life: 5000 });
       this.$router.push("/login");
     }
   },

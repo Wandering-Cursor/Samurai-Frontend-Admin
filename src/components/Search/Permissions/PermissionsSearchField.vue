@@ -39,7 +39,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search permissions', life: 3000 });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search permissions', life: 5000 });
         }
     );
 };

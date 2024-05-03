@@ -40,7 +40,7 @@ const fetchAccount = () => {
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to get account info', life: 5000 });
         }
 
     )
@@ -67,7 +67,7 @@ const createConnectionClick = () => {
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create connection' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create connection', life: 5000 });
         }
     )
 }
@@ -81,12 +81,12 @@ const saveAccountConnections = () => {
         accountInfo.value?.account_id as string,
         setAccountConnectionsData,
         () => {
-            toast.add({ severity: 'success', summary: 'Success', detail: 'Connections saved' });
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Connections saved', life: 3000 });
             fetchAccount();
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to save connections' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to save connections', life: 5000 });
         }
     )
 

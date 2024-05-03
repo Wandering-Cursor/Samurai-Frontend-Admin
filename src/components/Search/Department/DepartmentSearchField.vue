@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search departments' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search departments', life: 5000 });
         }
     )
 };

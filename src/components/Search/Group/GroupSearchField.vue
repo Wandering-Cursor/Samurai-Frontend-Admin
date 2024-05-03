@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search groups' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search groups', life: 5000 });
         }
     )
 };

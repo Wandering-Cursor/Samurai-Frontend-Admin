@@ -24,7 +24,7 @@ const showError = (error: AxiosError) => {
 const gotFaculties = (data: FacultySearchResponse) => {
     list.value = [];
     list.value.push(...data.content);
-    metaInfo.value = data.meta;
+    metaInfo.value.fromMeta(data.meta);
 };
 
 const onFilter = (filters: { [key: string]: any }) => {

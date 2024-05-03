@@ -38,7 +38,7 @@ const searchMethod = (event: AutoCompleteCompleteEvent, callback: (newItems: obj
         },
         (error) => {
             console.error(error);
-            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search faculties' });
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to search faculties', life: 5000 });
         }
     )
 };

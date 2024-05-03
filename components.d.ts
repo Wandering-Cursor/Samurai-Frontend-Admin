@@ -27,6 +27,7 @@ declare module 'vue' {
     FacultyCreateForm: typeof import('./src/components/Faculty/FacultyCreateForm.vue')['default']
     FacultySearchField: typeof import('./src/components/Search/Faculty/FacultySearchField.vue')['default']
     FacultyTable: typeof import('./src/components/Faculty/FacultyTable.vue')['default']
+    FacultyUpdateForm: typeof import('./src/components/Faculty/FacultyUpdateForm.vue')['default']
     Fieldset: typeof import('primevue/fieldset')['default']
     FilterPanel: typeof import('./src/components/Search/FilterPanel/FilterPanel.vue')['default']
     GroupSearchField: typeof import('./src/components/Search/Group/GroupSearchField.vue')['default']
