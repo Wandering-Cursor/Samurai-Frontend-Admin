@@ -3,7 +3,7 @@ import { FacultyCreateRequest } from '@/api/types/organization/Faculty';
 import { onMounted, ref } from 'vue';
 import DepartmentSearchField from '../Search/Department/DepartmentSearchField.vue';
 import { AutoCompleteItemSelectEvent } from 'primevue/autocomplete';
-import Department from '@/api/types/organization/Department';
+import { Department } from '@/api/types/organization/Department';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { getFaculty } from '@/api/organization/faculty/getFaculty';
