@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import LoginForm from "@/components/Login/LoginForm.vue";
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Login Page',
+  meta: [
+    { property: 'og:title', content: 'Login Page' },
+    { property: 'og:description', content: 'Sign in to the web-site' },
+  ]
+});
 </script>
 
 <template>

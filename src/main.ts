@@ -8,10 +8,14 @@ import PrimeVue from "primevue/config";
 import router from "./lib/router";
 import ToastService from "primevue/toastservice";
 import Tooltip from "primevue/tooltip";
+import { createHead } from "@unhead/vue";
+
+const head = createHead();
 
 const app = createApp(App);
 app.use(router);
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
+app.use(head);
 app.mount("#app");
 app.directive("tooltip", Tooltip);
