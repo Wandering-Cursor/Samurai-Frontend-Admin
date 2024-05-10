@@ -69,6 +69,32 @@ const routes = [
               },
             ],
           },
+          {
+            path: "departments",
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    "@/pages/Main/Organization/Department/DepartmentList.vue"
+                  ),
+              },
+              {
+                path: "create",
+                component: () =>
+                  import(
+                    "@/pages/Main/Organization/Department/DepartmentCreate.vue"
+                  ),
+              },
+              {
+                path: ":id/edit",
+                component: () =>
+                  import(
+                    "@/pages/Main/Organization/Department/DepartmentEdit.vue"
+                  ),
+              },
+            ],
+          },
         ],
       },
       {
