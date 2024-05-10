@@ -52,5 +52,6 @@ declare module 'vue' {
     SearchField: typeof import('./src/components/Search/SearchField.vue')['default']
     SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
     SidePanelRouterLink: typeof import('./src/components/SidePanel/SidePanelRouterLink.vue')['default']
+    Textarea: typeof import('primevue/textarea')['default']
   }
 }

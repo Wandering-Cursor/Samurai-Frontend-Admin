@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-import FacultyCreateForm from "@/components/Faculty/FacultyCreateForm.vue";
+import DepartmentCreateForm from "@/components/Department/DepartmentCreateForm.vue";
 
 </script>
 
 <template>
-    <FacultyCreateForm />
+    <DepartmentCreateForm />
 </template>

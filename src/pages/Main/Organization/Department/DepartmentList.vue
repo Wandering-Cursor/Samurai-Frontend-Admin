@@ -9,7 +9,7 @@ import { Ref, ref } from "vue";
 
 import { Meta } from "@/api/types/common/Pagination";
 import { SearchFilter } from "@/api/types/common/Search";
-import Department, { DepartmentSearchRequest, DepartmentSearchResponse } from "@/api/types/organization/Department";
+import { Department, DepartmentSearchRequest, DepartmentSearchResponse } from "@/api/types/organization/Department";
 import DepartmentTable from "@/components/Department/DepartmentTable.vue";
 
 let list: Ref<Array<Department>> = ref([]);

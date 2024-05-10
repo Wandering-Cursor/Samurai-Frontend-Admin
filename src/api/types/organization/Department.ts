@@ -4,7 +4,7 @@ import {
   BasePaginatedResponse,
 } from "@/api/types/common/Pagination";
 
-export default class Department extends DBObject {
+export class Department extends DBObject {
   department_id: string = "";
   name: string = "";
   description: string = "";
@@ -35,3 +35,22 @@ export class DepartmentSearchRequest extends BasePaginatedQuery {
 export class DepartmentSearchResponse extends BasePaginatedResponse {
   content: Array<Department> = [];
 }
+
+export class DepartmentCreateRequest {
+  name: string;
+  description: string | null;
+
+  constructor(name: string, description: string | null = null) {
+    this.name = name;
+    this.description = description;
+  }
+
+  public toObject() {
+    return {
+      name: this.name,
+      description: this.description,
+    };
+  }
+}
+
+export class DepartmentUpdateRequest extends DepartmentCreateRequest {}

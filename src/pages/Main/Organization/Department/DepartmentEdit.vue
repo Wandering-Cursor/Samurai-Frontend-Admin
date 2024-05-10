@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
-import FacultyUpdateForm from "@/components/Faculty/FacultyUpdateForm.vue";
+
+import DepartmentUpdateForm from "@/components/Department/DepartmentUpdateForm.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -8,5 +9,5 @@ const route = useRoute();
 </script>
 
 <template>
-    <FacultyUpdateForm :faculty_id="route.params.id as string" />
+    <DepartmentUpdateForm :department_id="route.params.id as string" />
 </template>

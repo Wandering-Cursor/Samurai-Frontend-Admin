@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue';
 import { AxiosError } from 'axios';
 import { defineProps } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import Department, { DepartmentSearchRequest, DepartmentSearchResponse } from '@/api/types/organization/Department';
+import { Department, DepartmentSearchRequest, DepartmentSearchResponse } from '@/api/types/organization/Department';
 import { searchDepartments } from '@/api/organization/department/searchDepartments';
 import { deleteDepartment } from '@/api/organization/department/deleteDepartment';
 
@@ -46,7 +46,7 @@ const deleteDepartmentAction = () => {
     deleteDepartment(
         deleteDepartmentID.value,
         () => {
-            toast.add({ severity: 'success', summary: 'Success', detail: 'Faculty deleted successfully', life: 3000 });
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Department deleted successfully', life: 3000 });
             searchDepartments(props.pageFilters, gotDepartments, showError);
             deleteDialogVisible.value = false;
         },
@@ -73,6 +73,7 @@ const deleteDepartmentAction = () => {
         <Column key="department_id" field="department_id" header="Department ID" />
         <Column key="name" field="name" header="Name" />
         <Column key="description" field="description" header="Description" />
+        <Column key="faculties_count" field="faculties_count" header="Faculties Count" />
         <Column key="created_at" field="created_at" header="Created At" />
         <Column key="updated_at" field="updated_at" header="Updated At" />
         <Column key="actions" header="Actions">
