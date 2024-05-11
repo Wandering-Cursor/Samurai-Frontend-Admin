@@ -85,8 +85,8 @@ const deleteDepartmentAction = () => {
                 <template #header>
                     <div class="flex flex-wrap align-items-center justify-content-between gap-2">
                         <div></div>
-                        <RouterLink to="/organization/departments/create">
-                            <Button icon="pi pi-plus" v-tooltip="'Create new account'" label="New" raised link />
+                        <RouterLink to="/organization/department/create">
+                            <Button icon="pi pi-plus" v-tooltip="'Create new department'" label="New" raised link />
                         </RouterLink>
                     </div>
                 </template>
@@ -102,7 +102,7 @@ const deleteDepartmentAction = () => {
                             <CopyToClipboard :data="(slotProps.data as Department).department_id" tooltip="Copy ID"
                                 icon="pi pi-copy" />
                             <RouterLink
-                                :to="`/organization/departments/${(slotProps.data as Department).department_id}/edit`">
+                                :to="`/organization/department/${(slotProps.data as Department).department_id}/edit`">
                                 <Button icon="pi pi-pencil" v-tooltip="'Edit Department'" />
                             </RouterLink>
                             <Button icon="pi pi-trash" v-tooltip="'Delete Department'" class="p-button-danger"
@@ -124,7 +124,7 @@ const deleteDepartmentAction = () => {
     <Dialog v-model:visible="deleteDialogVisible" modal header="Delete faculty" :style="{ width: '50%' }">
         <span class="p-text-secondary block mb-5">Are you sure you want to delete department {{
             deleteDepartmentID
-            }}?</span>
+        }}?</span>
         <div class="flex flex-row gap-2 justify-content-center">
             <Button label="Yes" @click="deleteDepartmentAction" />
             <Button label="No" @click="deleteDialogVisible = false" severity="secondary" />

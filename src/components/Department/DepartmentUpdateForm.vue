@@ -50,7 +50,7 @@ const submitForm = () => {
         departmentData.value,
         () => {
             toast.add({ severity: 'success', summary: 'Success', detail: 'Department updated successfully', life: 3000 });
-            router.push("/organization/departments");
+            router.push("/organization/department");
         },
         (error) => {
             toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 });

@@ -12,7 +12,7 @@ import FacultySearchField from '@/components/Search/Faculty/FacultySearchField.v
 import { Department } from '@/api/types/organization/Department';
 import { Faculty } from '@/api/types/organization/Faculty';
 import GroupSearchField from '@/components/Search/Group/GroupSearchField.vue';
-import Group from '@/api/types/organization/Group';
+import { Group } from '@/api/types/organization/Group';
 import createConnection from '@/api/organization/connection/createConnection';
 import { setConnections } from '@/api/account/setConnections';
 

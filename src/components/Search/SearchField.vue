@@ -27,7 +27,7 @@ const props = defineProps({
     },
 });
 
-const value = ref("");
+const value = ref<object>();
 const items = ref<object[]>([]);
 
 const setItemsCallback = (newItems: object[]) => {

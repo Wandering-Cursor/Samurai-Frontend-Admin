@@ -11,7 +11,7 @@ import DepartmentTable from "@/components/Department/DepartmentTable.vue";
         <div class="w-full">
             <p class="text-4xl font-bold text-center">Departments Control</p>
         </div>
-        <div class="grid w-full">
+        <div class="grid w-full p-2">
             <DepartmentTable />
         </div>
     </div>

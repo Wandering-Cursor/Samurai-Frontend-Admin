@@ -70,7 +70,7 @@ const routes = [
             ],
           },
           {
-            path: "departments",
+            path: "department",
             children: [
               {
                 path: "",
@@ -92,6 +92,31 @@ const routes = [
                   import(
                     "@/pages/Main/Organization/Department/DepartmentEdit.vue"
                   ),
+              },
+            ],
+          },
+          {
+            path: "group",
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import("@/pages/Main/Organization/Group/GroupList.vue"),
+              },
+              {
+                path: "create",
+                component: () =>
+                  import("@/pages/Main/Organization/Group/GroupCreate.vue"),
+              },
+              {
+                path: ":id/edit",
+                component: () =>
+                  import("@/pages/Main/Organization/Group/GroupEdit.vue"),
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import("@/pages/Main/Organization/Group/GroupPage.vue"),
               },
             ],
           },

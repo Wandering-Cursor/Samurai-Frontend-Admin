@@ -42,9 +42,9 @@ const items = ref([
   {
     label: 'Organization',
     items: [
-      { label: 'Departments', icon: 'pi pi-building', route: "/organization/departments" },
+      { label: 'Departments', icon: 'pi pi-building', route: "/organization/department" },
       { label: 'Faculties', icon: 'pi pi-building-columns', route: "/organization/faculty" },
-      { label: 'Groups', icon: 'pi pi-users', route: "/organization/groups" }
+      { label: 'Groups', icon: 'pi pi-users', route: "/organization/group" }
     ]
   },
   {
