@@ -5,7 +5,7 @@ import {
   SearchGroupsResponse,
 } from "@/api/types/organization/Group";
 
-export default function searchGroups(
+export function searchGroups(
   query: SearchGroupsQuery,
   onSuccess: (response: SearchGroupsResponse) => void,
   onError: (error: AxiosError) => void

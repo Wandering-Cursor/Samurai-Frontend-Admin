@@ -22,17 +22,17 @@ const $props = defineProps(
         </template>
         <template #content>
             <p v-if="$props.connection.group_id">
-                To Group: <RouterLink :to="`/groups/${$props.connection.group_id}`">
+                To Group: <RouterLink :to="`/organization/group/${$props.connection.group_id}`">
                     {{ $props.connection.group_id }}
                 </RouterLink>
             </p>
             <p v-if="$props.connection.faculty_id">
-                To Faculty: <RouterLink :to="`/faculties/${$props.connection.faculty_id}`">
+                To Faculty: <RouterLink :to="`/organization/faculty/${$props.connection.faculty_id}/edit`">
                     {{ $props.connection.faculty_id }}
                 </RouterLink>
             </p>
             <p v-if="$props.connection.department_id">
-                To Department: <RouterLink :to="`/departments/${$props.connection.department_id}`">
+                To Department: <RouterLink :to="`/organization/department/${$props.connection.department_id}/edit`">
                     {{ $props.connection.department_id }}
                 </RouterLink>
             </p>
