@@ -42,7 +42,7 @@ const setItemsCallback = (newItems: object[]) => {
         <AutoComplete :id="props.id" v-model="value" :suggestions="items" class="flex-auto"
             :placeholder="props.placeholder"
             @complete="(event: AutoCompleteCompleteEvent) => searchMethod(event, setItemsCallback)"
-            @item-select="onItemSelect" :option-label="props.optionLabel" dropdown :multiple="props.multiple">
+            :option-label="props.optionLabel" dropdown :multiple="props.multiple" v-on:change="onItemSelect">
         </AutoComplete>
     </div>
 </template>

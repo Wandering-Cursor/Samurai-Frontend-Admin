@@ -28,3 +28,21 @@ instance.interceptors.request.use(
 );
 
 export default instance;
+
+import { Api } from "@/codegen/Api";
+
+const apiClient = new Api();
+apiClient.instance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export { apiClient };

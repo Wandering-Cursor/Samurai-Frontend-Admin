@@ -123,6 +123,21 @@ const routes = [
         ],
       },
       {
+        path: "/projects",
+        children: [
+          {
+            path: "/projects",
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import("@/pages/Main/Projects/Projects/ProjectsPage.vue"),
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: "/:pathMatch(.*)*",
         component: () => import("@/pages/Main/NotFound.vue"),
       },
