@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AccountsTable: typeof import('./src/components/Account/AccountsTable.vue')['default']
     AppHeader: typeof import('./src/components/SidePanel/AppHeader.vue')['default']
+    AssignProjectModal: typeof import('./src/components/Projects/AssignProjectModal.vue')['default']
     AuthenticationRequired: typeof import('./src/components/AuthenticationRequired.vue')['default']
     AutoComplete: typeof import('primevue/autocomplete')['default']
     Button: typeof import('primevue/button')['default']
@@ -57,6 +58,7 @@ declare module 'vue' {
     SearchField: typeof import('./src/components/Search/SearchField.vue')['default']
     SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
     SidePanelRouterLink: typeof import('./src/components/SidePanel/SidePanelRouterLink.vue')['default']
+    StudentsSearchField: typeof import('./src/components/Search/Account/StudentsSearchField.vue')['default']
     TeacherSearchField: typeof import('./src/components/Search/Account/TeacherSearchField.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']
   }

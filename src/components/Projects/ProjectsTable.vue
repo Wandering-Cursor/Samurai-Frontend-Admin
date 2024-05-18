@@ -4,9 +4,13 @@ import { useToast } from "primevue/usetoast";
 import { copyToClipboard } from "@/components/Utils/CopyToClipboardMethod";
 import { useRouter } from "vue-router";
 import { PageState } from "primevue/paginator";
+import { ref } from "vue";
+import { useDialog } from "primevue/usedialog";
+import AssignProjectModal from "./AssignProjectModal.vue";
 
 const router = useRouter();
 const toast = useToast();
+const dialog = useDialog();
 
 defineProps<{
   projects: {
@@ -22,6 +26,22 @@ defineProps<{
   meta: { total: number; page: number; page_size: number; total_pages: number };
   onPageChange: (event: PageState) => void;
 }>();
+
+const assignProjectProjectId = ref<string>("");
+
+const showAssignProjectModal = (projectId: string) => {
+  assignProjectProjectId.value = projectId;
+
+  dialog.open(AssignProjectModal, {
+    data: {
+      assignProjectProjectId: assignProjectProjectId,
+    },
+    props: {
+      modal: true,
+      header: "Assign Project",
+    },
+  });
+};
 </script>
 
 <template>
@@ -79,6 +99,12 @@ defineProps<{
             >
               <Button icon="pi pi-pencil" label="Edit" />
             </RouterLink>
+            <Button
+              icon="pi pi-users"
+              label="Assign"
+              severity="info"
+              @click="() => {showAssignProjectModal((slotProps.data as ShortProjectRepresentation).project_id)}"
+            />
           </div>
         </template>
       </Column>
