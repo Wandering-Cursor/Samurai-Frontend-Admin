@@ -32,6 +32,8 @@ export default instance;
 import { Api } from "@/codegen/Api";
 
 const apiClient = new Api();
+// Setup the base URL for the API client
+apiClient.instance.defaults.baseURL = getBaseAPIUrl();
 // This interceptor will refresh the access token if it is expired
 apiClient.instance.interceptors.response.use(
   (response) => {
