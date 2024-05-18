@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { searchGroups } from "@/api/organization/group/searchGroups";
-import { SearchGroupsQuery } from "@/api/types/organization/Group";
 import SearchField from "@/components/Search/SearchField.vue";
 import {
   AutoCompleteCompleteEvent,
@@ -8,6 +6,8 @@ import {
 } from "primevue/autocomplete";
 import { defineProps } from "vue";
 import { useToast } from "primevue/usetoast";
+import { apiClient } from "@/api/base";
+import { AccountType } from "@/codegen/Api";
 
 const toast = useToast();
 
@@ -30,34 +30,30 @@ const props = defineProps({
     ) => void,
     required: true,
   },
-  multiple: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const searchMethod = (
   event: AutoCompleteCompleteEvent,
   callback: (newItems: object[]) => void
 ) => {
-  let request = new SearchGroupsQuery();
-  request.name = event.query;
-
-  searchGroups(
-    request,
-    (data) => {
-      callback(data.content);
-    },
-    (error) => {
-      console.error(error);
+  apiClient.admin
+    .getAllAccountsAdminAccountGet({
+      email: event.query,
+      username: event.query,
+      account_type: AccountType.Teacher,
+      page_size: 10,
+      page: 1,
+    })
+    .then((response) => {
+      callback(response.data.content);
+    })
+    .catch((error) => {
       toast.add({
         severity: "error",
         summary: "Error",
-        detail: "Failed to search groups",
-        life: 5000,
+        detail: `Failed to search for accounts: ${error}`,
       });
-    }
-  );
+    });
 };
 </script>
 
@@ -68,7 +64,6 @@ const searchMethod = (
     :placeholder="props.placeholder"
     :search-method="searchMethod"
     :on-item-select="props.onItemSelect"
-    :option-label="'name'"
-    :multiple="props.multiple"
+    :option-label="'email'"
   />
 </template>

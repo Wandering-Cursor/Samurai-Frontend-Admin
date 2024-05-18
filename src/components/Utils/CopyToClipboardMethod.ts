@@ -1,9 +1,6 @@
-<script setup lang="ts">
-import { useToast } from "primevue/usetoast";
+import { ToastServiceMethods } from "primevue/toastservice";
 
-const toast = useToast();
-
-const copyToClipboard = (value: string) => {
+export const copyToClipboard = (value: string, toast: ToastServiceMethods) => {
   navigator.clipboard
     .writeText(value)
     .then(() => {
@@ -24,16 +21,3 @@ const copyToClipboard = (value: string) => {
       console.error(err);
     });
 };
-
-defineProps<{
-  data: String;
-  tooltip: String;
-  icon: String;
-}>();
-
-</script>
-
-<template>
-  <Button v-tooltip="tooltip" :icon="icon as string" class="p-button"
-    @click="() => { copyToClipboard(data as string) }" />
-</template>

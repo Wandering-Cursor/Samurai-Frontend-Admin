@@ -12,7 +12,11 @@
         <Divider />
         <div class="flex justify-content-center">
           <a href="https://github.com/Wandering-Cursor/">
-            <Button link label="By Wandering-Cursor team" class="font-medium text-xs font-light p-0 m-0" />
+            <Button
+              link
+              label="By Wandering-Cursor team"
+              class="font-medium text-xs font-light p-0 m-0"
+            />
           </a>
         </div>
       </template>
@@ -21,45 +25,45 @@
 </template>
 
 <script setup lang="ts">
-import Divider from 'primevue/divider';
-import { ref } from 'vue';
-import AppHeader from '@/components/SidePanel/AppHeader.vue';
-import SidePanelRouterLink from './SidePanelRouterLink.vue';
+import Divider from "primevue/divider";
+import { ref } from "vue";
+import AppHeader from "@/components/SidePanel/AppHeader.vue";
+import SidePanelRouterLink from "./SidePanelRouterLink.vue";
 
 const items = ref([
   {
-    label: 'Home',
-    items: [
-      { label: 'Home', icon: 'pi pi-home', route: '/' },
-    ]
+    label: "Home",
+    items: [{ label: "Home", icon: "pi pi-home", route: "/" }],
   },
   {
-    label: 'Accounts',
-    items: [
-      { label: 'Accounts', icon: 'pi pi-user', route: "/accounts" },
-    ]
+    label: "Accounts",
+    items: [{ label: "Accounts", icon: "pi pi-user", route: "/accounts" }],
   },
   {
-    label: 'Organization',
+    label: "Organization",
     items: [
-      { label: 'Departments', icon: 'pi pi-building', route: "/organization/department" },
-      { label: 'Faculties', icon: 'pi pi-building-columns', route: "/organization/faculty" },
-      { label: 'Groups', icon: 'pi pi-users', route: "/organization/group" }
-    ]
+      {
+        label: "Departments",
+        icon: "pi pi-building",
+        route: "/organization/department",
+      },
+      {
+        label: "Faculties",
+        icon: "pi pi-building-columns",
+        route: "/organization/faculty",
+      },
+      { label: "Groups", icon: "pi pi-users", route: "/organization/group" },
+    ],
   },
   {
-    label: 'Projects',
+    label: "Projects",
     items: [
-      { label: 'Projects', icon: 'pi pi-folder-open', route: "/projects" },
-      { label: 'Tasks', icon: 'pi pi-briefcase', route: "/tasks" }
-    ]
+      { label: "Projects", icon: "pi pi-folder-open", route: "/projects" },
+    ],
   },
   {
-    label: 'Miscellaneous',
-    items: [
-      { label: 'Settings', icon: 'pi pi-cog', route: "/settings" },
-    ]
-  }
+    label: "Miscellaneous",
+    items: [{ label: "Settings", icon: "pi pi-cog", route: "/settings" }],
+  },
 ]);
-
 </script>
