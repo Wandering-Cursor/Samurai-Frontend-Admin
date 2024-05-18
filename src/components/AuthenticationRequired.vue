@@ -9,21 +9,22 @@ import { useToast } from "primevue/usetoast";
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 import { jwtDecode } from "jwt-decode";
 import { ExtendedAuthToken } from "@/api/types/common/Auth";
+import { apiClient } from "@/api/base";
 
 export default defineComponent({
   props: {
     wrapped: {
       type: Object as () => any,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       isTokenValid: false,
-      props: {}
+      props: {},
     };
   },
   methods: {
@@ -51,19 +52,36 @@ export default defineComponent({
       }
 
       return true;
-    }
+    },
   },
   created() {
     this.isTokenValid = this.validateAccessToken();
 
     if (!this.isTokenValid) {
+      apiClient.auth.refreshTokenAuthRefreshPost(null).then(
+        (res) => {
+          localStorage.setItem("accessToken", res.data.access_token);
+          this.isTokenValid = this.validateAccessToken();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
+
+    if (!this.isTokenValid) {
       const toast = useToast();
-      toast.add({ severity: "error", "summary": "Authentication error", "detail": "You need to be logged in to access this page.", life: 5000 });
+      toast.add({
+        severity: "error",
+        summary: "Authentication error",
+        detail: "You need to be logged in to access this page.",
+        life: 5000,
+      });
       this.$router.push("/login");
     }
   },
   render(h: Function) {
     return this.isTokenValid ? h(this.wrapped, { props: this.props }) : null;
-  }
+  },
 });
 </script>

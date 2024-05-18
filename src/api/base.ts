@@ -32,6 +32,46 @@ export default instance;
 import { Api } from "@/codegen/Api";
 
 const apiClient = new Api();
+// This interceptor will refresh the access token if it is expired
+apiClient.instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/auth/refresh"
+    ) {
+      originalRequest._retry = true;
+      try {
+        const response = await apiClient.auth.refreshTokenAuthRefreshPost(null);
+        localStorage.setItem("accessToken", response.data.access_token);
+        return apiClient.instance(originalRequest);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// This interceptor will display the toast message if the request fails
+apiClient.instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      const message = error.response.data.detail;
+      console.error(message);
+    }
+    return Promise.reject(error);
+  }
+);
+
+// This interceptor will add the access token to the request headers
 apiClient.instance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");

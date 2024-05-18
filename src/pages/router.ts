@@ -129,13 +129,42 @@ const routes = [
             path: "/projects",
             children: [
               {
+                name: "ProjectsList",
                 path: "",
                 component: () =>
                   import("@/pages/Main/Projects/Projects/ProjectsPage.vue"),
               },
+              {
+                path: "create",
+                component: () =>
+                  import("@/pages/Main/Projects/Projects/ProjectCreate.vue"),
+              },
+              {
+                name: "EditProject",
+                path: ":id/edit",
+                component: () =>
+                  import("@/pages/Main/Projects/Projects/ProjectEdit.vue"),
+              }
             ],
           },
         ],
+      },
+      {
+        path: "/tasks",
+        children: [
+          {
+            name: "AddProjectTask",
+            path: ":projectId/add",
+            component: () =>
+              import("@/pages/Main/Projects/Tasks/TaskAdd.vue"),
+          },
+          {
+            name: "EditProjectTask",
+            path: ":projectId/:taskId/edit",
+            component: () =>
+              import("@/pages/Main/Projects/Tasks/TaskEdit.vue"),
+          },
+        ]
       },
       {
         path: "/:pathMatch(.*)*",
