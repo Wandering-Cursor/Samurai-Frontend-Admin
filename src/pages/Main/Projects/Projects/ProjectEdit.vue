@@ -161,7 +161,10 @@ onMounted(() => {
           <!-- For some reason, the Editor component leks out of the container unless
         you specify a parent component to be slightly larger than the Editor -->
           <div style="height: 550px">
-            <Editor v-model="projectEntity.description" style="height: 500px" />
+            <Editor
+              v-model="projectEntity.description as string | undefined"
+              style="height: 500px"
+            />
           </div>
         </div>
         <ProjectsTasksDataView :projectEntity="projectEntity" />
