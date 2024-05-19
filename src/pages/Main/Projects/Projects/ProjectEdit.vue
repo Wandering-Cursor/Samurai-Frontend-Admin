@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import {
   Faculty,
   ProjectRepresentation as IProjectRepresentation,
-  TaskModel,
+  TaskRepresentationShortDescription,
 } from "@/codegen/Api";
 import { useToast } from "primevue/usetoast";
 import { useRoute, useRouter } from "vue-router";
@@ -20,14 +20,11 @@ const route = useRoute();
 class ProjectRepresentation implements IProjectRepresentation {
   created_at?: string | undefined;
   updated_at?: string | undefined;
-
   name: string = "";
   description?: string | null | undefined;
   faculty_id: string = "";
   project_id: string = "";
-  tasks: TaskModel[] = [];
-  tasks_count: number = 0;
-  _links: Record<string, Record<string, string>> = {};
+  tasks: TaskRepresentationShortDescription[] = [];
 }
 
 let projectEntity = ref<ProjectRepresentation>(new ProjectRepresentation());

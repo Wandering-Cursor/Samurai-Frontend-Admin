@@ -14,6 +14,7 @@ import { useToast } from "primevue/usetoast";
 class ProjectAssignBody implements IProjectAssignBody {
   students_ids?: string[] | null;
   group_ids?: string[] | null;
+  teachers_ids?: string[] | null;
 }
 
 const toast = useToast();
@@ -44,15 +45,17 @@ const studentsSelected = (event: AutoCompleteItemSelectEvent) => {
     (student: VerboseAccountRepresentation) => student.account_id
   );
 };
+const teacherSelected = (event: AutoCompleteItemSelectEvent) => {
+  projectAssignData.value.teachers_ids = event.value.map(
+    (teacher: VerboseAccountRepresentation) => teacher.account_id
+  );
+};
 
 const assignProject = () => {
   apiClient.admin
     .assignProjectAdminProjectProjectIdAssignPost(
       params.value.assignProjectProjectId as string,
-      {
-        group_ids: projectAssignData.value?.group_ids,
-        students_ids: projectAssignData.value?.students_ids,
-      }
+      projectAssignData.value
     )
     .then(() => {
       toast.add({
@@ -81,6 +84,7 @@ const assignProject = () => {
     <p>Project ID: {{ params?.assignProjectProjectId }}</p>
     <GroupSearchField :on-item-select="groupSelected" :multiple="true" />
     <StudentsSearchField :on-item-select="studentsSelected" :multiple="true" />
+    <TeacherSearchField :on-item-select="teacherSelected" :multiple="true" />
     <Button label="Assign" @click="assignProject" />
   </div>
 </template>
