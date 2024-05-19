@@ -1,31 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { ProjectRepresentation as IProjectRepresentation } from "@/codegen/Api";
 import ProjectTaskItem from "./ProjectTaskItem.vue";
 
 const router = useRouter();
 
 const props = defineProps<{
-  projectEntity: {
-    created_at?: string | undefined;
-    updated_at?: string | undefined;
-    name: string;
-    description?: string | null | undefined;
-    faculty_id: string;
-    project_id: string;
-    tasks: {
-      created_at?: string | undefined;
-      updated_at?: string | undefined;
-      name: string;
-      description?: string | null | undefined;
-      priority?: number | undefined;
-      reviewer?: string | null | undefined;
-      due_date?: string | null | undefined;
-      project_id: string;
-      task_id?: string | undefined;
-    }[];
-    tasks_count: number;
-    _links: Record<string, Record<string, string>>;
-  };
+  projectEntity: IProjectRepresentation;
 }>();
 
 const openAddTaskTab = () => {

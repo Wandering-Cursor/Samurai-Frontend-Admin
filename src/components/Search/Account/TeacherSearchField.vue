@@ -7,28 +7,31 @@ import {
 import { defineProps } from "vue";
 import { useToast } from "primevue/usetoast";
 import { apiClient } from "@/api/base";
-import { AccountType } from "@/codegen/Api";
 
 const toast = useToast();
 
 const props = defineProps({
   id: {
     type: String,
-    default: "group-search",
+    default: "teacher-search",
   },
   label: {
     type: String,
-    default: "Group",
+    default: "Teacher",
   },
   placeholder: {
     type: String,
-    default: "Enter a name to search for a group",
+    default: "Enter a email or username of a teacher",
   },
   onItemSelect: {
     type: Function as unknown as () => (
       event: AutoCompleteItemSelectEvent
     ) => void,
     required: true,
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -40,7 +43,6 @@ const searchMethod = (
     .getAllAccountsAdminAccountGet({
       email: event.query,
       username: event.query,
-      account_type: AccountType.Teacher,
       page_size: 10,
       page: 1,
     })
@@ -65,5 +67,6 @@ const searchMethod = (
     :search-method="searchMethod"
     :on-item-select="props.onItemSelect"
     :option-label="'email'"
+    :multiple="props.multiple"
   />
 </template>

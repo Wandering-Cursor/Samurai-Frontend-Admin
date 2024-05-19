@@ -145,6 +145,15 @@ export enum AccountType {
   Overseer = "overseer",
 }
 
+/** Body_create_file_common_file_post */
+export interface BodyCreateFileCommonFilePost {
+  /**
+   * File
+   * @format binary
+   */
+  file: File;
+}
+
 /** ChatAddMember */
 export interface ChatAddMember {
   /** Account Ids */
@@ -716,6 +725,23 @@ export interface FacultySearchOutput {
   content: FacultyRepresentation[];
 }
 
+/** FileRepresentation */
+export interface FileRepresentation {
+  /**
+   * File Id
+   * @format uuid4
+   */
+  file_id: string;
+  /** File Name */
+  file_name: string;
+  /** File Type */
+  file_type: string;
+  /** File Size */
+  file_size: number;
+  /**  Links */
+  _links: Record<string, string>;
+}
+
 /** GetToken */
 export interface GetToken {
   /** Username */
@@ -925,6 +951,7 @@ export interface PermissionBase {
 /** Permissions */
 export enum Permissions {
   Admin = "admin",
+  AccountsSearch = "accounts:search",
   Projects = "projects",
   ProjectsRead = "projects:read",
   ProjectsUpdate = "projects:update",
@@ -958,6 +985,8 @@ export enum Permissions {
 export interface ProjectAssignBody {
   /** Students Ids */
   students_ids?: string[] | null;
+  /** Teachers Ids */
+  teachers_ids?: string[] | null;
   /** Group Ids */
   group_ids?: string[] | null;
 }
@@ -1002,13 +1031,48 @@ export interface ProjectRepresentation {
   project_id: string;
   /**
    * Tasks
-   * Tasks of the project (up to 5)
+   * Tasks of the project
    */
-  tasks: TaskModel[];
-  /** Tasks Count */
-  tasks_count: number;
-  /**  Links */
-  _links: Record<string, Record<string, string>>;
+  tasks: TaskRepresentationShortDescription[];
+}
+
+/** ProjectRepresentationFull */
+export interface ProjectRepresentationFull {
+  /**
+   * Created At
+   * @format date-time
+   */
+  created_at?: string;
+  /**
+   * Updated At
+   * @format date-time
+   */
+  updated_at?: string;
+  /**
+   * Name
+   * Name of an object
+   */
+  name: string;
+  /**
+   * Description
+   * Description of an object (optional)
+   */
+  description?: string | null;
+  /**
+   * Faculty Id
+   * @format uuid4
+   */
+  faculty_id: string;
+  /**
+   * Project Id
+   * @format uuid4
+   */
+  project_id: string;
+  /**
+   * Tasks
+   * Tasks of the project
+   */
+  tasks: TaskRepresentationShortDescription[];
 }
 
 /** ProjectSearchOutput */
@@ -1090,6 +1154,15 @@ export interface RegistrationEmailCode {
   is_used?: boolean;
 }
 
+/**
+ * SamuraiErrorModel
+ * @example {"detail":"Resource Not Found"}
+ */
+export interface SamuraiErrorModel {
+  /** Detail */
+  detail: any[] | object | string;
+}
+
 /** ShortProjectRepresentation */
 export interface ShortProjectRepresentation {
   /**
@@ -1168,8 +1241,8 @@ export interface ShortUserProjectRepresentation {
   _links: Record<string, Record<string, string>>;
 }
 
-/** TaskModel */
-export interface TaskModel {
+/** TaskRepresentation */
+export interface TaskRepresentation {
   /**
    * Created At
    * @format date-time
@@ -1216,11 +1289,11 @@ export interface TaskModel {
    * Task Id
    * @format uuid4
    */
-  task_id?: string;
+  task_id: string;
 }
 
-/** TaskRepresentation */
-export interface TaskRepresentation {
+/** TaskRepresentationShortDescription */
+export interface TaskRepresentationShortDescription {
   /**
    * Created At
    * @format date-time
@@ -1343,10 +1416,6 @@ export interface UserProjectRepresentation {
   tasks: UserTaskRepresentation[];
   /** Account Links */
   account_links: UserProjectLinkRepresentation[];
-  /** Tasks Count */
-  tasks_count: number;
-  /**  Links */
-  _links: Record<string, Record<string, string>>;
   /** Tasks Count By Status */
   tasks_count_by_status: Record<string, number>;
 }
@@ -1592,7 +1661,7 @@ export class HttpClient<SecurityDataType = unknown> {
       headers: {
         ...((method &&
           this.instance.defaults.headers[
-            method.toLowerCase() as keyof HeadersDefaults
+          method.toLowerCase() as keyof HeadersDefaults
           ]) ||
           {}),
         ...(params1.headers || {}),
@@ -1680,7 +1749,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title Samurai Backend
- * @version 0.12.4
+ * @version 0.12.7
  * @baseUrl http://localhost:8000
  */
 export class Api<
@@ -2389,7 +2458,7 @@ export class Api<
       projectId: string,
       params: RequestParams = {}
     ) =>
-      this.request<ProjectRepresentation, HTTPValidationError>({
+      this.request<ProjectRepresentationFull, HTTPValidationError>({
         path: `/admin/project/${projectId}`,
         method: "GET",
         secure: true,
@@ -2411,7 +2480,7 @@ export class Api<
       data: CreateProject,
       params: RequestParams = {}
     ) =>
-      this.request<ProjectRepresentation, HTTPValidationError>({
+      this.request<ProjectRepresentationFull, HTTPValidationError>({
         path: `/admin/project/${projectId}`,
         method: "PUT",
         body: data,
@@ -2679,7 +2748,10 @@ export class Api<
       data: RegisterAccount,
       params: RequestParams = {}
     ) =>
-      this.request<RegisterAccountResponse, HTTPValidationError>({
+      this.request<
+        RegisterAccountResponse,
+        SamuraiErrorModel | HTTPValidationError
+      >({
         path: `/account/register`,
         method: "POST",
         body: data,
@@ -2700,11 +2772,64 @@ export class Api<
       data: ConfirmEmail,
       params: RequestParams = {}
     ) =>
-      this.request<ConfirmEmailResponse, HTTPValidationError>({
+      this.request<
+        ConfirmEmailResponse,
+        SamuraiErrorModel | HTTPValidationError
+      >({
         path: `/account/confirm-email`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags account
+     * @name GetMeAccountMeGet
+     * @summary Get Me
+     * @request GET:/account/me
+     * @secure
+     */
+    getMeAccountMeGet: (params: RequestParams = {}) =>
+      this.request<VerboseAccountRepresentation, SamuraiErrorModel>({
+        path: `/account/me`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This endpoint allows anyone with authorization to look for another user, for search you can provide: account_id, email or username. Match has to be exact, otherwise, the user will not be found. Only one result per search is returned.
+     *
+     * @tags account
+     * @name SearchAccountsAccountSearchGet
+     * @summary Search Accounts
+     * @request GET:/account/search
+     * @secure
+     */
+    searchAccountsAccountSearchGet: (
+      query?: {
+        /** Account Id */
+        account_id?: string | null;
+        /** Email */
+        email?: string | null;
+        /** Username */
+        username?: string | null;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<
+        VerboseAccountRepresentation,
+        SamuraiErrorModel | HTTPValidationError
+      >({
+        path: `/account/search`,
+        method: "GET",
+        query: query,
+        secure: true,
         format: "json",
         ...params,
       }),
@@ -3439,6 +3564,48 @@ export class Api<
         path: `/communication/message/${messageId}/seen`,
         method: "PATCH",
         secure: true,
+        ...params,
+      }),
+  };
+  common = {
+    /**
+     * @description Download a file by its ID.
+     *
+     * @tags common
+     * @name GetFileCommonFileFileIdGet
+     * @summary Get File
+     * @request GET:/common/file/{file_id}
+     * @secure
+     */
+    getFileCommonFileFileIdGet: (fileId: string, params: RequestParams = {}) =>
+      this.request<any, ErrorSchema | HTTPValidationError>({
+        path: `/common/file/${fileId}`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Upload a new file.
+     *
+     * @tags common
+     * @name CreateFileCommonFilePost
+     * @summary Create File
+     * @request POST:/common/file
+     * @secure
+     */
+    createFileCommonFilePost: (
+      data: BodyCreateFileCommonFilePost,
+      params: RequestParams = {}
+    ) =>
+      this.request<FileRepresentation, ErrorSchema | HTTPValidationError>({
+        path: `/common/file`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
         ...params,
       }),
   };

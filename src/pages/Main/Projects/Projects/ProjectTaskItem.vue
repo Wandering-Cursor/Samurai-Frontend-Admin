@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { apiClient } from "@/api/base";
-import { TaskModel } from "@/codegen/Api";
+import { TaskRepresentation } from "@/codegen/Api";
 import { cropText } from "@/components/Utils/AddDotsToLongText";
 import { useToast } from "primevue/usetoast";
 import { ref } from "vue";
@@ -10,8 +10,8 @@ const toast = useToast();
 const router = useRouter();
 
 const props = defineProps<{
-  item: TaskModel;
-  items: TaskModel[];
+  item: TaskRepresentation;
+  items: TaskRepresentation[];
 }>();
 
 const deleteTaskModalVisible = ref(false);
