@@ -9,6 +9,68 @@
  * ---------------------------------------------------------------
  */
 
+/** AccountBatchCreateInput */
+export interface AccountBatchCreateInput {
+  /** Accounts */
+  accounts: AccountCreateInputForBatch[];
+}
+
+/** AccountBatchCreateOutput */
+export interface AccountBatchCreateOutput {
+  /**
+   * Status
+   * @default "success"
+   */
+  status?: string;
+}
+
+/** AccountByAccountIdMixin */
+export interface AccountByAccountIdMixin {
+  /**
+   * Account Id
+   * @format uuid4
+   */
+  account_id: string;
+  account_details: AccountRepresentation;
+}
+
+/** AccountCreateConnectionForBatch */
+export interface AccountCreateConnectionForBatch {
+  /** Group Id */
+  group_id?: string | null;
+  /** Faculty Id */
+  faculty_id?: string | null;
+  /** Department Id */
+  department_id?: string | null;
+}
+
+/** AccountCreateInputForBatch */
+export interface AccountCreateInputForBatch {
+  /** @default "student" */
+  account_type?: AccountType;
+  /**
+   * First Name
+   * @maxLength 256
+   */
+  first_name: string;
+  /** Middle Name */
+  middle_name?: string | null;
+  /**
+   * Last Name
+   * @maxLength 256
+   */
+  last_name: string;
+  /**
+   * Is Email Verified
+   * @default false
+   */
+  is_email_verified?: boolean;
+  /** Connections */
+  connections?: AccountCreateConnectionForBatch[];
+  /** Permissions */
+  permissions?: string[];
+}
+
 /** AccountModelSchema */
 export interface AccountModelSchema {
   /**
@@ -116,6 +178,7 @@ export interface AccountRepresentation {
   middle_name?: string | null;
   /** Last Name */
   last_name: string;
+  account_type: AccountType;
 }
 
 /** AccountSearchResultVerbose */
@@ -143,6 +206,38 @@ export enum AccountType {
   Student = "student",
   Teacher = "teacher",
   Overseer = "overseer",
+}
+
+/** BatchCreateProject */
+export interface BatchCreateProject {
+  /** Name */
+  name: string;
+  /** Description */
+  description: string;
+  /**
+   * Faculty Id
+   * @format uuid4
+   */
+  faculty_id: string;
+  /** Tasks */
+  tasks: BatchCreateProjectTask[];
+}
+
+/** BatchCreateProjectTask */
+export interface BatchCreateProjectTask {
+  /** Name */
+  name: string;
+  /** Description */
+  description: string;
+  /**
+   * Priority
+   * @default 0
+   */
+  priority?: number;
+  /** Reviewer */
+  reviewer?: string | null;
+  /** Due Date */
+  due_date?: string | null;
 }
 
 /** Body_create_file_common_file_post */
@@ -908,6 +1003,12 @@ export interface MessagesSearchResponse {
   content: MessageRepresentation[];
 }
 
+/** OrderDirection */
+export enum OrderDirection {
+  Asc = "asc",
+  Desc = "desc",
+}
+
 /** PaginationMetaInformation */
 export interface PaginationMetaInformation {
   /** Total */
@@ -979,6 +1080,7 @@ export enum Permissions {
   MessagesUpdate = "messages:update",
   MessagesDelete = "messages:delete",
   MessagesCreate = "messages:create",
+  ProjectsStats = "projects_stats",
 }
 
 /** ProjectAssignBody */
@@ -1080,6 +1182,46 @@ export interface ProjectSearchOutput {
   meta: PaginationMetaInformation;
   /** Content */
   content: ShortProjectRepresentation[];
+}
+
+/** ProjectStatsByTeacher */
+export interface ProjectStatsByTeacher {
+  /**
+   * Account Id
+   * @format uuid4
+   */
+  account_id: string;
+  projects: ProjectStatsEntity;
+  /** Tasks */
+  tasks: Record<string, number>;
+  /** Tasks Total */
+  tasks_total: number;
+  account_details: AccountRepresentation;
+}
+
+/** ProjectStatsEntity */
+export interface ProjectStatsEntity {
+  /** Total */
+  total: number;
+}
+
+/** ProjectsTasksStats */
+export interface ProjectsTasksStats {
+  /**
+   * Project Id
+   * @format uuid4
+   */
+  project_id: string;
+  /** Name */
+  name: string;
+  /** Students */
+  students: AccountByAccountIdMixin[];
+  /** Teachers */
+  teachers: AccountByAccountIdMixin[];
+  /** Tasks */
+  tasks: Record<string, number>;
+  /** Tasks Total */
+  tasks_total: number;
 }
 
 /** RefreshTokenInput */
@@ -1195,8 +1337,8 @@ export interface ShortProjectRepresentation {
    * @format uuid4
    */
   project_id: string;
-  /** Tasks Count */
-  tasks_count: number;
+  /** Tasks Total */
+  tasks_total: number;
   /**  Links */
   _links: Record<string, Record<string, string>>;
 }
@@ -1235,10 +1377,12 @@ export interface ShortUserProjectRepresentation {
   project_id: string;
   /** Account Links */
   account_links: UserProjectLinkRepresentation[];
-  /** Tasks Count */
-  tasks_count: number;
+  /** Tasks Total */
+  tasks_total: number;
   /**  Links */
   _links: Record<string, Record<string, string>>;
+  /** Tasks Count */
+  tasks_count: Record<string, number>;
 }
 
 /** TaskRepresentation */
@@ -1569,24 +1713,17 @@ export interface VerboseAccountRepresentation {
   middle_name?: string | null;
   /** Last Name */
   last_name: string;
+  account_type: AccountType;
   /** Is Active */
   is_active: boolean;
-  account_type: AccountType;
 }
 
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  HeadersDefaults,
-  ResponseType,
-} from "axios";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams
-  extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -1601,15 +1738,11 @@ export interface FullRequestParams
   body?: unknown;
 }
 
-export type RequestParams = Omit<
-  FullRequestParams,
-  "body" | "method" | "query" | "path"
->;
+export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
 
-export interface ApiConfig<SecurityDataType = unknown>
-  extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
+export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
-    securityData: SecurityDataType | null
+    securityData: SecurityDataType | null,
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
@@ -1629,16 +1762,8 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({
-    securityWorker,
-    secure,
-    format,
-    ...axiosConfig
-  }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({
-      ...axiosConfig,
-      baseURL: axiosConfig.baseURL || "http://localhost:8000",
-    });
+  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://localhost:8000" });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -1648,10 +1773,7 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  protected mergeRequestParams(
-    params1: AxiosRequestConfig,
-    params2?: AxiosRequestConfig
-  ): AxiosRequestConfig {
+  protected mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
     const method = params1.method || (params2 && params2.method);
 
     return {
@@ -1659,11 +1781,7 @@ export class HttpClient<SecurityDataType = unknown> {
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...((method &&
-          this.instance.defaults.headers[
-          method.toLowerCase() as keyof HeadersDefaults
-          ]) ||
-          {}),
+        ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
@@ -1681,15 +1799,11 @@ export class HttpClient<SecurityDataType = unknown> {
   protected createFormData(input: Record<string, unknown>): FormData {
     return Object.keys(input || {}).reduce((formData, key) => {
       const property = input[key];
-      const propertyContent: any[] =
-        property instanceof Array ? property : [property];
+      const propertyContent: any[] = property instanceof Array ? property : [property];
 
       for (const formItem of propertyContent) {
         const isFileType = formItem instanceof Blob || formItem instanceof File;
-        formData.append(
-          key,
-          isFileType ? formItem : this.stringifyFormItem(formItem)
-        );
+        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
       }
 
       return formData;
@@ -1713,21 +1827,11 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = format || this.format || undefined;
 
-    if (
-      type === ContentType.FormData &&
-      body &&
-      body !== null &&
-      typeof body === "object"
-    ) {
+    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
-    if (
-      type === ContentType.Text &&
-      body &&
-      body !== null &&
-      typeof body !== "string"
-    ) {
+    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
       body = JSON.stringify(body);
     }
 
@@ -1735,9 +1839,7 @@ export class HttpClient<SecurityDataType = unknown> {
       ...requestParams,
       headers: {
         ...(requestParams.headers || {}),
-        ...(type && type !== ContentType.FormData
-          ? { "Content-Type": type }
-          : {}),
+        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
       },
       params: query,
       responseType: responseFormat,
@@ -1749,12 +1851,10 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title Samurai Backend
- * @version 0.12.7
+ * @version 0.15.0
  * @baseUrl http://localhost:8000
  */
-export class Api<
-  SecurityDataType extends unknown
-> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   health = {
     /**
      * No description
@@ -1798,10 +1898,7 @@ export class Api<
      * @summary Refresh Token
      * @request POST:/auth/refresh
      */
-    refreshTokenAuthRefreshPost: (
-      data: RefreshTokenInput | null,
-      params: RequestParams = {}
-    ) =>
+    refreshTokenAuthRefreshPost: (data: RefreshTokenInput | null, params: RequestParams = {}) =>
       this.request<Token, ErrorSchema | HTTPValidationError>({
         path: `/auth/refresh`,
         method: "POST",
@@ -1837,10 +1934,7 @@ export class Api<
      * @request POST:/admin/account/create
      * @secure
      */
-    createAccountAdminAccountCreatePost: (
-      data: CreateAccountModel,
-      params: RequestParams = {}
-    ) =>
+    createAccountAdminAccountCreatePost: (data: CreateAccountModel, params: RequestParams = {}) =>
       this.request<AccountModelSchema, HTTPValidationError>({
         path: `/admin/account/create`,
         method: "POST",
@@ -1872,7 +1966,7 @@ export class Api<
         /** Registration Code */
         registration_code?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<AccountModelSchema, HTTPValidationError>({
         path: `/admin/account/${accountId}`,
@@ -1917,7 +2011,7 @@ export class Api<
         /** Registration Code */
         registration_code?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<AccountSearchResultVerbose, HTTPValidationError>({
         path: `/admin/account`,
@@ -1940,7 +2034,7 @@ export class Api<
     setPermissionsEndpointAdminAccountAccountIdPermissionsPost: (
       accountId: string,
       data: AccountSetPermissionsInput,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<AccountModelSchema, HTTPValidationError>({
         path: `/admin/account/${accountId}/permissions`,
@@ -1964,10 +2058,30 @@ export class Api<
     setConnectionsEndpointAdminAccountAccountIdConnectionsPost: (
       accountId: string,
       data: AccountSetConnectionsInput,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<AccountModelSchema, HTTPValidationError>({
         path: `/admin/account/${accountId}/connections`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags admin
+     * @name BatchCreateAccountsAdminAccountBatchPost
+     * @summary Batch Create Accounts
+     * @request POST:/admin/account/batch
+     * @secure
+     */
+    batchCreateAccountsAdminAccountBatchPost: (data: AccountBatchCreateInput, params: RequestParams = {}) =>
+      this.request<AccountBatchCreateOutput, HTTPValidationError>({
+        path: `/admin/account/batch`,
         method: "POST",
         body: data,
         secure: true,
@@ -2008,7 +2122,7 @@ export class Api<
         /** Department Id */
         department_id?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ConnectionsPaginatedResponse, HTTPValidationError>({
         path: `/admin/connections`,
@@ -2028,10 +2142,7 @@ export class Api<
      * @request POST:/admin/connections
      * @secure
      */
-    createConnectionAdminConnectionsPost: (
-      data: ConnectionCreate,
-      params: RequestParams = {}
-    ) =>
+    createConnectionAdminConnectionsPost: (data: ConnectionCreate, params: RequestParams = {}) =>
       this.request<ConnectionBase, HTTPValidationError>({
         path: `/admin/connections`,
         method: "POST",
@@ -2051,10 +2162,7 @@ export class Api<
      * @request POST:/admin/department
      * @secure
      */
-    createDepartmentAdminDepartmentPost: (
-      data: CreateDepartment,
-      params: RequestParams = {}
-    ) =>
+    createDepartmentAdminDepartmentPost: (data: CreateDepartment, params: RequestParams = {}) =>
       this.request<DepartmentRepresentation, HTTPValidationError>({
         path: `/admin/department`,
         method: "POST",
@@ -2091,7 +2199,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<DepartmentSearchOutput, HTTPValidationError>({
         path: `/admin/department`,
@@ -2114,7 +2222,7 @@ export class Api<
     updateDepartmentAdminDepartmentDepartmentIdPut: (
       departmentId: string,
       data: CreateDepartment,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<DepartmentRepresentation, HTTPValidationError>({
         path: `/admin/department/${departmentId}`,
@@ -2135,10 +2243,7 @@ export class Api<
      * @request DELETE:/admin/department/{department_id}
      * @secure
      */
-    deleteDepartmentAdminDepartmentDepartmentIdDelete: (
-      departmentId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteDepartmentAdminDepartmentDepartmentIdDelete: (departmentId: string, params: RequestParams = {}) =>
       this.request<any, HTTPValidationError>({
         path: `/admin/department/${departmentId}`,
         method: "DELETE",
@@ -2156,10 +2261,7 @@ export class Api<
      * @request GET:/admin/department/{department_id}
      * @secure
      */
-    getDepartmentByIdAdminDepartmentDepartmentIdGet: (
-      departmentId: string,
-      params: RequestParams = {}
-    ) =>
+    getDepartmentByIdAdminDepartmentDepartmentIdGet: (departmentId: string, params: RequestParams = {}) =>
       this.request<DepartmentRepresentation, HTTPValidationError>({
         path: `/admin/department/${departmentId}`,
         method: "GET",
@@ -2177,10 +2279,7 @@ export class Api<
      * @request POST:/admin/faculty
      * @secure
      */
-    createFacultyAdminFacultyPost: (
-      data: CreateFaculty,
-      params: RequestParams = {}
-    ) =>
+    createFacultyAdminFacultyPost: (data: CreateFaculty, params: RequestParams = {}) =>
       this.request<Faculty, HTTPValidationError>({
         path: `/admin/faculty`,
         method: "POST",
@@ -2219,7 +2318,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<FacultySearchOutput, HTTPValidationError>({
         path: `/admin/faculty`,
@@ -2239,10 +2338,7 @@ export class Api<
      * @request GET:/admin/faculty/{faculty_id}
      * @secure
      */
-    getFacultyAdminFacultyFacultyIdGet: (
-      facultyId: string,
-      params: RequestParams = {}
-    ) =>
+    getFacultyAdminFacultyFacultyIdGet: (facultyId: string, params: RequestParams = {}) =>
       this.request<Faculty, HTTPValidationError>({
         path: `/admin/faculty/${facultyId}`,
         method: "GET",
@@ -2260,11 +2356,7 @@ export class Api<
      * @request PUT:/admin/faculty/{faculty_id}
      * @secure
      */
-    updateFacultyAdminFacultyFacultyIdPut: (
-      facultyId: string,
-      data: CreateFaculty,
-      params: RequestParams = {}
-    ) =>
+    updateFacultyAdminFacultyFacultyIdPut: (facultyId: string, data: CreateFaculty, params: RequestParams = {}) =>
       this.request<Faculty, HTTPValidationError>({
         path: `/admin/faculty/${facultyId}`,
         method: "PUT",
@@ -2284,10 +2376,7 @@ export class Api<
      * @request DELETE:/admin/faculty/{faculty_id}
      * @secure
      */
-    deleteFacultyAdminFacultyFacultyIdDelete: (
-      facultyId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteFacultyAdminFacultyFacultyIdDelete: (facultyId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/admin/faculty/${facultyId}`,
         method: "DELETE",
@@ -2323,7 +2412,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<GroupSearchOutput, HTTPValidationError>({
         path: `/admin/group`,
@@ -2343,10 +2432,7 @@ export class Api<
      * @request POST:/admin/group
      * @secure
      */
-    createGroupAdminGroupPost: (
-      data: GroupCreate,
-      params: RequestParams = {}
-    ) =>
+    createGroupAdminGroupPost: (data: GroupCreate, params: RequestParams = {}) =>
       this.request<Group, HTTPValidationError>({
         path: `/admin/group`,
         method: "POST",
@@ -2366,10 +2452,7 @@ export class Api<
      * @request GET:/admin/group/{group_id}
      * @secure
      */
-    getGroupAdminGroupGroupIdGet: (
-      groupId: string,
-      params: RequestParams = {}
-    ) =>
+    getGroupAdminGroupGroupIdGet: (groupId: string, params: RequestParams = {}) =>
       this.request<Group, HTTPValidationError>({
         path: `/admin/group/${groupId}`,
         method: "GET",
@@ -2387,11 +2470,7 @@ export class Api<
      * @request PUT:/admin/group/{group_id}
      * @secure
      */
-    updateGroupAdminGroupGroupIdPut: (
-      groupId: string,
-      data: GroupCreate,
-      params: RequestParams = {}
-    ) =>
+    updateGroupAdminGroupGroupIdPut: (groupId: string, data: GroupCreate, params: RequestParams = {}) =>
       this.request<Group, HTTPValidationError>({
         path: `/admin/group/${groupId}`,
         method: "PUT",
@@ -2411,10 +2490,7 @@ export class Api<
      * @request DELETE:/admin/group/{group_id}
      * @secure
      */
-    deleteGroupAdminGroupGroupIdDelete: (
-      groupId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteGroupAdminGroupGroupIdDelete: (groupId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/admin/group/${groupId}`,
         method: "DELETE",
@@ -2431,10 +2507,7 @@ export class Api<
      * @request POST:/admin/project
      * @secure
      */
-    createProjectAdminProjectPost: (
-      data: CreateProject,
-      params: RequestParams = {}
-    ) =>
+    createProjectAdminProjectPost: (data: CreateProject, params: RequestParams = {}) =>
       this.request<ProjectRepresentation, HTTPValidationError>({
         path: `/admin/project`,
         method: "POST",
@@ -2454,10 +2527,7 @@ export class Api<
      * @request GET:/admin/project/{project_id}
      * @secure
      */
-    getProjectAdminProjectProjectIdGet: (
-      projectId: string,
-      params: RequestParams = {}
-    ) =>
+    getProjectAdminProjectProjectIdGet: (projectId: string, params: RequestParams = {}) =>
       this.request<ProjectRepresentationFull, HTTPValidationError>({
         path: `/admin/project/${projectId}`,
         method: "GET",
@@ -2475,11 +2545,7 @@ export class Api<
      * @request PUT:/admin/project/{project_id}
      * @secure
      */
-    updateProjectAdminProjectProjectIdPut: (
-      projectId: string,
-      data: CreateProject,
-      params: RequestParams = {}
-    ) =>
+    updateProjectAdminProjectProjectIdPut: (projectId: string, data: CreateProject, params: RequestParams = {}) =>
       this.request<ProjectRepresentationFull, HTTPValidationError>({
         path: `/admin/project/${projectId}`,
         method: "PUT",
@@ -2499,10 +2565,7 @@ export class Api<
      * @request DELETE:/admin/project/{project_id}
      * @secure
      */
-    deleteProjectAdminProjectProjectIdDelete: (
-      projectId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteProjectAdminProjectProjectIdDelete: (projectId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/admin/project/${projectId}`,
         method: "DELETE",
@@ -2538,7 +2601,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ProjectSearchOutput, HTTPValidationError>({
         path: `/admin/projects`,
@@ -2561,10 +2624,30 @@ export class Api<
     assignProjectAdminProjectProjectIdAssignPost: (
       projectId: string,
       data: ProjectAssignBody,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ProjectAssignOutput, HTTPValidationError>({
         path: `/admin/project/${projectId}/assign`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags admin
+     * @name BatchCreateProjectsAdminProjectBatchPost
+     * @summary Batch Create Projects
+     * @request POST:/admin/project/batch
+     * @secure
+     */
+    batchCreateProjectsAdminProjectBatchPost: (data: BatchCreateProject[], params: RequestParams = {}) =>
+      this.request<string, HTTPValidationError>({
+        path: `/admin/project/batch`,
         method: "POST",
         body: data,
         secure: true,
@@ -2620,11 +2703,7 @@ export class Api<
      * @request PUT:/admin/task/{task_id}
      * @secure
      */
-    updateTaskAdminTaskTaskIdPut: (
-      taskId: string,
-      data: CreateTask,
-      params: RequestParams = {}
-    ) =>
+    updateTaskAdminTaskTaskIdPut: (taskId: string, data: CreateTask, params: RequestParams = {}) =>
       this.request<TaskRepresentation, HTTPValidationError>({
         path: `/admin/task/${taskId}`,
         method: "PUT",
@@ -2644,10 +2723,7 @@ export class Api<
      * @request DELETE:/admin/task/{task_id}
      * @secure
      */
-    deleteTaskAdminTaskTaskIdDelete: (
-      taskId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteTaskAdminTaskTaskIdDelete: (taskId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/admin/task/${taskId}`,
         method: "DELETE",
@@ -2683,7 +2759,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<TaskSearchOutput, HTTPValidationError>({
         path: `/admin/tasks`,
@@ -2721,10 +2797,7 @@ export class Api<
      * @request POST:/admin/permissions
      * @secure
      */
-    createPermissionAdminPermissionsPost: (
-      data: CreatePermission,
-      params: RequestParams = {}
-    ) =>
+    createPermissionAdminPermissionsPost: (data: CreatePermission, params: RequestParams = {}) =>
       this.request<PermissionBase, HTTPValidationError>({
         path: `/admin/permissions`,
         method: "POST",
@@ -2744,14 +2817,8 @@ export class Api<
      * @summary Register Account
      * @request POST:/account/register
      */
-    registerAccountAccountRegisterPost: (
-      data: RegisterAccount,
-      params: RequestParams = {}
-    ) =>
-      this.request<
-        RegisterAccountResponse,
-        SamuraiErrorModel | HTTPValidationError
-      >({
+    registerAccountAccountRegisterPost: (data: RegisterAccount, params: RequestParams = {}) =>
+      this.request<RegisterAccountResponse, SamuraiErrorModel | HTTPValidationError>({
         path: `/account/register`,
         method: "POST",
         body: data,
@@ -2768,14 +2835,8 @@ export class Api<
      * @summary Confirm Email
      * @request POST:/account/confirm-email
      */
-    confirmEmailAccountConfirmEmailPost: (
-      data: ConfirmEmail,
-      params: RequestParams = {}
-    ) =>
-      this.request<
-        ConfirmEmailResponse,
-        SamuraiErrorModel | HTTPValidationError
-      >({
+    confirmEmailAccountConfirmEmailPost: (data: ConfirmEmail, params: RequestParams = {}) =>
+      this.request<ConfirmEmailResponse, SamuraiErrorModel | HTTPValidationError>({
         path: `/account/confirm-email`,
         method: "POST",
         body: data,
@@ -2820,12 +2881,9 @@ export class Api<
         /** Username */
         username?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
-      this.request<
-        VerboseAccountRepresentation,
-        SamuraiErrorModel | HTTPValidationError
-      >({
+      this.request<VerboseAccountRepresentation, SamuraiErrorModel | HTTPValidationError>({
         path: `/account/search`,
         method: "GET",
         query: query,
@@ -2844,11 +2902,7 @@ export class Api<
      * @request POST:/projects/tasks/{task_id}/comment
      * @secure
      */
-    createCommentProjectsTasksTaskIdCommentPost: (
-      taskId: string,
-      data: CreateComment,
-      params: RequestParams = {}
-    ) =>
+    createCommentProjectsTasksTaskIdCommentPost: (taskId: string, data: CreateComment, params: RequestParams = {}) =>
       this.request<CommentRepresentation, HTTPValidationError>({
         path: `/projects/tasks/${taskId}/comment`,
         method: "POST",
@@ -2884,7 +2938,7 @@ export class Api<
          */
         page_size?: number;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<CommentPaginatedResponse, HTTPValidationError>({
         path: `/projects/tasks/${taskId}/comments`,
@@ -2904,10 +2958,7 @@ export class Api<
      * @request GET:/projects/comments/{comment_id}
      * @secure
      */
-    getCommentProjectsCommentsCommentIdGet: (
-      commentId: string,
-      params: RequestParams = {}
-    ) =>
+    getCommentProjectsCommentsCommentIdGet: (commentId: string, params: RequestParams = {}) =>
       this.request<CommentRepresentation, HTTPValidationError>({
         path: `/projects/comments/${commentId}`,
         method: "GET",
@@ -2925,11 +2976,7 @@ export class Api<
      * @request PUT:/projects/comments/{comment_id}
      * @secure
      */
-    updateCommentProjectsCommentsCommentIdPut: (
-      commentId: string,
-      data: CreateComment,
-      params: RequestParams = {}
-    ) =>
+    updateCommentProjectsCommentsCommentIdPut: (commentId: string, data: CreateComment, params: RequestParams = {}) =>
       this.request<CommentRepresentation, HTTPValidationError>({
         path: `/projects/comments/${commentId}`,
         method: "PUT",
@@ -2949,10 +2996,7 @@ export class Api<
      * @request DELETE:/projects/comments/{comment_id}
      * @secure
      */
-    deleteCommentProjectsCommentsCommentIdDelete: (
-      commentId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteCommentProjectsCommentsCommentIdDelete: (commentId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/projects/comments/${commentId}`,
         method: "DELETE",
@@ -2983,12 +3027,14 @@ export class Api<
          * @default 10
          */
         page_size?: number;
+        /** Account Id */
+        account_id?: string | null;
         /** Faculty Id */
         faculty_id?: string | null;
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<UserProjectSearchOutput, HTTPValidationError>({
         path: `/projects/projects`,
@@ -3008,10 +3054,7 @@ export class Api<
      * @request POST:/projects/projects
      * @secure
      */
-    createProjectProjectsProjectsPost: (
-      data: CreateUserProject,
-      params: RequestParams = {}
-    ) =>
+    createProjectProjectsProjectsPost: (data: CreateUserProject, params: RequestParams = {}) =>
       this.request<UserProjectRepresentation, HTTPValidationError>({
         path: `/projects/projects`,
         method: "POST",
@@ -3031,9 +3074,7 @@ export class Api<
      * @request GET:/projects/projects/current
      * @secure
      */
-    getCurrentProjectsProjectsProjectsCurrentGet: (
-      params: RequestParams = {}
-    ) =>
+    getCurrentProjectsProjectsProjectsCurrentGet: (params: RequestParams = {}) =>
       this.request<UserProjectRepresentation, any>({
         path: `/projects/projects/current`,
         method: "GET",
@@ -3051,13 +3092,28 @@ export class Api<
      * @request GET:/projects/projects/{project_id}
      * @secure
      */
-    getProjectProjectsProjectsProjectIdGet: (
-      projectId: string,
-      params: RequestParams = {}
-    ) =>
+    getProjectProjectsProjectsProjectIdGet: (projectId: string, params: RequestParams = {}) =>
       this.request<UserProjectRepresentation, HTTPValidationError>({
         path: `/projects/projects/${projectId}`,
         method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Delete a project.
+     *
+     * @tags teacher, overseer, projects
+     * @name DeleteProjectProjectsProjectsProjectIdDelete
+     * @summary Delete Project
+     * @request DELETE:/projects/projects/{project_id}
+     * @secure
+     */
+    deleteProjectProjectsProjectsProjectIdDelete: (projectId: string, params: RequestParams = {}) =>
+      this.request<Record<string, string>, HTTPValidationError>({
+        path: `/projects/projects/${projectId}`,
+        method: "DELETE",
         secure: true,
         format: "json",
         ...params,
@@ -3090,7 +3146,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<UserTaskSearchOutput, HTTPValidationError>({
         path: `/projects/tasks/${projectId}`,
@@ -3110,10 +3166,7 @@ export class Api<
      * @request GET:/projects/task/{task_id}
      * @secure
      */
-    getTaskProjectsTaskTaskIdGet: (
-      taskId: string,
-      params: RequestParams = {}
-    ) =>
+    getTaskProjectsTaskTaskIdGet: (taskId: string, params: RequestParams = {}) =>
       this.request<UserTaskRepresentation, HTTPValidationError>({
         path: `/projects/task/${taskId}`,
         method: "GET",
@@ -3131,11 +3184,7 @@ export class Api<
      * @request PUT:/projects/task/{task_id}
      * @secure
      */
-    updateTaskProjectsTaskTaskIdPut: (
-      taskId: string,
-      data: UserTaskCreate,
-      params: RequestParams = {}
-    ) =>
+    updateTaskProjectsTaskTaskIdPut: (taskId: string, data: UserTaskCreate, params: RequestParams = {}) =>
       this.request<UserTaskRepresentation, HTTPValidationError>({
         path: `/projects/task/${taskId}`,
         method: "PUT",
@@ -3155,10 +3204,7 @@ export class Api<
      * @request DELETE:/projects/task/{task_id}
      * @secure
      */
-    deleteTaskProjectsTaskTaskIdDelete: (
-      taskId: string,
-      params: RequestParams = {}
-    ) =>
+    deleteTaskProjectsTaskTaskIdDelete: (taskId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/projects/task/${taskId}`,
         method: "DELETE",
@@ -3178,7 +3224,7 @@ export class Api<
     updateTaskStatusProjectsTaskTaskIdStatusPut: (
       taskId: string,
       data: UserTaskStatusUpdateInput,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<UserTaskRepresentation, HTTPValidationError>({
         path: `/projects/task/${taskId}/status`,
@@ -3199,16 +3245,70 @@ export class Api<
      * @request POST:/projects/task
      * @secure
      */
-    createTaskProjectsTaskPost: (
-      data: UserTaskCreate,
-      params: RequestParams = {}
-    ) =>
+    createTaskProjectsTaskPost: (data: UserTaskCreate, params: RequestParams = {}) =>
       this.request<UserTaskRepresentation, HTTPValidationError>({
         path: `/projects/task`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags teacher, overseer, projects, stats
+     * @name GetStatsPerTeacherProjectsStatsTeachersGet
+     * @summary Get Stats Per Teacher
+     * @request GET:/projects/stats/teachers
+     * @secure
+     */
+    getStatsPerTeacherProjectsStatsTeachersGet: (params: RequestParams = {}) =>
+      this.request<ProjectStatsByTeacher[], any>({
+        path: `/projects/stats/teachers`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags teacher, overseer, projects, stats
+     * @name GetStatsByTasksProjectsStatsTasksGet
+     * @summary Get Stats By Tasks
+     * @request GET:/projects/stats/tasks
+     * @secure
+     */
+    getStatsByTasksProjectsStatsTasksGet: (
+      query?: {
+        /**
+         * Order By State
+         * @default "done"
+         */
+        order_by_state?: TaskState;
+        /**
+         * Order Direction
+         * @default "asc"
+         */
+        order_direction?: OrderDirection;
+        /**
+         * Limit
+         * @min 1
+         * @default 10
+         */
+        limit?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProjectsTasksStats[], HTTPValidationError>({
+        path: `/projects/stats/tasks`,
+        method: "GET",
+        query: query,
+        secure: true,
         format: "json",
         ...params,
       }),
@@ -3223,10 +3323,7 @@ export class Api<
      * @request POST:/communication/chat
      * @secure
      */
-    createChatCommunicationChatPost: (
-      data: ChatCreate,
-      params: RequestParams = {}
-    ) =>
+    createChatCommunicationChatPost: (data: ChatCreate, params: RequestParams = {}) =>
       this.request<ChatRepresentation, HTTPValidationError>({
         path: `/communication/chat`,
         method: "POST",
@@ -3263,7 +3360,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ChatsSearchResponse, HTTPValidationError>({
         path: `/communication/chat`,
@@ -3283,10 +3380,7 @@ export class Api<
      * @request GET:/communication/chat/{chat_id}
      * @secure
      */
-    getChatCommunicationChatChatIdGet: (
-      chatId: string,
-      params: RequestParams = {}
-    ) =>
+    getChatCommunicationChatChatIdGet: (chatId: string, params: RequestParams = {}) =>
       this.request<ChatRepresentation, HTTPValidationError>({
         path: `/communication/chat/${chatId}`,
         method: "GET",
@@ -3304,11 +3398,7 @@ export class Api<
      * @request PATCH:/communication/chat/{chat_id}
      * @secure
      */
-    updateChatCommunicationChatChatIdPatch: (
-      chatId: string,
-      data: ChatUpdate,
-      params: RequestParams = {}
-    ) =>
+    updateChatCommunicationChatChatIdPatch: (chatId: string, data: ChatUpdate, params: RequestParams = {}) =>
       this.request<ChatRepresentation, HTTPValidationError>({
         path: `/communication/chat/${chatId}`,
         method: "PATCH",
@@ -3346,7 +3436,7 @@ export class Api<
         /** Name */
         name?: string | null;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ChatParticipantsResponse, HTTPValidationError>({
         path: `/communication/chat/${chatId}/participants`,
@@ -3369,7 +3459,7 @@ export class Api<
     addChatMemberCommunicationChatChatIdAddMemberPost: (
       chatId: string,
       data: ChatAddMember,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ChatRepresentation, HTTPValidationError>({
         path: `/communication/chat/${chatId}/add_member`,
@@ -3390,10 +3480,7 @@ export class Api<
      * @request POST:/communication/chat/{chat_id}/leave
      * @secure
      */
-    leaveChatCommunicationChatChatIdLeavePost: (
-      chatId: string,
-      params: RequestParams = {}
-    ) =>
+    leaveChatCommunicationChatChatIdLeavePost: (chatId: string, params: RequestParams = {}) =>
       this.request<ChatLeaveResponse, HTTPValidationError>({
         path: `/communication/chat/${chatId}/leave`,
         method: "POST",
@@ -3447,7 +3534,7 @@ export class Api<
          */
         descending?: boolean;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<MessagesSearchResponse, HTTPValidationError>({
         path: `/communication/messages`,
@@ -3467,10 +3554,7 @@ export class Api<
      * @request GET:/communication/message/{message_id}
      * @secure
      */
-    getMessageCommunicationMessageMessageIdGet: (
-      messageId: string,
-      params: RequestParams = {}
-    ) =>
+    getMessageCommunicationMessageMessageIdGet: (messageId: string, params: RequestParams = {}) =>
       this.request<MessageRepresentation, HTTPValidationError>({
         path: `/communication/message/${messageId}`,
         method: "GET",
@@ -3491,7 +3575,7 @@ export class Api<
     updateMessageCommunicationMessageMessageIdPut: (
       messageId: string,
       data: MessageUpdate,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<MessageRepresentation, HTTPValidationError>({
         path: `/communication/message/${messageId}`,
@@ -3512,10 +3596,7 @@ export class Api<
      * @request GET:/communication/message/{message_id}/seen_by
      * @secure
      */
-    getMessageSeenByCommunicationMessageMessageIdSeenByGet: (
-      messageId: string,
-      params: RequestParams = {}
-    ) =>
+    getMessageSeenByCommunicationMessageMessageIdSeenByGet: (messageId: string, params: RequestParams = {}) =>
       this.request<MessageSeenByResponse, HTTPValidationError>({
         path: `/communication/message/${messageId}/seen_by`,
         method: "GET",
@@ -3533,10 +3614,7 @@ export class Api<
      * @request POST:/communication/message
      * @secure
      */
-    createMessageCommunicationMessagePost: (
-      data: MessageCreate,
-      params: RequestParams = {}
-    ) =>
+    createMessageCommunicationMessagePost: (data: MessageCreate, params: RequestParams = {}) =>
       this.request<MessageRepresentation, HTTPValidationError>({
         path: `/communication/message`,
         method: "POST",
@@ -3556,10 +3634,7 @@ export class Api<
      * @request PATCH:/communication/message/{message_id}/seen
      * @secure
      */
-    markMessageSeenCommunicationMessageMessageIdSeenPatch: (
-      messageId: string,
-      params: RequestParams = {}
-    ) =>
+    markMessageSeenCommunicationMessageMessageIdSeenPatch: (messageId: string, params: RequestParams = {}) =>
       this.request<void, HTTPValidationError>({
         path: `/communication/message/${messageId}/seen`,
         method: "PATCH",
@@ -3587,6 +3662,22 @@ export class Api<
       }),
 
     /**
+     * @description Get information about a file by its ID.
+     *
+     * @tags common
+     * @name GetFileInfoCommonFileFileIdInfoGet
+     * @summary Get File Info
+     * @request GET:/common/file/{file_id}/info
+     */
+    getFileInfoCommonFileFileIdInfoGet: (fileId: string, params: RequestParams = {}) =>
+      this.request<FileRepresentation, ErrorSchema | HTTPValidationError>({
+        path: `/common/file/${fileId}/info`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
      * @description Upload a new file.
      *
      * @tags common
@@ -3595,10 +3686,7 @@ export class Api<
      * @request POST:/common/file
      * @secure
      */
-    createFileCommonFilePost: (
-      data: BodyCreateFileCommonFilePost,
-      params: RequestParams = {}
-    ) =>
+    createFileCommonFilePost: (data: BodyCreateFileCommonFilePost, params: RequestParams = {}) =>
       this.request<FileRepresentation, ErrorSchema | HTTPValidationError>({
         path: `/common/file`,
         method: "POST",
