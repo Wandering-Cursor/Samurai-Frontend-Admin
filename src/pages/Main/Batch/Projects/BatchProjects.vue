@@ -117,8 +117,8 @@ const sendBatchProjects = () => {
                           :onItemSelect="(event: AutoCompleteItemSelectEvent) => {task.reviewer = event.value.account_id}"
                         ></TeacherSearchField>
                         <Calendar
-                          v-model="task.due_date"
                           placeholder="Deadline"
+                          @date-select="(value: Date) => {task.due_date = value.toISOString()}"
                         />
                         <Button
                           label="Remove task"
