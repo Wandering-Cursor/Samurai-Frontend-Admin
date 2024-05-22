@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import { apiClient } from "@/api/base";
 import {
   BatchCreateProjectTask,
   BatchCreateProject as IBatchCreateProject,
 } from "@/codegen/Api";
+import { useToast } from "primevue/usetoast";
 import { v4 as uuidv4 } from "uuid";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
+import FacultySearchField from "@/components/Search/Faculty/FacultySearchField.vue";
+import TeacherSearchField from "@/components/Search/Account/TeacherSearchField.vue";
+import { AutoCompleteItemSelectEvent } from "primevue/autocomplete";
+
+const toast = useToast();
 
 class BatchCreateProject implements IBatchCreateProject {
   id: string;
@@ -19,7 +26,6 @@ class BatchCreateProject implements IBatchCreateProject {
 }
 
 const projects = reactive<BatchCreateProject[]>([]);
-const codeText = ref();
 
 const addProject = () => {
   projects.push(new BatchCreateProject());
@@ -35,6 +41,28 @@ const addTask = (projectId: string) => {
     });
   }
 };
+
+const sendBatchProjects = () => {
+  apiClient.admin
+    .batchCreateProjectsAdminProjectBatchPost(projects)
+    .then((response) => {
+      console.log(response);
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Projects created successfully",
+      });
+      projects.splice(0, projects.length);
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to create projects",
+      });
+      console.error(error);
+    });
+};
 </script>
 
 <template>
@@ -45,13 +73,20 @@ const addTask = (projectId: string) => {
           <template #header>
             <div class="flex gap-2">
               <Button label="Add new project" @click="addProject" />
+              <Button label="Submit" @click="sendBatchProjects" />
             </div>
           </template>
           <div class="flex gap-4 flex-column">
             <Panel header="Project" v-for="project in projects">
               <div class="flex gap-2 flex-column">
-                <InputText placeholder="Name" />
-                <InputText placeholder="Description" />
+                <InputText v-model="project.name" placeholder="Name" />
+                <InputText
+                  v-model="project.description"
+                  placeholder="Description"
+                />
+                <FacultySearchField
+                  :onItemSelect="(event: AutoCompleteItemSelectEvent) => {project.faculty_id = event.value.faculty_id}"
+                />
                 <Panel>
                   <template #header>
                     <div class="flex gap-2">
@@ -63,18 +98,35 @@ const addTask = (projectId: string) => {
                     </div>
                   </template>
                   <div class="flex flex-column gap-2">
-                    <Panel header="Task" v-for="taskProps in project.tasks">
+                    <Panel
+                      header="Task"
+                      v-for="task in project.tasks"
+                      v-model="project.tasks"
+                    >
                       <div class="flex gap-2 flex-column">
-                        <InputText placeholder="Name" />
-                        <InputText placeholder="Description" />
-                        <InputNumber placeholder="Priority" />
+                        <InputText v-model="task.name" placeholder="Name" />
+                        <InputText
+                          v-model="task.description"
+                          placeholder="Description"
+                        />
+                        <InputNumber
+                          v-model="task.priority"
+                          placeholder="Priority"
+                        />
+                        <TeacherSearchField
+                          :onItemSelect="(event: AutoCompleteItemSelectEvent) => {task.reviewer = event.value.account_id}"
+                        ></TeacherSearchField>
+                        <Calendar
+                          v-model="task.due_date"
+                          placeholder="Deadline"
+                        />
                         <Button
                           label="Remove task"
                           severity="danger"
                           @click="() => {
                           const project_ent = projects.find(p => p.id === (project as BatchCreateProject).id);
                           if (project_ent) {
-                            project_ent.tasks = project_ent.tasks.filter(t => t !== taskProps);
+                            project_ent.tasks = project_ent.tasks.filter(t => t !== task);
                           }
                         }"
                         />
