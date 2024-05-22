@@ -167,6 +167,24 @@ const routes = [
         ]
       },
       {
+        path: "/batch",
+        children: [
+          {
+            name: "BatchAccounts",
+            path: "accounts",
+            component: () =>
+              import("@/pages/Main/Batch/Accounts/BatchAccounts.vue"),
+          },
+          {
+            name: "BatchProjects",
+            path: "projects",
+            component: () =>
+              import("@/pages/Main/Batch/Projects/BatchProjects.vue"),
+          },
+        ]
+
+      },
+      {
         path: "/:pathMatch(.*)*",
         component: () => import("@/pages/Main/NotFound.vue"),
       },

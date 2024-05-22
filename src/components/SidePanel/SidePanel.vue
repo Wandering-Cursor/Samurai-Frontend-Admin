@@ -63,7 +63,18 @@ const items = ref([
   },
   {
     label: "Miscellaneous",
-    items: [{ label: "Settings", icon: "pi pi-cog", route: "/settings" }],
+    items: [
+      {
+        label: "Import Accounts",
+        icon: "pi pi-upload",
+        route: "/batch/accounts",
+      },
+      {
+        label: "Import Projects",
+        icon: "pi pi-upload",
+        route: "/batch/projects",
+      },
+    ],
   },
 ]);
 </script>

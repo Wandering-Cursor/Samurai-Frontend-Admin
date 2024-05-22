@@ -13,16 +13,7 @@ const toast = useToast();
 const dialog = useDialog();
 
 defineProps<{
-  projects: {
-    created_at?: string | undefined;
-    updated_at?: string | undefined;
-    name: string;
-    description?: string | null | undefined;
-    faculty_id: string;
-    project_id: string;
-    tasks_count: number;
-    _links: Record<string, Record<string, string>>;
-  }[];
+  projects: ShortProjectRepresentation[];
   meta: { total: number; page: number; page_size: number; total_pages: number };
   onPageChange: (event: PageState) => void;
 }>();
