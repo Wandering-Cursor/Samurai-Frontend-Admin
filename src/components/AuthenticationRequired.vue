@@ -35,7 +35,12 @@ export default defineComponent({
         return false;
       }
 
-      const decodedToken: ExtendedAuthToken = jwtDecode(accessToken);
+      let decodedToken: ExtendedAuthToken;
+      try {
+        decodedToken = jwtDecode(accessToken);
+      } catch (e) {
+        return false;
+      }
 
       if (decodedToken.exp == null) {
         return false;
