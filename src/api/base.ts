@@ -14,6 +14,42 @@ const instance = axios.create({
   },
 });
 
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error: any) => {
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/auth/refresh"
+    ) {
+      originalRequest._retry = true;
+      try {
+        apiClient.auth.refreshTokenAuthRefreshPost(
+          null,
+          {
+            withCredentials: true,
+          }
+        ).then(
+          (repl) => {
+            localStorage.setItem("accessToken", repl.data.access_token);
+            return apiClient.instance(originalRequest);
+          }
+        );
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    if (error.response) {
+      const message = error.response.data.detail;
+      console.error(message);
+    }
+    return Promise.reject(error);
+  },
+);
+
 instance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -22,9 +58,6 @@ instance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
 );
 
 export default instance;
@@ -34,12 +67,13 @@ import { Api } from "@/codegen/Api";
 const apiClient = new Api();
 // Setup the base URL for the API client
 apiClient.instance.defaults.baseURL = getBaseAPIUrl();
-// This interceptor will refresh the access token if it is expired
+
+// This interceptor will display the toast message if the request fails
 apiClient.instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error) => {
+  (error: any) => {
     const originalRequest = error.config;
     if (
       error.response?.status === 401 &&
@@ -48,32 +82,27 @@ apiClient.instance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const response = await apiClient.auth.refreshTokenAuthRefreshPost(
+        apiClient.auth.refreshTokenAuthRefreshPost(
           null,
-          {withCredentials: true}
+          {
+            withCredentials: true,
+          }
+        ).then(
+          (repl) => {
+            localStorage.setItem("accessToken", repl.data.access_token);
+            return apiClient.instance(originalRequest);
+          }
         );
-        localStorage.setItem("accessToken", response.data.access_token);
-        return apiClient.instance(originalRequest);
       } catch (error) {
         return Promise.reject(error);
       }
     }
-    return Promise.reject(error);
-  }
-);
-
-// This interceptor will display the toast message if the request fails
-apiClient.instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
     if (error.response) {
       const message = error.response.data.detail;
       console.error(message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 // This interceptor will add the access token to the request headers
@@ -86,6 +115,8 @@ apiClient.instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    const message = error.response.data.detail;
+    console.error(message);
     return Promise.reject(error);
   }
 );
