@@ -48,7 +48,10 @@ apiClient.instance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const response = await apiClient.auth.refreshTokenAuthRefreshPost(null);
+        const response = await apiClient.auth.refreshTokenAuthRefreshPost(
+          null,
+          {withCredentials: true}
+        );
         localStorage.setItem("accessToken", response.data.access_token);
         return apiClient.instance(originalRequest);
       } catch (error) {
