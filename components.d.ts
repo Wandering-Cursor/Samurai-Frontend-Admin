@@ -39,6 +39,7 @@ declare module 'vue' {
     GroupsTable: typeof import('./src/components/Group/GroupsTable.vue')['default']
     GroupUpdateForm: typeof import('./src/components/Group/GroupUpdateForm.vue')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
+    InputSwitch: typeof import('primevue/inputswitch')['default']
     InputText: typeof import('primevue/inputtext')['default']
     LoginForm: typeof import('./src/components/Login/LoginForm.vue')['default']
     LogOutButton: typeof import('./src/components/Auth/LogOutButton.vue')['default']
