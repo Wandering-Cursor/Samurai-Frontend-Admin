@@ -38,25 +38,25 @@ const capitalize = (str: string) => {
 <template>
   <div class="w-full m-2">
     <div>
-      <h1>Account: {{ account?.account_id }}</h1>
+      <h1>{{ $t("entities.account.title") }}: {{ account?.account_id }}</h1>
     </div>
     <div v-if="account">
-      <Fieldset legend="Account ID">
+      <Fieldset :legend="$t('filters.accountID')">
         <p>{{ account.account_id }}</p>
       </Fieldset>
-      <Fieldset legend="Email">
+      <Fieldset :legend="$t('filters.email')">
         <p>{{ account.email }}</p>
       </Fieldset>
-      <Fieldset legend="Registration code">
+      <Fieldset :legend="$t('filters.registrationCode')">
         <p>{{ account.registration_code }}</p>
       </Fieldset>
-      <Fieldset legend="Username">
+      <Fieldset :legend="$t('filters.username')">
         <p>{{ account.username }}</p>
       </Fieldset>
-      <Fieldset legend="Account Type">
+      <Fieldset :legend="$t('filters.accountType')">
         <p>{{ capitalize(account.account_type) }}</p>
       </Fieldset>
-      <Fieldset legend="Name">
+      <Fieldset :legend="$t('filters.fullName')">
         <p>
           {{
             `${account.first_name} ${account.last_name} ${
@@ -65,17 +65,17 @@ const capitalize = (str: string) => {
           }}
         </p>
       </Fieldset>
-      <Fieldset legend="State">
+      <Fieldset :legend="$t('filters.state')">
         <p>
-          Is active:
+          {{ $t("strings.isAccountActive") }}
           <CheckOrX :value="account.is_active" />
         </p>
         <p>
-          Is email verified:
+          {{ $t("strings.isEmailVerified") }}
           <CheckOrX :value="account.is_email_verified" />
         </p>
       </Fieldset>
-      <Fieldset legend="Permissions">
+      <Fieldset :legend="$t('filters.permissions')">
         <ScrollPanel
           v-if="account.permissions && account.permissions.length > 0"
           style="height: 16em"
@@ -96,10 +96,10 @@ const capitalize = (str: string) => {
           />
         </ScrollPanel>
         <div v-else>
-          <p>No permissions</p>
+          <p>{{ $t("strings.noPermissions") }}</p>
         </div>
       </Fieldset>
-      <Fieldset legend="Connections">
+      <Fieldset :legend="$t('filters.connections')">
         <ScrollPanel
           v-if="account.connections && account.connections.length > 0"
           style="height: 16em"
@@ -120,10 +120,10 @@ const capitalize = (str: string) => {
           />
         </ScrollPanel>
         <div v-else>
-          <p>No connections</p>
+          <p>{{ $t("strings.noConnections") }}</p>
         </div>
       </Fieldset>
-      <Fieldset legend="Email confirmation code">
+      <Fieldset :legend="$t('filters.emailRegistrationCodes')">
         <RegistrationCode :account="account" />
       </Fieldset>
     </div>

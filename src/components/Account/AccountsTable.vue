@@ -52,14 +52,14 @@ onMounted(() => {
           <Button
             icon="pi pi-plus"
             v-tooltip="'Create new account'"
-            label="New"
+            :label="$t('buttons.actions.create')"
             raised
             link
           />
         </RouterLink>
       </div>
     </template>
-    <Column key="email" field="email" header="Email">
+    <Column key="email" field="email" :header="$t('filters.email')">
       <template #body="slotProps">
         <RouterLink :to="`/accounts/${slotProps.data.account_id}`">
           <Button :to="`/accounts/${slotProps.data.account_id}`" link>
@@ -68,23 +68,31 @@ onMounted(() => {
         </RouterLink>
       </template>
     </Column>
-    <Column key="first_name" field="first_name" header="First Name"></Column>
-    <Column key="last_name" field="last_name" header="Last Name"></Column>
+    <Column
+      key="first_name"
+      field="first_name"
+      :header="$t('filters.firstName')"
+    ></Column>
+    <Column
+      key="last_name"
+      field="last_name"
+      :header="$t('filters.lastName')"
+    ></Column>
     <Column
       key="account_type"
       field="account_type"
-      header="Account Type"
+      :header="$t('filters.accountType')"
     ></Column>
-    <Column header="Actions">
+    <Column :header="$t('strings.actionsColumn')">
       <template #body="slotProps">
         <div class="flex flex-wrap gap-2">
           <CopyToClipboard
             :data="slotProps.data.account_id"
-            tooltip="Copy Account ID"
+            :tooltip="$t('strings.copyAccountID')"
             icon="pi pi-id-card"
           />
           <Button
-            v-tooltip="'Edit Connections'"
+            v-tooltip="$t('strings.editConnections')"
             class="p-button"
             icon="pi pi-link"
             @click="
@@ -96,7 +104,7 @@ onMounted(() => {
             "
           />
           <Button
-            v-tooltip="'Edit Permissions'"
+            v-tooltip="$t('strings.editPermissions')"
             class="p-button"
             @click="
               () => {

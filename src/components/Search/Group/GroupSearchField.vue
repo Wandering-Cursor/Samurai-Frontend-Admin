@@ -18,11 +18,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "Group",
+    default: "label.group",
   },
   placeholder: {
     type: String,
-    default: "Enter a name to search for a group",
+    default: "strings.groupSearchPlaceholder",
   },
   onItemSelect: {
     type: Function as unknown as () => (
