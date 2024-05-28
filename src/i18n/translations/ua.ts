@@ -169,6 +169,9 @@ export const entities = {
     },
     task: {
         title: "Задача",
+        priority: "Пріоритет",
+        dueDate: "Кінцевий термін",
+        reviewer: "Перевіряючий",
     }
 }
 
