@@ -66,47 +66,64 @@ const accountTypes = ref([
 </script>
 
 <template>
-  <Panel header="Batch add Students" class="w-full">
+  <Panel
+    :header="$t('sideMenu.miscellaneousSubTopics.importAccounts')"
+    class="w-full"
+  >
     <div class="flex flex-column gap-4">
       <div class="flex w-full relative">
         <div class="flex gap-4 absolute right-0 bottom-0">
-          <Button label="Add new account" @click="addAccount" />
-          <Button label="Submit" @click="sendBatchAccounts" />
+          <Button
+            :label="$t('buttons.actions.create')"
+            @click="addAccount"
+            icon="pi pi-plus"
+          />
+          <Button
+            :label="$t('buttons.actions.apply')"
+            @click="sendBatchAccounts"
+            icon="pi pi-save"
+          />
         </div>
       </div>
-      <Panel header="Accounts">
+      <Panel>
         <div class="flex gap-4 flex-column">
-          <Panel header="Account" v-for="account in accounts">
+          <Panel
+            :header="$t('entities.account.title')"
+            v-for="account in accounts"
+          >
             <div class="flex flex-column gap-2 w-full">
               <Dropdown
                 v-model="account.account_type"
                 :options="accountTypes"
-                placeholder="Оберіть тип акаунту"
+                :placeholder="$t('strings.select')"
               />
               <Divider />
               <InputText
                 v-model="account.first_name"
-                placeholder="First Name"
+                :placeholder="$t('filters.firstName')"
               />
-              <InputText v-model="account.last_name" placeholder="Last Name" />
+              <InputText
+                v-model="account.last_name"
+                :placeholder="$t('filters.lastName')"
+              />
               <InputText
                 v-model="account.middle_name"
-                placeholder="Middle Name"
+                :placeholder="$t('filters.middleName')"
               />
               <Divider />
               <div class="flex gap-2">
-                <span>Is email verified?</span>
+                <span>{{ $t("strings.isEmailVerified") }}</span>
                 <InputSwitch v-model="account.is_email_verified" />
               </div>
               <Divider />
-              <Panel header="Connections">
+              <Panel :header="$t('filters.connections')">
                 <div class="flex gap-4 flex-column">
                   <Button
-                    label="Add connection"
+                    :label="$t('buttons.actions.create')"
                     @click="account.connections.push({})"
                   />
                   <Panel
-                    header="Connection"
+                    :header="$t('entities.connection.title')"
                     v-for="connection in account.connections"
                   >
                     <div class="flex flex-column gap-2 w-full">
@@ -120,7 +137,7 @@ const accountTypes = ref([
                         :onItemSelect="(event: AutoCompleteItemSelectEvent) => {connection.group_id = event.value.group_id}"
                       />
                       <Button
-                        label="Remove connection"
+                        :label="$t('buttons.actions.delete')"
                         severity="danger"
                         @click="
                           account.connections.splice(
@@ -133,7 +150,7 @@ const accountTypes = ref([
                   </Panel>
                 </div>
               </Panel>
-              <Panel header="Permissions">
+              <Panel :header="$t('filters.permissions')">
                 <PermissionsSearchField
                   :onItemSelect="(event: AutoCompleteItemSelectEvent) => {account.permissions = event.value.map((permission: Permission) => permission.account_permission_id)}"
                   :multiple="true"
