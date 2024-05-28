@@ -191,13 +191,12 @@ const deleteDepartmentAction = () => {
     v-model:visible="deleteDialogVisible"
     modal
     :header="$t('departmentsPages.list.modal.title')"
-    :style="{ width: '50%' }"
   >
     <span class="p-text-secondary block mb-5"
       >{{ $t("departmentsPages.list.modal.subtitle") }}
       {{ deleteDepartmentID }}</span
     >
-    <div class="flex flex-row gap-2 justify-content-center">
+    <div class="flex flex-row gap-2 justify-content-between">
       <Button
         :label="$t('buttons.actions.yes')"
         @click="deleteDepartmentAction"

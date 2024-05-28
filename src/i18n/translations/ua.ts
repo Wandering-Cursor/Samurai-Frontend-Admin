@@ -81,6 +81,7 @@ export const filters = {
     facultiesCount: "К-ть факультетів",
     groupsCount: "К-ть груп",
     departmentID: "ID підрозділу",
+    facultyID: "ID факультету",
 }
 
 export const buttons = {
@@ -195,6 +196,22 @@ export const facultiesPages = {
     }
 }
 
+export const groupsPages = {
+    list: {
+        title: "Список груп",
+        modal: {
+            title: "Видалити групу",
+            subtitle: "Ви впевнені, що хочете видалити цю групу?",
+        }
+    },
+    edit: {
+        title: "Редагування групи",
+    },
+    create: {
+        title: "Створити нову групу",
+    }
+}
+
 export const UaTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -210,4 +227,5 @@ export const UaTranslation = {
     label: label,
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
+    groupsPages: groupsPages,
 }

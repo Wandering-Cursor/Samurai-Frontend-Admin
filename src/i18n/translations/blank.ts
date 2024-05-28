@@ -63,6 +63,7 @@ export const filters = {
     facultiesCount: "",
     groupsCount: "",
     departmentID: "",
+    facultyID: "",
 }
 
 export const strings = {
@@ -195,6 +196,22 @@ export const facultiesPages = {
     }
 }
 
+export const groupsPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
 export const BlankTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -210,4 +227,5 @@ export const BlankTranslation = {
     label: label,
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
+    groupsPages: groupsPages,
 }

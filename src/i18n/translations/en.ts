@@ -86,6 +86,7 @@ export const filters = {
     facultiesCount: "Faculties Count",
     groupsCount: "Groups Count",
     departmentID: "Department ID",
+    facultyID: "Faculty ID",
 }
 
 export const buttons = {
@@ -196,6 +197,22 @@ export const facultiesPages = {
     }
 }
 
+export const groupsPages = {
+    list: {
+        title: "List of Groups",
+        modal: {
+            title: "Delete Group",
+            subtitle: "Are you sure you want to delete this group?",
+        }
+    },
+    edit: {
+        title: "Editing group",
+    },
+    create: {
+        title: "Create new group",
+    }
+}
+
 export const EnTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -211,5 +228,5 @@ export const EnTranslation = {
     label: label,
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
-
+    groupsPages: groupsPages,
 }
