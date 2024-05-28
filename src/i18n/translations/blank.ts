@@ -80,6 +80,7 @@ export const strings = {
     facultySearchPlaceholder: "",
     groupSearchPlaceholder: "",
     permissionSearchPlaceholder: "",
+    userSearchPlaceholder: "",
     select: "",
 }
 
@@ -93,6 +94,7 @@ export const buttons = {
         copyID: "",
         yes: "",
         no: "",
+        apply: "",
     },
 }
 
@@ -162,6 +164,8 @@ export const label = {
     faculty: "",
     group: "",
     permission: "",
+    teacher: "",
+    student: "",
 }
 
 export const departmentsPages = {
@@ -212,6 +216,26 @@ export const groupsPages = {
     }
 }
 
+export const projectsPages = {
+    list: {
+        title: SideMenu.projectsSubTopics.projects,
+        modal: {
+            title: "",
+            subtitle: "",
+        },
+        buttons: {
+            assign: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+
+}
+
 export const BlankTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -228,4 +252,5 @@ export const BlankTranslation = {
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
     groupsPages: groupsPages,
+    projectsPages: projectsPages,
 }

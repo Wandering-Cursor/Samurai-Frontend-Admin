@@ -99,6 +99,7 @@ export const buttons = {
         copyID: "Copy ID",
         yes: "Yes",
         no: "No",
+        apply: "Apply",
     }
 }
 
@@ -116,6 +117,7 @@ export const strings = {
     facultySearchPlaceholder: "Search faculty",
     groupSearchPlaceholder: "Search group",
     permissionSearchPlaceholder: "Search permission",
+    userSearchPlaceholder: "Enter email to search for a user",
     select: "Select an option",
 }
 
@@ -163,6 +165,8 @@ export const label = {
     faculty: "Faculty",
     group: "Group",
     permission: "Permission",
+    teacher: "Teacher",
+    student: "Student",
 }
 
 export const departmentsPages = {
@@ -213,6 +217,26 @@ export const groupsPages = {
     }
 }
 
+export const projectsPages = {
+    list: {
+        title: SideMenu.projectsSubTopics.projects,
+        modal: {
+            title: "Assign project",
+            subtitle: "Assign project to the following users:",
+        },
+        buttons: {
+            assign: "Призначити",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "Create project",
+    }
+
+}
+
 export const EnTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -229,4 +253,5 @@ export const EnTranslation = {
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
     groupsPages: groupsPages,
+    projectsPages: projectsPages,
 }

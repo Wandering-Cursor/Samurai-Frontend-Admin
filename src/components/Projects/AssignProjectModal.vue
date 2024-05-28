@@ -80,11 +80,10 @@ const assignProject = () => {
 
 <template>
   <div class="flex flex-column gap-2">
-    <p>Assign project to users</p>
-    <p>Project ID: {{ params?.assignProjectProjectId }}</p>
+    <p>{{ $t("projectsPages.list.modal.subtitle") }}</p>
     <GroupSearchField :on-item-select="groupSelected" :multiple="true" />
     <StudentsSearchField :on-item-select="studentsSelected" :multiple="true" />
     <TeacherSearchField :on-item-select="teacherSelected" :multiple="true" />
-    <Button label="Assign" @click="assignProject" />
+    <Button :label="$t('buttons.actions.apply')" @click="assignProject" />
   </div>
 </template>

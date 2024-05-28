@@ -7,10 +7,13 @@ import { PageState } from "primevue/paginator";
 import { ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import AssignProjectModal from "./AssignProjectModal.vue";
+import { useI18nLocal } from "@/i18n/i18n";
 
 const router = useRouter();
 const toast = useToast();
 const dialog = useDialog();
+
+const { t } = useI18nLocal();
 
 defineProps<{
   projects: ShortProjectRepresentation[];
@@ -29,7 +32,7 @@ const showAssignProjectModal = (projectId: string) => {
     },
     props: {
       modal: true,
-      header: "Assign Project",
+      header: t("projectsPages.list.modal.title"),
     },
   });
 };
@@ -42,7 +45,7 @@ const showAssignProjectModal = (projectId: string) => {
         <div class="flex justify-content-end">
           <Button
             icon="pi pi-plus"
-            label="New"
+            :label="$t('buttons.actions.create')"
             @click="
               () => {
                 router.push('/projects/create');
@@ -51,7 +54,7 @@ const showAssignProjectModal = (projectId: string) => {
           />
         </div>
       </template>
-      <Column field="project_id" header="Project ID">
+      <Column field="project_id" :header="$t('commonEntity.id')">
         <template #body="slotProps">
           <p
             @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).project_id, toast) }"
@@ -65,8 +68,8 @@ const showAssignProjectModal = (projectId: string) => {
           </p>
         </template>
       </Column>
-      <Column field="name" header="Name"></Column>
-      <Column field="faculty_id" header="Faculty ID">
+      <Column field="name" :header="$t('commonEntity.name')"></Column>
+      <Column field="faculty_id" :header="$t('filters.facultyID')">
         <template #body="slotProps">
           <p
             @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).faculty_id, toast) }"
@@ -80,19 +83,25 @@ const showAssignProjectModal = (projectId: string) => {
           </p>
         </template>
       </Column>
-      <Column field="created_at" header="Created At"></Column>
-      <Column field="updated_at" header="Updated At"></Column>
-      <Column header="Actions">
+      <Column
+        field="created_at"
+        :header="$t('commonEntity.createdAt')"
+      ></Column>
+      <Column
+        field="updated_at"
+        :header="$t('commonEntity.updatedAt')"
+      ></Column>
+      <Column :header="$t('strings.actionsColumn')">
         <template #body="slotProps">
           <div class="flex flex-warp gap-2">
             <RouterLink
               :to="`/projects/${(slotProps.data as ShortProjectRepresentation).project_id}/edit`"
             >
-              <Button icon="pi pi-pencil" label="Edit" />
+              <Button icon="pi pi-pencil" :label="$t('buttons.actions.edit')" />
             </RouterLink>
             <Button
               icon="pi pi-users"
-              label="Assign"
+              :label="$t('projectsPages.list.buttons.assign')"
               severity="info"
               @click="() => {showAssignProjectModal((slotProps.data as ShortProjectRepresentation).project_id)}"
             />

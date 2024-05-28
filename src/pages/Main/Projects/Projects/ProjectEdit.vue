@@ -154,7 +154,9 @@ onMounted(() => {
           <FacultySearchField :on-item-select="facultySelected" />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="projectDescription">Description</label>
+          <label for="projectDescription">
+            {{ $t("commonEntity.description") }}
+          </label>
           <!-- For some reason, the Editor component leks out of the container unless
         you specify a parent component to be slightly larger than the Editor -->
           <div style="height: 550px">

@@ -28,6 +28,7 @@ declare module 'vue' {
     Dialog: typeof import('primevue/dialog')['default']
     Divider: typeof import('primevue/divider')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
+    Editor: typeof import('primevue/editor')['default']
     FacultyCreateForm: typeof import('./src/components/Faculty/FacultyCreateForm.vue')['default']
     FacultySearchField: typeof import('./src/components/Search/Faculty/FacultySearchField.vue')['default']
     FacultyTable: typeof import('./src/components/Faculty/FacultyTable.vue')['default']
