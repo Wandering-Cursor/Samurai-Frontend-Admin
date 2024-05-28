@@ -152,6 +152,7 @@ const saveAccountConnections = () => {
             icon="pi pi-trash"
             class="p-button-rounded p-button-danger"
             @click="removeItem(connection.connection_id)"
+            v-tooltip.right="$t('buttons.actions.delete')"
           />
         </ConnectionRepresentation>
       </div>

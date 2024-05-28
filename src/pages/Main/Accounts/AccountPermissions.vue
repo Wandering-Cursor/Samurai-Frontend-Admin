@@ -13,6 +13,7 @@ import {
 } from "@/api/types/account/Permission";
 import PermissionsSearchField from "@/components/Search/Permissions/PermissionsSearchField.vue";
 import { setPermissions } from "@/api/account/setPermissions";
+import PermissionRepresentation from "@/components/Account/PermissionRepresentation.vue";
 
 const route = useRoute();
 const toast = useToast();
@@ -92,18 +93,18 @@ onMounted(() => {
   <Panel class="w-full">
     <Menubar>
       <template #start>
-        <p>Permissions of {{ accountInfo?.email }}</p>
+        <p>{{ $t("permissionsPage.title") }} {{ accountInfo?.email }}</p>
       </template>
       <template #end>
         <div class="flex gap-2">
           <Button
-            v-tooltip.left="'Add new connection'"
+            v-tooltip.left="$t('buttons.actions.create')"
             icon="pi pi-plus"
             class="p-button-rounded"
             @click="createPermissionDialogVisible = true"
           />
           <Button
-            v-tooltip.left="'Save connections'"
+            v-tooltip.left="$t('buttons.actions.save')"
             icon="pi pi-save"
             class="p-button-rounded"
             @click="saveAccountPermissions"
@@ -111,30 +112,20 @@ onMounted(() => {
         </div>
       </template>
     </Menubar>
-    <Panel header="Permissions List">
+    <Panel :header="$t('permissionsPage.listTitle')">
       <div class="flex flex-column gap-4">
-        <Card
+        <PermissionRepresentation
+          :permission="permission"
           v-for="permission in allPermissions"
           :key="permission.account_permission_id"
         >
-          <template #header>
-            <div class="text-center">
-              <h3>Permission - {{ permission.account_permission_id }}</h3>
-            </div>
-          </template>
-          <template #content>
-            <p>Name: {{ permission.name }}</p>
-            <p>Description: {{ permission.description }}</p>
-          </template>
-          <template #footer>
-            <Button
-              v-tooltip.right="'Delete permission'"
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-danger"
-              @click="removeItem(permission.account_permission_id)"
-            />
-          </template>
-        </Card>
+          <Button
+            v-tooltip.right="$t('buttons.actions.delete')"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            @click="removeItem(permission.account_permission_id)"
+          />
+        </PermissionRepresentation>
       </div>
     </Panel>
   </Panel>
@@ -142,16 +133,16 @@ onMounted(() => {
   <Dialog
     v-model:visible="createPermissionDialogVisible"
     modal
-    header="Create connection"
+    :header="$t('permissionsPage.modal.title')"
     :style="{ width: '50%' }"
   >
     <span class="p-text-secondary block mb-5"
-      >Add new connection for {{ accountInfo?.email }}</span
+      >{{ $t("permissionsPage.modal.subtitle") }} {{ accountInfo?.email }}</span
     >
     <div class="flex flex-column gap-2">
       <PermissionsSearchField :onItemSelect="onPermissionSelect" />
       <Divider />
-      <Button label="Add" @click="addPermission" />
+      <Button :label="$t('buttons.actions.create')" @click="addPermission" />
     </div>
   </Dialog>
 </template>

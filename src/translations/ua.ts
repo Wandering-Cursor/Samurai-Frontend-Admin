@@ -57,7 +57,7 @@ export const permissionsPage = {
     listTitle: "Список Дозволів",
     modal: {
         title: "Створити новий дозвіл",
-        subtitle: "Додає новий дозвіл для:",
+        subtitle: "Додати новий дозвіл для:",
     }
 }
 
@@ -83,6 +83,7 @@ export const buttons = {
     actions: {
         create: "Створити",
         save: "Зберегти",
+        delete: "Видалити",
     }
 }
 
@@ -108,6 +109,7 @@ export const strings = {
     departmentSearchPlaceholder: "Пошук відділення",
     facultySearchPlaceholder: "Пошук факультету",
     groupSearchPlaceholder: "Пошук групи",
+    permissionSearchPlaceholder: "Пошук дозволу",
 }
 
 export const commonEntity = {

@@ -58,11 +58,11 @@ export const connectionsPage = {
 }
 
 export const permissionsPage = {
-    title: "",
-    listTitle: "",
+    title: "Permissions:",
+    listTitle: "Permissions List",
     modal: {
-        title: "",
-        subtitle: "",
+        title: "Create Permission",
+        subtitle: "Add new permission for:",
     }
 }
 
@@ -88,6 +88,7 @@ export const buttons = {
     actions: {
         create: "New",
         save: "Save",
+        delete: "Delete",
     }
 }
 
@@ -104,6 +105,7 @@ export const strings = {
     departmentSearchPlaceholder: "Search department",
     facultySearchPlaceholder: "Search faculty",
     groupSearchPlaceholder: "Search group",
+    permissionSearchPlaceholder: "Search permission",
 }
 
 export const message = {
@@ -146,6 +148,7 @@ export const label = {
     department: "Department",
     faculty: "Faculty",
     group: "Group",
+    permission: "Permission",
 }
 
 export const EnTranslation = {

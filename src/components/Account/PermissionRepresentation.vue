@@ -5,6 +5,11 @@ import { Permission } from "@/api/types/account/Permission";
 const $props = defineProps<{
   permission: Permission;
 }>();
+
+const slots = defineSlots<{
+  // Allows to pass HTML elements to the component
+  default(props: any): any;
+}>();
 </script>
 
 <template>
@@ -21,6 +26,9 @@ const $props = defineProps<{
         {{ $t("entities.permissions.description") }}:
         {{ $props.permission.description }}
       </p>
+    </template>
+    <template #footer>
+      <slot />
     </template>
   </Card>
 </template>

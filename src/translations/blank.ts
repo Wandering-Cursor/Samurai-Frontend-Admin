@@ -73,8 +73,7 @@ export const strings = {
     departmentSearchPlaceholder: "",
     facultySearchPlaceholder: "",
     groupSearchPlaceholder: "",
-    newConnection: "",
-    saveConnection: "",
+    permissionSearchPlaceholder: "",
 }
 
 export const buttons = {
@@ -82,6 +81,7 @@ export const buttons = {
     actions: {
         create: "",
         save: "",
+        delete: "",
     }
 }
 
@@ -147,6 +147,7 @@ export const label = {
     department: "",
     faculty: "",
     group: "",
+    permission: "",
 }
 
 export const BlankTranslation = {
