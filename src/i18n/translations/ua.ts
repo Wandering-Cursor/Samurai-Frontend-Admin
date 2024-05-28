@@ -76,6 +76,12 @@ export const filters = {
     permissions: "Дозволи",
     connections: "Зв'язки",
     emailRegistrationCodes: "Коди підтвердження електронної пошти",
+    departments: "Підрозділи",
+    genericName: "Назва",
+    facultiesCount: "К-ть факультетів",
+    groupsCount: "К-ть груп",
+    departmentID: "ID підрозділу",
+    facultyID: "ID факультету",
 }
 
 export const buttons = {
@@ -84,6 +90,10 @@ export const buttons = {
         create: "Створити",
         save: "Зберегти",
         delete: "Видалити",
+        edit: "Редагувати",
+        copyID: "Скопіювати ID",
+        yes: "Так",
+        no: "Ні",
     }
 }
 
@@ -106,13 +116,17 @@ export const strings = {
     noConnections: "Зв'язки відсутні",
     noPermissions: "Дозволи відсутні",
     noEmailConfirmationCodes: "Коди підтвердження електронної пошти відсутні",
-    departmentSearchPlaceholder: "Пошук відділення",
+    departmentSearchPlaceholder: "Пошук підрозділу",
     facultySearchPlaceholder: "Пошук факультету",
     groupSearchPlaceholder: "Пошук групи",
     permissionSearchPlaceholder: "Пошук дозволу",
+    select: "Оберіть варіант",
 }
 
 export const commonEntity = {
+    id: "Унікальний ідентифікатор",
+    name: "Назва",
+    description: "Опис",
     createdAt: "Створено Об",
     updatedAt: "Оновлено Об",
 }
@@ -130,7 +144,7 @@ export const entities = {
         title: "Зв'язок",
         toGroup: "До групи",
         toFaculty: "До факультету",
-        toDepartment: "До відділу",
+        toDepartment: "До підрозділу",
         createdAt: commonEntity.createdAt,
         updatedAt: commonEntity.updatedAt,
     },
@@ -144,10 +158,58 @@ export const entities = {
 }
 
 export const label = {
-    department: "Відділення",
+    department: "Підрозділ",
     faculty: "Факультет",
     group: "Група",
     permission: "Дозвіл",
+}
+
+export const departmentsPages = {
+    list: {
+        title: "Список підрозділів",
+        modal: {
+            title: "Видалити підрозділ",
+            subtitle: "Ви впевнені, що хочете видалити цей підрозділ?",
+        }
+    },
+    edit: {
+        title: "Редагування підрозділу",
+    },
+    create: {
+        title: "Створити новий підрозділ",
+    }
+}
+
+export const facultiesPages = {
+    list: {
+        title: "Список факультетів",
+        modal: {
+            title: "Видалити факультет",
+            subtitle: "Ви впевнені, що хочете видалити цей факультет?",
+        }
+    },
+    edit: {
+        title: "Редагування факультету",
+    },
+    create: {
+        title: "Створити новий факультет",
+    }
+}
+
+export const groupsPages = {
+    list: {
+        title: "Список груп",
+        modal: {
+            title: "Видалити групу",
+            subtitle: "Ви впевнені, що хочете видалити цю групу?",
+        }
+    },
+    edit: {
+        title: "Редагування групи",
+    },
+    create: {
+        title: "Створити нову групу",
+    }
 }
 
 export const UaTranslation = {
@@ -157,9 +219,13 @@ export const UaTranslation = {
     accountListPage: accountListPage,
     connectionsPage: connectionsPage,
     permissionsPage: permissionsPage,
+    departmentsPages: departmentsPages,
     filters: filters,
     buttons: buttons,
     strings: strings,
     entities: entities,
     label: label,
+    commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
+    groupsPages: groupsPages,
 }

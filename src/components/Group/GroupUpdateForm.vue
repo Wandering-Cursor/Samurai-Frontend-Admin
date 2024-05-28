@@ -75,24 +75,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <Card>
+  <Card class="p-2 w-full">
     <template #header>
-      <h2 class="text-center">Group: {{ groupObject.name }}</h2>
+      <h2 class="text-center">
+        {{ $t("groupsPages.edit.title") }}: {{ groupObject.name }}
+      </h2>
     </template>
     <template #content>
       <div class="p-fluid flex flex-column gap-2">
         <InputText
           v-model="groupUpdateRequest.name"
-          label="Name"
-          placeholder="Enter group name"
+          :placeholder="$t('commonEntity.name')"
         />
         <Textarea
           v-model="groupUpdateRequest.description"
-          label="Description"
-          placeholder="Enter group description (optional)"
+          :placeholder="$t('commonEntity.description')"
         />
         <FacultySearchField :onItemSelect="updateSelectedFaculty" />
-        <Button @click="submit" label="Save" />
+        <Button @click="submit" :label="$t('buttons.actions.save')" />
       </div>
     </template>
   </Card>

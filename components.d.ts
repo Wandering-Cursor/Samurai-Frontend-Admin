@@ -34,7 +34,6 @@ declare module 'vue' {
     FacultyUpdateForm: typeof import('./src/components/Faculty/FacultyUpdateForm.vue')['default']
     Fieldset: typeof import('primevue/fieldset')['default']
     FilterPanel: typeof import('./src/components/Search/FilterPanel/FilterPanel.vue')['default']
-    Flag: typeof import('./src/components/i18n/flag.vue')['default']
     GroupCreateForm: typeof import('./src/components/Group/GroupCreateForm.vue')['default']
     GroupSearchField: typeof import('./src/components/Search/Group/GroupSearchField.vue')['default']
     GroupsTable: typeof import('./src/components/Group/GroupsTable.vue')['default']
@@ -64,6 +63,5 @@ declare module 'vue' {
     StudentsSearchField: typeof import('./src/components/Search/Account/StudentsSearchField.vue')['default']
     TeacherSearchField: typeof import('./src/components/Search/Account/TeacherSearchField.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']
-    VFlag: typeof import('./src/components/i18n/VFlag.vue')['default']
   }
 }

@@ -58,6 +58,12 @@ export const filters = {
     permissions: "",
     connections: "",
     emailRegistrationCodes: "",
+    departments: "",
+    genericName: "",
+    facultiesCount: "",
+    groupsCount: "",
+    departmentID: "",
+    facultyID: "",
 }
 
 export const strings = {
@@ -74,6 +80,7 @@ export const strings = {
     facultySearchPlaceholder: "",
     groupSearchPlaceholder: "",
     permissionSearchPlaceholder: "",
+    select: "",
 }
 
 export const buttons = {
@@ -82,10 +89,17 @@ export const buttons = {
         create: "",
         save: "",
         delete: "",
-    }
+        edit: "",
+        copyID: "",
+        yes: "",
+        no: "",
+    },
 }
 
 export const commonEntity = {
+    id: "",
+    name: "",
+    description: "",
     createdAt: "",
     updatedAt: "",
 }
@@ -150,6 +164,54 @@ export const label = {
     permission: "",
 }
 
+export const departmentsPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
+export const facultiesPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
+export const groupsPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
 export const BlankTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -157,9 +219,13 @@ export const BlankTranslation = {
     accountListPage: accountListPage,
     connectionsPage: connectionsPage,
     permissionsPage: permissionsPage,
+    departmentsPages: departmentsPages,
     filters: filters,
     buttons: buttons,
     strings: strings,
     entities: entities,
     label: label,
+    commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
+    groupsPages: groupsPages,
 }

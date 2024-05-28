@@ -81,6 +81,12 @@ export const filters = {
     permissions: "Permissions",
     connections: "Connections",
     emailRegistrationCodes: "Email Registration Codes",
+    departments: "Departments",
+    genericName: "Name",
+    facultiesCount: "Faculties Count",
+    groupsCount: "Groups Count",
+    departmentID: "Department ID",
+    facultyID: "Faculty ID",
 }
 
 export const buttons = {
@@ -89,6 +95,10 @@ export const buttons = {
         create: "New",
         save: "Save",
         delete: "Delete",
+        edit: "Edit",
+        copyID: "Copy ID",
+        yes: "Yes",
+        no: "No",
     }
 }
 
@@ -106,6 +116,7 @@ export const strings = {
     facultySearchPlaceholder: "Search faculty",
     groupSearchPlaceholder: "Search group",
     permissionSearchPlaceholder: "Search permission",
+    select: "Select an option",
 }
 
 export const message = {
@@ -114,6 +125,9 @@ export const message = {
 }
 
 export const commonEntity = {
+    id: "ID",
+    name: "Name",
+    description: "Description",
     createdAt: "Created At",
     updatedAt: "Updated At",
 }
@@ -151,6 +165,54 @@ export const label = {
     permission: "Permission",
 }
 
+export const departmentsPages = {
+    list: {
+        title: "List of Departments",
+        modal: {
+            title: "Delete Department",
+            subtitle: "Are you sure you want to delete this department?",
+        }
+    },
+    edit: {
+        title: "Editing department",
+    },
+    create: {
+        title: "Create new department",
+    }
+}
+
+export const facultiesPages = {
+    list: {
+        title: "List of Faculties",
+        modal: {
+            title: "Delete Faculty",
+            subtitle: "Are you sure you want to delete this faculty?",
+        }
+    },
+    edit: {
+        title: "Editing faculty",
+    },
+    create: {
+        title: "Create new faculty",
+    }
+}
+
+export const groupsPages = {
+    list: {
+        title: "List of Groups",
+        modal: {
+            title: "Delete Group",
+            subtitle: "Are you sure you want to delete this group?",
+        }
+    },
+    edit: {
+        title: "Editing group",
+    },
+    create: {
+        title: "Create new group",
+    }
+}
+
 export const EnTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -158,9 +220,13 @@ export const EnTranslation = {
     accountListPage: accountListPage,
     connectionsPage: connectionsPage,
     permissionsPage: permissionsPage,
+    departmentsPages: departmentsPages,
     filters: filters,
     buttons: buttons,
     strings: strings,
     entities: entities,
     label: label,
+    commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
+    groupsPages: groupsPages,
 }

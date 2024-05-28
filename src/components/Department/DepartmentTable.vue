@@ -28,7 +28,7 @@ const deleteDepartmentID = ref("");
 
 const filters: SearchFilter[] = [
   {
-    title: "Name",
+    title: "filters.genericName",
     propertyName: "name",
     placeholder: "КІПтаКЗ",
   },
@@ -107,8 +107,7 @@ const deleteDepartmentAction = () => {
             <RouterLink to="/organization/department/create">
               <Button
                 icon="pi pi-plus"
-                v-tooltip="'Create new department'"
-                label="New"
+                :label="$t('buttons.actions.create')"
                 raised
                 link
               />
@@ -118,33 +117,48 @@ const deleteDepartmentAction = () => {
         <Column
           key="department_id"
           field="department_id"
-          header="Department ID"
+          :header="$t('commonEntity.id')"
         />
-        <Column key="name" field="name" header="Name" />
-        <Column key="description" field="description" header="Description" />
+        <Column key="name" field="name" :header="$t('commonEntity.name')" />
+        <Column
+          key="description"
+          field="description"
+          :header="$t('commonEntity.description')"
+        />
         <Column
           key="faculties_count"
           field="faculties_count"
-          header="Faculties Count"
+          :header="$t('filters.facultiesCount')"
         />
-        <Column key="created_at" field="created_at" header="Created At" />
-        <Column key="updated_at" field="updated_at" header="Updated At" />
-        <Column key="actions" header="Actions">
+        <Column
+          key="created_at"
+          field="created_at"
+          :header="$t('commonEntity.createdAt')"
+        />
+        <Column
+          key="updated_at"
+          field="updated_at"
+          :header="$t('commonEntity.updatedAt')"
+        />
+        <Column key="actions" :header="$t('strings.actionsColumn')">
           <template #body="slotProps">
             <div class="flex flex-wrap gap-2">
               <CopyToClipboard
                 :data="(slotProps.data as Department).department_id"
-                tooltip="Copy ID"
+                :tooltip="$t('buttons.actions.copyID')"
                 icon="pi pi-copy"
               />
               <RouterLink
                 :to="`/organization/department/${(slotProps.data as Department).department_id}/edit`"
               >
-                <Button icon="pi pi-pencil" v-tooltip="'Edit Department'" />
+                <Button
+                  icon="pi pi-pencil"
+                  v-tooltip="$t('buttons.actions.edit')"
+                />
               </RouterLink>
               <Button
                 icon="pi pi-trash"
-                v-tooltip="'Delete Department'"
+                v-tooltip="$t('buttons.actions.delete')"
                 class="p-button-danger"
                 @click="
                   showDeleteDepartmentDialog(
@@ -168,7 +182,7 @@ const deleteDepartmentAction = () => {
       <FilterPanel
         :filters="filters"
         :filterHandler="onFilter"
-        search-name="Departments"
+        :search-name="$t('filters.departments')"
       />
     </div>
   </div>
@@ -176,17 +190,19 @@ const deleteDepartmentAction = () => {
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    header="Delete faculty"
-    :style="{ width: '50%' }"
+    :header="$t('departmentsPages.list.modal.title')"
   >
     <span class="p-text-secondary block mb-5"
-      >Are you sure you want to delete department
-      {{ deleteDepartmentID }}?</span
+      >{{ $t("departmentsPages.list.modal.subtitle") }}
+      {{ deleteDepartmentID }}</span
     >
-    <div class="flex flex-row gap-2 justify-content-center">
-      <Button label="Yes" @click="deleteDepartmentAction" />
+    <div class="flex flex-row gap-2 justify-content-between">
       <Button
-        label="No"
+        :label="$t('buttons.actions.yes')"
+        @click="deleteDepartmentAction"
+      />
+      <Button
+        :label="$t('buttons.actions.no')"
         @click="deleteDialogVisible = false"
         severity="secondary"
       />

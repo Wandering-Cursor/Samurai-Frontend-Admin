@@ -9,7 +9,7 @@ const $props = defineProps({
   },
 });
 
-const slots = defineSlots<{
+defineSlots<{
   // Allows to pass HTML elements to the component
   default(props: any): any;
 }>();

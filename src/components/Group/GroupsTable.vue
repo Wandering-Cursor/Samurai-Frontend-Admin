@@ -26,14 +26,14 @@ const deleteGroupId = ref("");
 
 const filters: SearchFilter[] = [
   {
-    title: "Faculty ID",
+    title: "filters.facultyID",
     propertyName: "faculty_id",
-    placeholder: "Enter faculty ID",
+    placeholder: "de4052e9-5238-40b4-95bf-eac9e740c6af",
   },
   {
-    title: "Name",
+    title: "commonEntity.name",
     propertyName: "name",
-    placeholder: "Enter group name",
+    placeholder: "КН-343[Б]",
   },
 ];
 
@@ -112,38 +112,43 @@ onMounted(() => {
             <RouterLink to="/organization/group/create">
               <Button
                 icon="pi pi-plus"
-                v-tooltip="'Create new group'"
-                label="New"
+                :label="$t('buttons.actions.create')"
                 raised
                 link
               />
             </RouterLink>
           </div>
         </template>
-        <Column key="faculty_id" field="faculty_id" header="Faculty ID" />
-        <Column key="name" field="name" header="Name" />
-        <Column key="description" field="description" header="Description" />
-        <Column key="actions" header="Actions">
+        <Column
+          key="faculty_id"
+          field="faculty_id"
+          :header="$t('filters.facultyID')"
+        />
+        <Column key="name" field="name" :header="$t('commonEntity.name')" />
+        <Column
+          key="description"
+          field="description"
+          :header="$t('commonEntity.description')"
+        />
+        <Column key="actions" :header="$t('strings.actionsColumn')">
           <template #body="slotProps">
             <div class="flex flex-wrap gap-2">
-              <RouterLink
-                :to="`/organization/group/${(slotProps.data as Group).group_id}`"
-              >
-                <Button icon="pi pi-eye" v-tooltip="'View group'" />
-              </RouterLink>
               <CopyToClipboard
                 :data="(slotProps.data as Group).group_id"
-                tooltip="Copy ID"
+                :tooltip="$t('buttons.actions.copyID')"
                 icon="pi pi-copy"
               />
               <RouterLink
                 :to="`/organization/group/${(slotProps.data as Group).group_id}/edit`"
               >
-                <Button icon="pi pi-pencil" v-tooltip="'Edit group'" />
+                <Button
+                  icon="pi pi-pencil"
+                  v-tooltip="$t('buttons.actions.edit')"
+                />
               </RouterLink>
               <Button
                 icon="pi pi-trash"
-                v-tooltip="'Delete group'"
+                v-tooltip="$t('buttons.actions.delete')"
                 class="p-button-danger"
                 @click="
                   showDeleteGroupDialog(
@@ -168,8 +173,7 @@ onMounted(() => {
       <FilterPanel
         v-bind:filters="filters"
         v-bind:filterHandler="onFilter"
-        title="Filters"
-        searchName="Group"
+        :searchName="$t('label.group')"
       />
     </div>
   </div>
@@ -177,16 +181,15 @@ onMounted(() => {
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    header="Delete group"
-    :style="{ width: '50%' }"
+    :header="$t('groupsPages.list.modal.title')"
   >
-    <span class="p-text-secondary block mb-5"
-      >Are you sure you want to delete group {{ deleteGroupId }}?</span
-    >
-    <div class="flex justify-content-end gap-2">
-      <Button label="Yes" @click="deleteGroupAction" />
+    <span class="p-text-secondary block mb-5">
+      {{ $t("groupsPages.list.modal.subtitle") }} {{ deleteGroupId }}
+    </span>
+    <div class="flex flex-row gap-2 justify-content-between">
+      <Button :label="$t('buttons.actions.yes')" @click="deleteGroupAction" />
       <Button
-        label="No"
+        :label="$t('buttons.actions.no')"
         @click="deleteDialogVisible = false"
         severity="secondary"
       />

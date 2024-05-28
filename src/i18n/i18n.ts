@@ -1,6 +1,6 @@
-import { BlankTranslation } from "@/translations/blank";
-import { EnTranslation } from "@/translations/en";
-import { UaTranslation } from "@/translations/ua";
+import { BlankTranslation } from "@/i18n/translations/blank";
+import { EnTranslation } from "@/i18n/translations/en";
+import { UaTranslation } from "@/i18n/translations/ua";
 import { createI18n, useI18n } from "vue-i18n";
 
 type MessageSchema = typeof BlankTranslation;

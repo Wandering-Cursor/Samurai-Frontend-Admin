@@ -6,7 +6,7 @@ const $props = defineProps<{
   permission: Permission;
 }>();
 
-const slots = defineSlots<{
+defineSlots<{
   // Allows to pass HTML elements to the component
   default(props: any): any;
 }>();
