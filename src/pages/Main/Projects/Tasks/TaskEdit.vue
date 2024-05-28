@@ -82,36 +82,44 @@ const closePage = () => {
             aria-label="Leave page"
             @click="closePage"
           />
-          <p class="font-semibold text-lg">Add Task</p>
+          <p class="font-semibold text-lg">
+            {{ $t("projectsPages.tasks.edit") }}: {{ editTask.name }} ({{
+              taskId
+            }})
+          </p>
         </div>
         <div class="flex align-items-center gap-2">
-          <Button icon="pi pi-save" label="Save" @click="saveTask" />
+          <Button
+            icon="pi pi-save"
+            :label="$t('buttons.actions.save')"
+            @click="saveTask"
+          />
         </div>
       </div>
     </template>
-    <p>For project: {{ editTask.project_id }}</p>
     <div class="flex justify-content-center flex-wrap">
-      <Panel class="md:w-4 sm:w-full" header="Task Data">
+      <Panel class="w-full">
         <div class="flex flex-column gap-4">
-          <InputText v-model="editTask.name" placeholder="Task name" />
-          <Textarea
-            v-model="editTask.description"
-            placeholder="Task description"
-          />
-          <InputNumber
-            v-model="editTask.priority"
-            showButtons
-            placeholder="Task priority"
-          />
+          <InputText v-model="editTask.name" placeholder="Створити файл..." />
+          <EditorWithLabel v-bind:binding="editTask" />
+          <div class="flex w-full flex-column gap-2">
+            <label for="task-priority">{{ $t("filters.priority") }}</label>
+            <InputNumber
+              id="task-priority"
+              v-model="editTask.priority"
+              showButtons
+              :placeholder="$t('filters.priority')"
+            />
+          </div>
           <TeacherSearchField
             id="task-reviewer"
-            label="Task reviewer"
-            placeholder="Task reviewer"
+            label="strings.taskReviewer"
+            placeholder="strings.taskReviewer"
             :onItemSelect="selectReviewer"
           />
           <Calendar
             v-model="editTask.due_date_handler"
-            placeholder="Task due date"
+            :placeholder="$t('strings.dueDate')"
             :min-date="new Date()"
             showIcon
             @update:model-value="setDueDate"

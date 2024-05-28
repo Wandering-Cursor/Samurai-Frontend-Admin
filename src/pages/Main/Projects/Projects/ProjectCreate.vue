@@ -65,19 +65,37 @@ const createNewProject = () => {
           <RouterLink to="/projects">
             <Button icon="pi pi-chevron-left" aria-label="Back" />
           </RouterLink>
-          <p class="font-semibold text-lg">Create Project</p>
+          <p class="font-semibold text-lg">
+            {{ $t("projectsPages.create.title") }}
+          </p>
         </div>
         <div class="flex align-items-center gap-2">
-          <Button icon="pi pi-save" label="Create" @click="createNewProject" />
+          <Button
+            icon="pi pi-save"
+            :label="$t('buttons.actions.create')"
+            @click="createNewProject"
+          />
         </div>
       </div>
     </template>
     <div class="w-full flex flex-column gap-2">
-      <InputText v-model="createProjectBody.name" placeholder="Project Name" />
-      <Textarea
-        v-model="createProjectBody.description"
-        placeholder="A description for the project"
+      <InputText
+        v-model="createProjectBody.name"
+        :placeholder="$t('commonEntity.name')"
       />
+      <div class="flex flex-column gap-2">
+        <label for="projectDescription">
+          {{ $t("commonEntity.description") }}
+        </label>
+        <!-- For some reason, the Editor component leks out of the container unless
+        you specify a parent component to be slightly larger than the Editor -->
+        <div style="height: 450px">
+          <Editor
+            v-model="createProjectBody.description as string | undefined"
+            style="height: 400px"
+          />
+        </div>
+      </div>
       <FacultySearchField :onItemSelect="facultySelected"></FacultySearchField>
     </div>
   </Panel>

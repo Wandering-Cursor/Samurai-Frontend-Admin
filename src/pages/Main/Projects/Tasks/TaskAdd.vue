@@ -9,6 +9,7 @@ import { AutoCompleteItemSelectEvent } from "primevue/autocomplete";
 import TeacherSearchField from "@/components/Search/Account/TeacherSearchField.vue";
 import { apiClient } from "@/api/base";
 import { useToast } from "primevue/usetoast";
+import EditorWithLabel from "@/components/EditorWithLabel.vue";
 
 const route = useRoute();
 const toast = useToast();
@@ -72,36 +73,42 @@ const closePage = () => {
             aria-label="Leave page"
             @click="closePage"
           />
-          <p class="font-semibold text-lg">Add Task</p>
+          <p class="font-semibold text-lg">
+            {{ $t("projectsPages.tasks.create") }}
+          </p>
         </div>
         <div class="flex align-items-center gap-2">
-          <Button icon="pi pi-save" label="Save" @click="addNewTask" />
+          <Button
+            icon="pi pi-save"
+            :label="$t('buttons.actions.create')"
+            @click="addNewTask"
+          />
         </div>
       </div>
     </template>
-    <p>For project: {{ projectId }}</p>
     <div class="flex justify-content-center flex-wrap">
-      <Panel class="md:w-4 sm:w-full" header="Task Data">
+      <Panel class="w-full">
         <div class="flex flex-column gap-4">
-          <InputText v-model="newTask.name" placeholder="Task name" />
-          <Textarea
-            v-model="newTask.description"
-            placeholder="Task description"
-          />
-          <InputNumber
-            v-model="newTask.priority"
-            showButtons
-            placeholder="Task priority"
-          />
+          <InputText v-model="newTask.name" placeholder="Створити файл..." />
+          <EditorWithLabel v-bind:binding="newTask" />
+          <div class="flex w-full flex-column gap-2">
+            <label for="task-priority">{{ $t("filters.priority") }}</label>
+            <InputNumber
+              id="task-priority"
+              v-model="newTask.priority"
+              showButtons
+              :placeholder="$t('filters.priority')"
+            />
+          </div>
           <TeacherSearchField
             id="task-reviewer"
-            label="Task reviewer"
-            placeholder="Task reviewer"
+            label="strings.taskReviewer"
+            placeholder="strings.taskReviewer"
             :onItemSelect="selectReviewer"
           />
           <Calendar
             v-model="newTask.due_date_handler"
-            placeholder="Task due date"
+            :placeholder="$t('strings.dueDate')"
             :min-date="new Date()"
             showIcon
             @update:model-value="setDueDate"

@@ -44,7 +44,7 @@ const setItemsCallback = (newItems: object[]) => {
 </script>
 
 <template>
-  <div class="flex align-items-center gap-2 mb-2">
+  <div class="flex align-items-center gap-6 mb-2">
     <label :for="props.id" class="font-semibold w-6rem">{{
       $t(props.label as string)
     }}</label>
@@ -52,7 +52,7 @@ const setItemsCallback = (newItems: object[]) => {
       :id="props.id"
       v-model="value"
       :suggestions="items"
-      class="flex-auto"
+      class="flex-grow-1"
       :placeholder="$t(props.placeholder)"
       @complete="(event: AutoCompleteCompleteEvent) => searchMethod(event, setItemsCallback)"
       :option-label="props.optionLabel"

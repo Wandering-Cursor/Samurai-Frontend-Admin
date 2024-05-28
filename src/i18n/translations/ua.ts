@@ -82,6 +82,7 @@ export const filters = {
     groupsCount: "К-ть груп",
     departmentID: "ID підрозділу",
     facultyID: "ID факультету",
+    priority: "Пріоритет",
 }
 
 export const buttons = {
@@ -94,6 +95,8 @@ export const buttons = {
         copyID: "Скопіювати ID",
         yes: "Так",
         no: "Ні",
+        apply: "Застосувати",
+        update: "Оновити",
     }
 }
 
@@ -120,7 +123,10 @@ export const strings = {
     facultySearchPlaceholder: "Пошук факультету",
     groupSearchPlaceholder: "Пошук групи",
     permissionSearchPlaceholder: "Пошук дозволу",
+    userSearchPlaceholder: "Введіть електронну пошту для пошуку користувача",
     select: "Оберіть варіант",
+    taskReviewer: "Перевіряючий задачі",
+    dueDate: "Кінцевий термін",
 }
 
 export const commonEntity = {
@@ -162,6 +168,8 @@ export const label = {
     faculty: "Факультет",
     group: "Група",
     permission: "Дозвіл",
+    teacher: "Викладач",
+    student: "Студент",
 }
 
 export const departmentsPages = {
@@ -212,6 +220,39 @@ export const groupsPages = {
     }
 }
 
+export const projectsPages = {
+    list: {
+        title: SideMenu.projectsSubTopics.projects,
+        modal: {
+            title: "Призначити проєкт",
+            subtitle: "Призначити проєкт наступним користувачам:",
+        },
+        buttons: {
+            assign: "Призначити",
+        }
+    },
+    edit: {
+        title: "Редагування проєкту",
+        deleteModal: {
+            title: "Видалити проєкт",
+            subtitle: "Ви впевнені, що хочете видалити цей проєкт?",
+        }
+    },
+    create: {
+        title: "Створити проєкт",
+    },
+    tasks: {
+        list: "Список задач",
+        create: "Створити задачу",
+        edit: "Редагування задачі",
+        deleteModal: {
+            title: "Видалити задачу",
+            subtitle: "Ви впевнені, що хочете видалити цю задачу?",
+
+        }
+    }
+}
+
 export const UaTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -228,4 +269,5 @@ export const UaTranslation = {
     commonEntity: commonEntity,
     facultiesPages: facultiesPages,
     groupsPages: groupsPages,
+    projectsPages: projectsPages,
 }

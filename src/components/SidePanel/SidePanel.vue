@@ -103,16 +103,7 @@ const getCountryLabel = (option: { name: string; flag: string }) => {
       <template #end>
         <Divider />
         <div class="flex gap-4 flex-column">
-          <div class="flex justify-content-center">
-            <a href="https://github.com/Wandering-Cursor/">
-              <Button
-                link
-                label="By Wandering-Cursor team"
-                class="font-medium text-xs font-light p-0 m-0"
-              />
-            </a>
-          </div>
-          <div class="flex flex-column">
+          <div class="flex flex-column gap-2">
             <div class="flex justify-content-center">
               <p>{{ $t("message.chooseLanguage") }}</p>
             </div>
@@ -126,6 +117,15 @@ const getCountryLabel = (option: { name: string; flag: string }) => {
               class="flex justify-content-center"
               :allowEmpty="false"
             />
+          </div>
+          <div class="flex justify-content-center">
+            <a href="https://github.com/Wandering-Cursor/">
+              <Button
+                link
+                label="By Wandering-Cursor team"
+                class="font-medium text-xs font-light p-0 m-0"
+              />
+            </a>
           </div>
         </div>
       </template>

@@ -18,11 +18,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "Student",
+    default: "label.student",
   },
   placeholder: {
     type: String,
-    default: "Enter a username or email to perform search",
+    default: "strings.userSearchPlaceholder",
   },
   onItemSelect: {
     type: Function as unknown as () => (

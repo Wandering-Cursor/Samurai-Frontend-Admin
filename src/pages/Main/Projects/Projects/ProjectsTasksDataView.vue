@@ -22,9 +22,13 @@ const openAddTaskTab = () => {
   <DataView :value="projectEntity.tasks" data-key="task_id">
     <template #header>
       <div class="w-full flex justify-content-between align-items-center">
-        <div class="flex gap-2">List of Tasks</div>
+        <div class="flex gap-2">{{ $t("projectsPages.tasks.list") }}</div>
         <div class="flex gap-2">
-          <Button icon="pi pi-plus" label="Add task" @click="openAddTaskTab" />
+          <Button
+            icon="pi pi-plus"
+            :label="$t('buttons.actions.create')"
+            @click="openAddTaskTab"
+          />
         </div>
       </div>
     </template>
