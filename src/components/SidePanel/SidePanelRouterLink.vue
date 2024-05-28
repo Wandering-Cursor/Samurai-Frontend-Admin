@@ -17,7 +17,7 @@ const props = defineProps<{
   >
     <a v-ripple :href="href" v-bind="props.props.action" @click="navigate">
       <span :class="props.item.icon" />
-      <span class="ml-2">{{ props.item.label }}</span>
+      <span class="ml-2">{{ $t(props.item.label as string) }}</span>
     </a>
   </router-link>
 </template>
