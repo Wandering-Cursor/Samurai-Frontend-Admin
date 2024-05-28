@@ -101,65 +101,77 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid w-full p-2">
-    <div class="col-10 pt-4">
-      <DataTable :value="groupsList" showGridlines stripedRows>
-        <template #header>
-          <div
-            class="flex flex-wrap align-items-center justify-content-between gap-2"
-          >
-            <div></div>
-            <RouterLink to="/organization/group/create">
-              <Button
-                icon="pi pi-plus"
-                :label="$t('buttons.actions.create')"
-                raised
-                link
-              />
-            </RouterLink>
-          </div>
-        </template>
-        <Column
-          key="faculty_id"
-          field="faculty_id"
-          :header="$t('filters.facultyID')"
-        />
-        <Column key="name" field="name" :header="$t('commonEntity.name')" />
-        <Column
-          key="description"
-          field="description"
-          :header="$t('commonEntity.description')"
-        />
-        <Column key="actions" :header="$t('strings.actionsColumn')">
-          <template #body="slotProps">
-            <div class="flex flex-wrap gap-2">
-              <CopyToClipboard
-                :data="(slotProps.data as Group).group_id"
-                :tooltip="$t('buttons.actions.copyID')"
-                icon="pi pi-copy"
-              />
-              <RouterLink
-                :to="`/organization/group/${(slotProps.data as Group).group_id}/edit`"
-              >
+  <div class="flex flex-wrap">
+    <div class="flex-grow-1">
+      <div class="max-w-screen">
+        <DataTable :value="groupsList" showGridlines stripedRows scrollable>
+          <template #header>
+            <div
+              class="flex flex-wrap align-items-center justify-content-between gap-2"
+            >
+              <div></div>
+              <RouterLink to="/organization/group/create">
                 <Button
-                  icon="pi pi-pencil"
-                  v-tooltip="$t('buttons.actions.edit')"
+                  icon="pi pi-plus"
+                  :label="$t('buttons.actions.create')"
+                  raised
+                  link
                 />
               </RouterLink>
-              <Button
-                icon="pi pi-trash"
-                v-tooltip="$t('buttons.actions.delete')"
-                class="p-button-danger"
-                @click="
-                  showDeleteGroupDialog(
-                    (slotProps.data as Group).group_id as string
-                  )
-                "
-              />
             </div>
           </template>
-        </Column>
-      </DataTable>
+          <Column
+            key="faculty_id"
+            field="faculty_id"
+            :header="$t('filters.facultyID')"
+          />
+          <Column key="name" field="name" :header="$t('commonEntity.name')" />
+          <Column
+            key="description"
+            field="description"
+            :header="$t('commonEntity.description')"
+          />
+          <Column
+            key="created_at"
+            field="created_at"
+            :header="$t('commonEntity.createdAt')"
+          />
+          <Column
+            key="updated_at"
+            field="updated_at"
+            :header="$t('commonEntity.updatedAt')"
+          />
+          <Column key="actions" :header="$t('strings.actionsColumn')">
+            <template #body="slotProps">
+              <div class="flex flex-wrap gap-2">
+                <CopyToClipboard
+                  :data="(slotProps.data as Group).group_id"
+                  :tooltip="$t('buttons.actions.copyID')"
+                  icon="pi pi-copy"
+                />
+                <RouterLink
+                  :to="`/organization/group/${(slotProps.data as Group).group_id}/edit`"
+                >
+                  <Button
+                    icon="pi pi-pencil"
+                    v-tooltip="$t('buttons.actions.edit')"
+                  />
+                </RouterLink>
+                <Button
+                  icon="pi pi-trash"
+                  v-tooltip="$t('buttons.actions.delete')"
+                  class="p-button-danger"
+                  @click="
+                    showDeleteGroupDialog(
+                      (slotProps.data as Group).group_id as string
+                    )
+                  "
+                />
+              </div>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
       <Paginator
         v-model:page="pageFilters.page"
         v-model:totalRecords="metaInfo.total"
@@ -169,14 +181,13 @@ onMounted(() => {
         :rowsPerPageOptions="[1, 5, 10, 20, 30]"
       />
     </div>
-    <div class="col-2">
-      <FilterPanel
-        v-bind:filters="filters"
-        v-bind:filterHandler="onFilter"
-        :searchName="$t('label.group')"
-      />
-    </div>
   </div>
+  <FilterPanel
+    v-bind:filters="filters"
+    v-bind:filterHandler="onFilter"
+    :searchName="$t('label.group')"
+    class="flex-grow-1"
+  />
 
   <Dialog
     v-model:visible="deleteDialogVisible"

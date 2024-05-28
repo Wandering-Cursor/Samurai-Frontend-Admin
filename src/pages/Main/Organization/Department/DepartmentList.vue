@@ -9,8 +9,6 @@ import DepartmentTable from "@/components/Department/DepartmentTable.vue";
         {{ $t("departmentsPages.list.title") }}
       </p>
     </div>
-    <div class="grid w-full p-2">
-      <DepartmentTable />
-    </div>
+    <DepartmentTable />
   </div>
 </template>

@@ -89,27 +89,22 @@ const filters: SearchFilter[] = [
 </script>
 
 <template>
-  <div class="grid w-full m-1">
-    <div class="col">
-      <div>
-        <p class="text-4xl font-bold text-center">
-          {{ $t("accountListPage.title") }}
-        </p>
-      </div>
-      <div>
-        <AccountsTable
-          :list="list"
-          :metaInfo="metaInfo"
-          :pageFilters="pageFilters"
-        >
-        </AccountsTable>
-      </div>
-    </div>
-    <div class="col-2">
+  <div class="flex flex-column">
+    <p class="text-4xl font-bold text-center">
+      {{ $t("accountListPage.title") }}
+    </p>
+    <div class="flex flex-wrap">
+      <AccountsTable
+        :list="list"
+        :metaInfo="metaInfo"
+        :pageFilters="pageFilters"
+        class="max-w-screen flex-grow-1"
+      />
       <FilterPanel
         :filters="filters"
         :filterHandler="onFilter"
         :search-name="$t('filters.accountSearchName')"
+        class="flex-grow-1"
       />
     </div>
   </div>

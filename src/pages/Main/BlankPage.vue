@@ -13,7 +13,7 @@ useHead({
 
 <template>
   <Card
-    class="flex align-items-center justify-content-center align-self-center shadow-6"
+    class="flex h-full w-full align-items-center justify-content-center align-self-center"
   >
     <template #title> {{ $t("blankPage.title") }} </template>
     <template #content>

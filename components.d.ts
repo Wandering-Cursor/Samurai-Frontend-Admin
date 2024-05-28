@@ -60,6 +60,7 @@ declare module 'vue' {
     ScrollPanel: typeof import('primevue/scrollpanel')['default']
     SearchField: typeof import('./src/components/Search/SearchField.vue')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
+    Sidebar: typeof import('primevue/sidebar')['default']
     SidePanel: typeof import('./src/components/SidePanel/SidePanel.vue')['default']
     SidePanelRouterLink: typeof import('./src/components/SidePanel/SidePanelRouterLink.vue')['default']
     StudentsSearchField: typeof import('./src/components/Search/Account/StudentsSearchField.vue')['default']

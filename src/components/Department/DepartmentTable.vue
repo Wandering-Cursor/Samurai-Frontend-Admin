@@ -96,95 +96,95 @@ const deleteDepartmentAction = () => {
 </script>
 
 <template>
-  <div class="grid w-full">
-    <div class="col-10 pt-4">
-      <DataTable :value="list" showGridlines stripedRows>
-        <template #header>
-          <div
-            class="flex flex-wrap align-items-center justify-content-between gap-2"
-          >
-            <div></div>
-            <RouterLink to="/organization/department/create">
-              <Button
-                icon="pi pi-plus"
-                :label="$t('buttons.actions.create')"
-                raised
-                link
-              />
-            </RouterLink>
-          </div>
-        </template>
-        <Column
-          key="department_id"
-          field="department_id"
-          :header="$t('commonEntity.id')"
-        />
-        <Column key="name" field="name" :header="$t('commonEntity.name')" />
-        <Column
-          key="description"
-          field="description"
-          :header="$t('commonEntity.description')"
-        />
-        <Column
-          key="faculties_count"
-          field="faculties_count"
-          :header="$t('filters.facultiesCount')"
-        />
-        <Column
-          key="created_at"
-          field="created_at"
-          :header="$t('commonEntity.createdAt')"
-        />
-        <Column
-          key="updated_at"
-          field="updated_at"
-          :header="$t('commonEntity.updatedAt')"
-        />
-        <Column key="actions" :header="$t('strings.actionsColumn')">
-          <template #body="slotProps">
-            <div class="flex flex-wrap gap-2">
-              <CopyToClipboard
-                :data="(slotProps.data as Department).department_id"
-                :tooltip="$t('buttons.actions.copyID')"
-                icon="pi pi-copy"
-              />
-              <RouterLink
-                :to="`/organization/department/${(slotProps.data as Department).department_id}/edit`"
-              >
+  <div class="flex flex-column">
+    <div class="flex flex-wrap">
+      <div class="max-w-screen">
+        <DataTable :value="list" showGridlines stripedRows scrollable>
+          <template #header>
+            <div
+              class="flex flex-wrap align-items-center justify-content-between gap-2"
+            >
+              <RouterLink to="/organization/department/create">
                 <Button
-                  icon="pi pi-pencil"
-                  v-tooltip="$t('buttons.actions.edit')"
+                  icon="pi pi-plus"
+                  :label="$t('buttons.actions.create')"
+                  raised
+                  link
                 />
               </RouterLink>
-              <Button
-                icon="pi pi-trash"
-                v-tooltip="$t('buttons.actions.delete')"
-                class="p-button-danger"
-                @click="
-                  showDeleteDepartmentDialog(
-                    (slotProps.data as Department).department_id as string
-                  )
-                "
-              />
             </div>
           </template>
-        </Column>
-      </DataTable>
-      <Paginator
-        :rows="metaInfo.page_size"
-        :totalRecords="metaInfo.total"
-        v-on:page="onPageChange"
-        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
-        :rowsPerPageOptions="[1, 5, 10, 20, 30]"
-      />
-    </div>
-    <div class="col-2">
+          <Column
+            key="department_id"
+            field="department_id"
+            :header="$t('commonEntity.id')"
+          />
+          <Column key="name" field="name" :header="$t('commonEntity.name')" />
+          <Column
+            key="description"
+            field="description"
+            :header="$t('commonEntity.description')"
+          />
+          <Column
+            key="faculties_count"
+            field="faculties_count"
+            :header="$t('filters.facultiesCount')"
+          />
+          <Column
+            key="created_at"
+            field="created_at"
+            :header="$t('commonEntity.createdAt')"
+          />
+          <Column
+            key="updated_at"
+            field="updated_at"
+            :header="$t('commonEntity.updatedAt')"
+          />
+          <Column key="actions" :header="$t('strings.actionsColumn')">
+            <template #body="slotProps">
+              <div class="flex flex-wrap gap-2">
+                <CopyToClipboard
+                  :data="(slotProps.data as Department).department_id"
+                  :tooltip="$t('buttons.actions.copyID')"
+                  icon="pi pi-copy"
+                />
+                <RouterLink
+                  :to="`/organization/department/${(slotProps.data as Department).department_id}/edit`"
+                >
+                  <Button
+                    icon="pi pi-pencil"
+                    v-tooltip="$t('buttons.actions.edit')"
+                  />
+                </RouterLink>
+                <Button
+                  icon="pi pi-trash"
+                  v-tooltip="$t('buttons.actions.delete')"
+                  class="p-button-danger"
+                  @click="
+                    showDeleteDepartmentDialog(
+                      (slotProps.data as Department).department_id as string
+                    )
+                  "
+                />
+              </div>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
       <FilterPanel
         :filters="filters"
         :filterHandler="onFilter"
         :search-name="$t('filters.departments')"
+        class="flex-grow-1"
       />
     </div>
+    <Paginator
+      :rows="metaInfo.page_size"
+      :totalRecords="metaInfo.total"
+      v-on:page="onPageChange"
+      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+      :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+    />
   </div>
 
   <Dialog

@@ -69,17 +69,16 @@ const filters: SearchFilter[] = [
         {{ $t("facultiesPages.list.title") }}
       </p>
     </div>
-    <div class="grid w-full">
-      <div class="col-10 pt-4">
+    <div class="flex flex-wrap w-full">
+      <div class="flex-grow-1 pt-3">
         <FacultyTable
           :list="list"
           :metaInfo="metaInfo"
           :pageFilters="pageFilters"
           :change-page-callback="onPageChange"
-        >
-        </FacultyTable>
+        />
       </div>
-      <div class="col-2">
+      <div class="flex-grow-1">
         <FilterPanel
           :filters="filters"
           :filterHandler="onFilter"
