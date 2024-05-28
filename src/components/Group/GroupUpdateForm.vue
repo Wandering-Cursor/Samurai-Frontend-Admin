@@ -7,7 +7,6 @@ import { useRouter } from "vue-router";
 import FacultySearchField from "../Search/Faculty/FacultySearchField.vue";
 import { AutoCompleteItemSelectEvent } from "primevue/autocomplete";
 import { updateGroup } from "@/api/organization/group/updateGroup";
-import { label } from "../../i18n/translations/ua";
 
 const router = useRouter();
 const toast = useToast();
