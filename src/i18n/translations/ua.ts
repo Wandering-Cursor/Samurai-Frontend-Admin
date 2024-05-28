@@ -41,6 +41,7 @@ export const blankPage = {
 
 export const accountListPage = {
     title: "Керування акаунтами",
+    create: "Створити акаунт",
 }
 
 export const connectionsPage = {
@@ -98,6 +99,7 @@ export const buttons = {
         no: "Ні",
         apply: "Застосувати",
         update: "Оновити",
+        cancel: "Скасувати",
     }
 }
 

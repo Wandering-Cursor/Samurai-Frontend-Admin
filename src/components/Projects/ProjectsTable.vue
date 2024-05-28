@@ -7,7 +7,7 @@ import { PageState } from "primevue/paginator";
 import { ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import AssignProjectModal from "./AssignProjectModal.vue";
-import { useI18nLocal } from "@/i18n/i18n";
+import { useI18nLocal, currentPageReportTemplate } from "@/i18n/i18n";
 
 const router = useRouter();
 const toast = useToast();
@@ -109,5 +109,6 @@ const showAssignProjectModal = (projectId: string) => {
     @page="onPageChange"
     template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
     :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+    :currentPageReportTemplate="currentPageReportTemplate()"
   />
 </template>

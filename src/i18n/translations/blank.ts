@@ -41,6 +41,7 @@ export const blankPage = {
 
 export const accountListPage = {
     title: "",
+    create: "",
 }
 
 export const filters = {
@@ -100,6 +101,7 @@ export const buttons = {
         no: "",
         apply: "",
         update: "",
+        cancel: "",
     },
 }
 

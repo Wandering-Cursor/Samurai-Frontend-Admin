@@ -46,6 +46,7 @@ export const blankPage = {
 
 export const accountListPage = {
     title: "Accounts control",
+    create: "Create account",
 }
 
 export const connectionsPage = {
@@ -103,6 +104,7 @@ export const buttons = {
         no: "No",
         apply: "Apply",
         update: "Update",
+        cancel: "Cancel",
     }
 }
 

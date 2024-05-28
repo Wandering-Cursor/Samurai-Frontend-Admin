@@ -17,6 +17,19 @@ export function useI18nLocal() {
     );
 }
 
+export function currentPageReportTemplate() {
+    // Using hacks, because translations don't allow to use variables
+    const locale = localStorage.getItem('locale');
+    if (locale === 'en') {
+        return '({currentPage} of {totalPages} pages)';
+    }
+    else if (locale === 'ua') {
+        return '({currentPage} з {totalPages} сторінок)';
+    }
+    return '({currentPage} / {totalPages})';
+
+}
+
 export function i18nCallable() {
     return createI18n<[MessageSchema], 'en' | 'ua'>({
         locale: localStorage.getItem("locale") || 'ua',

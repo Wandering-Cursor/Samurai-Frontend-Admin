@@ -60,52 +60,54 @@ const createAction = () => {
 <template>
   <div class="flex flex-column">
     <div class="flex justify-content-center">
-      <h1>Create Account</h1>
+      <h1>{{ $t("accountListPage.create") }}</h1>
     </div>
     <Panel>
       <div class="flex flex-column gap-4">
         <div class="flex flex-column gap-2">
-          <label for="username">Name</label>
-          <div class="flex flex-row gap-1">
+          <label for="username">{{ $t("filters.fullName") }}</label>
+          <div class="flex flex-wrap flex-row gap-1">
             <InputText
-              id="username"
+              id="firstName"
               v-model="accountInfo.first_name"
-              placeholder="First name"
+              :placeholder="$t('filters.firstName')"
+              class="flex-grow-1"
             />
             <InputText
-              id="username"
+              id="lastName"
               v-model="accountInfo.last_name"
-              placeholder="Last name"
+              :placeholder="$t('filters.lastName')"
+              class="flex-grow-1"
             />
           </div>
           <InputText
-            id="username"
+            id="middleName"
             v-model="accountInfo.middle_name"
-            placeholder="Middle name (optional)"
+            :placeholder="$t('filters.middleName')"
             variant="filled"
           />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="account_type">Account type</label>
+          <label for="account_type">{{ $t("filters.accountType") }}</label>
           <Dropdown
             id="account_type"
             v-model="accountInfo.account_type"
             :options="accountTypeOptions"
             optionLabel="name"
-          >
-          </Dropdown>
+          />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="registration_code">Registration Code</label>
+          <label for="registration_code">{{
+            $t("filters.registrationCode")
+          }}</label>
           <InputText
             id="registration_code"
             v-model="accountInfo.registration_code"
-            placeholder="Auto-Generated"
             variant="filled"
           />
         </div>
         <div class="flex flex-column gap-2 p-fluid">
-          <label for="username">Permissions</label>
+          <label for="permissions">{{ $t("filters.permissions") }}</label>
           <AutoComplete
             v-model="accountInfo.permissions"
             optionLabel="name"
@@ -115,10 +117,13 @@ const createAction = () => {
             @complete="search"
           />
         </div>
-        <div class="flex flex-row gap-2 justify-content-center">
-          <Button label="Create" @click="createAction" />
+        <div class="flex flex-row gap-2 justify-content-between">
+          <Button :label="$t('buttons.actions.create')" @click="createAction" />
           <RouterLink to="/accounts">
-            <Button label="Cancel" severity="secondary" />
+            <Button
+              :label="$t('buttons.actions.cancel')"
+              severity="secondary"
+            />
           </RouterLink>
         </div>
       </div>

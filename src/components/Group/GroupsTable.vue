@@ -14,6 +14,7 @@ import { searchGroups } from "@/api/organization/group/searchGroups";
 import { deleteGroup } from "@/api/organization/group/deleteGroup";
 import { SearchFilter } from "@/api/types/common/Search";
 import FilterPanel from "../Search/FilterPanel/FilterPanel.vue";
+import { currentPageReportTemplate } from "@/i18n/i18n";
 
 const toast = useToast();
 
@@ -183,6 +184,7 @@ onMounted(() => {
         @onPageChange="onPageChange"
         template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
         :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+        :currentPageReportTemplate="currentPageReportTemplate()"
       />
     </div>
     <FilterPanel

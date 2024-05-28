@@ -13,6 +13,7 @@ import { AxiosError } from "axios";
 import { defineProps } from "vue";
 import { useToast } from "primevue/usetoast";
 import { deleteFaculty } from "@/api/organization/faculty/deleteFaculty";
+import { currentPageReportTemplate } from "@/i18n/i18n";
 
 const toast = useToast();
 
@@ -163,6 +164,7 @@ const deleteFacultyAction = () => {
         v-on:page="changePageCallback"
         template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
         :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+        :currentPageReportTemplate="currentPageReportTemplate()"
       />
     </div>
   </div>

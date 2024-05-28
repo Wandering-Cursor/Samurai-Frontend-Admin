@@ -11,6 +11,7 @@ import DataTable from "primevue/datatable";
 import Paginator, { PageState } from "primevue/paginator";
 import { onMounted } from "vue";
 import CopyToClipboard from "../Utils/CopyToClipboard.vue";
+import { currentPageReportTemplate } from "@/i18n/i18n";
 
 const props = defineProps<{
   list: AccountRepresentation[];
@@ -126,6 +127,7 @@ onMounted(() => {
       v-on:page="changePage"
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
       :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+      :currentPageReportTemplate="currentPageReportTemplate()"
     />
   </div>
 </template>

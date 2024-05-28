@@ -14,6 +14,7 @@ import { searchDepartments } from "@/api/organization/department/searchDepartmen
 import { deleteDepartment } from "@/api/organization/department/deleteDepartment";
 import { SearchFilter } from "@/api/types/common/Search";
 import FilterPanel from "@/components/Search/FilterPanel/FilterPanel.vue";
+import { currentPageReportTemplate } from "@/i18n/i18n";
 
 const toast = useToast();
 
@@ -182,6 +183,7 @@ const deleteDepartmentAction = () => {
           v-on:page="onPageChange"
           template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
           :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+          :currentPageReportTemplate="currentPageReportTemplate()"
         />
       </div>
       <FilterPanel
