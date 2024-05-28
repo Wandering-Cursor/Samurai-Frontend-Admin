@@ -106,6 +106,7 @@ export const strings = {
     facultySearchPlaceholder: "Search faculty",
     groupSearchPlaceholder: "Search group",
     permissionSearchPlaceholder: "Search permission",
+    select: "Select an option",
 }
 
 export const message = {

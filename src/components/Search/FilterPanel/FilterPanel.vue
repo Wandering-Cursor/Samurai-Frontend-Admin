@@ -78,7 +78,7 @@ const forwardFilter = () => {
           :id="filter.propertyName"
           v-model="filterValues[filter.propertyName]"
           :options="filter.options"
-          :placeholder="filter.placeholder"
+          :placeholder="$t('strings.select')"
         >
           <template #value="slotProps">
             <div v-if="slotProps.value" class="flex align-items-center">

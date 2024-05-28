@@ -110,6 +110,7 @@ export const strings = {
     facultySearchPlaceholder: "Пошук факультету",
     groupSearchPlaceholder: "Пошук групи",
     permissionSearchPlaceholder: "Пошук дозволу",
+    select: "Оберіть варіант",
 }
 
 export const commonEntity = {

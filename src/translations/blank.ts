@@ -74,6 +74,7 @@ export const strings = {
     facultySearchPlaceholder: "",
     groupSearchPlaceholder: "",
     permissionSearchPlaceholder: "",
+    select: "",
 }
 
 export const buttons = {
