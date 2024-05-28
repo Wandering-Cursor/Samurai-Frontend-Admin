@@ -87,6 +87,7 @@ export const filters = {
     groupsCount: "Groups Count",
     departmentID: "Department ID",
     facultyID: "Faculty ID",
+    priority: "Priority",
 }
 
 export const buttons = {
@@ -100,6 +101,7 @@ export const buttons = {
         yes: "Yes",
         no: "No",
         apply: "Apply",
+        update: "Update",
     }
 }
 
@@ -119,6 +121,8 @@ export const strings = {
     permissionSearchPlaceholder: "Search permission",
     userSearchPlaceholder: "Enter email to search for a user",
     select: "Select an option",
+    taskReviewer: "Task Reviewer",
+    dueDate: "Due Date",
 }
 
 export const message = {
@@ -229,12 +233,24 @@ export const projectsPages = {
         }
     },
     edit: {
-        title: "",
+        title: "Editing project",
+        deleteModal: {
+            title: "Delete project",
+            subtitle: "Are you sure you want to delete this project?",
+        }
     },
     create: {
         title: "Create project",
+    },
+    tasks: {
+        list: "List of tasks",
+        create: "Create new task",
+        edit: "Edit a task",
+        deleteModal: {
+            title: "Delete task",
+            subtitle: "Are you sure you want to delete this task?",
+        }
     }
-
 }
 
 export const EnTranslation = {

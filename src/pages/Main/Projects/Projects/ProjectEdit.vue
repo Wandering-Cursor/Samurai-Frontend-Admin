@@ -10,8 +10,8 @@ import { useToast } from "primevue/usetoast";
 import { useRoute, useRouter } from "vue-router";
 import FacultySearchField from "@/components/Search/Faculty/FacultySearchField.vue";
 import { AutoCompleteItemSelectEvent } from "primevue/autocomplete";
-import Editor from "primevue/editor";
 import ProjectsTasksDataView from "./ProjectsTasksDataView.vue";
+import EditorWithLabel from "@/components/EditorWithLabel.vue";
 
 const toast = useToast();
 const router = useRouter();
@@ -116,12 +116,14 @@ onMounted(() => {
           <RouterLink :to="{ name: 'ProjectsList' }">
             <Button icon="pi pi-chevron-left" aria-label="Back" />
           </RouterLink>
-          <p class="font-semibold text-lg">Edit Project</p>
+          <p class="font-semibold text-lg">
+            {{ $t("projectsPages.edit.title") }}
+          </p>
         </div>
         <div class="flex align-items-center gap-2">
           <Button
             icon="pi pi-refresh"
-            label="Reload"
+            :label="$t('buttons.actions.update')"
             severity="info"
             @click="
               () => {
@@ -129,10 +131,14 @@ onMounted(() => {
               }
             "
           />
-          <Button icon="pi pi-save" label="Save" @click="saveProject" />
+          <Button
+            icon="pi pi-save"
+            :label="$t('buttons.actions.save')"
+            @click="saveProject"
+          />
           <Button
             icon="pi pi-trash"
-            label="Delete"
+            :label="$t('buttons.actions.delete')"
             @click="showDeleteProjectModal"
             severity="danger"
           />
@@ -141,9 +147,9 @@ onMounted(() => {
     </template>
     <ScrollPanel>
       <div class="flex flex-column gap-2">
-        <p>Project ID: {{ projectEntity.project_id }}</p>
+        <p>{{ $t("commonEntity.id") }} {{ projectEntity.project_id }}</p>
         <div class="flex flex-column gap-2">
-          <label for="projectName">Project Name</label>
+          <label for="projectName">{{ $t("commonEntity.name") }}</label>
           <InputText
             id="projectName"
             v-model="projectEntity.name"
@@ -153,32 +159,32 @@ onMounted(() => {
         <div class="flex flex-column gap-2">
           <FacultySearchField :on-item-select="facultySelected" />
         </div>
-        <div class="flex flex-column gap-2">
-          <label for="projectDescription">
-            {{ $t("commonEntity.description") }}
-          </label>
-          <!-- For some reason, the Editor component leks out of the container unless
-        you specify a parent component to be slightly larger than the Editor -->
-          <div style="height: 550px">
-            <Editor
-              v-model="projectEntity.description as string | undefined"
-              style="height: 500px"
-            />
-          </div>
-        </div>
+        <EditorWithLabel v-bind:binding="projectEntity" />
         <ProjectsTasksDataView :projectEntity="projectEntity" />
-        <p>Created at: {{ projectEntity.created_at }}</p>
-        <p>Updated at: {{ projectEntity.updated_at }}</p>
+        <p>
+          {{ $t("commonEntity.createdAt") }}: {{ projectEntity.created_at }}
+        </p>
+        <p>
+          {{ $t("commonEntity.updatedAt") }}: {{ projectEntity.updated_at }}
+        </p>
       </div>
     </ScrollPanel>
   </Panel>
-  <Dialog v-model:visible="showDeleteProject" modal header="Delete Project">
+  <Dialog
+    v-model:visible="showDeleteProject"
+    modal
+    :header="$t('projectsPages.edit.deleteModal.title')"
+  >
     <div class="w-full flex flex-column gap-2">
-      <p>Are you sure you want to delete this project?</p>
+      <p>{{ $t("projectsPages.edit.deleteModal.subtitle") }}</p>
       <div class="w-full flex justify-content-between gap-2">
-        <Button label="Delete" severity="danger" @click="callProjectRemoval" />
         <Button
-          label="Cancel"
+          :label="$t('buttons.actions.yes')"
+          severity="danger"
+          @click="callProjectRemoval"
+        />
+        <Button
+          :label="$t('buttons.actions.no')"
           @click="showDeleteProject = false"
           severity="secondary"
         />

@@ -64,6 +64,7 @@ export const filters = {
     groupsCount: "",
     departmentID: "",
     facultyID: "",
+    priority: "",
 }
 
 export const strings = {
@@ -82,6 +83,8 @@ export const strings = {
     permissionSearchPlaceholder: "",
     userSearchPlaceholder: "",
     select: "",
+    taskReviewer: "",
+    dueDate: "",
 }
 
 export const buttons = {
@@ -95,6 +98,7 @@ export const buttons = {
         yes: "",
         no: "",
         apply: "",
+        update: "",
     },
 }
 
@@ -229,11 +233,23 @@ export const projectsPages = {
     },
     edit: {
         title: "",
+        deleteModal: {
+            title: "",
+            subtitle: "",
+        }
     },
     create: {
         title: "",
+    },
+    tasks: {
+        list: "",
+        create: "",
+        edit: "",
+        deleteModal: {
+            title: "",
+            subtitle: "",
+        }
     }
-
 }
 
 export const BlankTranslation = {

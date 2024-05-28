@@ -82,6 +82,7 @@ export const filters = {
     groupsCount: "К-ть груп",
     departmentID: "ID підрозділу",
     facultyID: "ID факультету",
+    priority: "Пріоритет",
 }
 
 export const buttons = {
@@ -95,6 +96,7 @@ export const buttons = {
         yes: "Так",
         no: "Ні",
         apply: "Застосувати",
+        update: "Оновити",
     }
 }
 
@@ -123,6 +125,8 @@ export const strings = {
     permissionSearchPlaceholder: "Пошук дозволу",
     userSearchPlaceholder: "Введіть електронну пошту для пошуку користувача",
     select: "Оберіть варіант",
+    taskReviewer: "Перевіряючий задачі",
+    dueDate: "Кінцевий термін",
 }
 
 export const commonEntity = {
@@ -228,12 +232,25 @@ export const projectsPages = {
         }
     },
     edit: {
-        title: "",
+        title: "Редагування проєкту",
+        deleteModal: {
+            title: "Видалити проєкт",
+            subtitle: "Ви впевнені, що хочете видалити цей проєкт?",
+        }
     },
     create: {
         title: "Створити проєкт",
-    }
+    },
+    tasks: {
+        list: "Список задач",
+        create: "Створити задачу",
+        edit: "Редагування задачі",
+        deleteModal: {
+            title: "Видалити задачу",
+            subtitle: "Ви впевнені, що хочете видалити цю задачу?",
 
+        }
+    }
 }
 
 export const UaTranslation = {

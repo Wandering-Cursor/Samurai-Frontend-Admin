@@ -56,7 +56,7 @@ const getDescription = (
   maxLength: number
 ) => {
   if (!description) {
-    return "No description available";
+    return "-";
   }
   return cropText(description, maxLength);
 };
@@ -73,37 +73,51 @@ const getDescription = (
       </template>
       <template #content>
         <p>
-          Description:
+          {{ $t("commonEntity.description") }}:
           {{ getDescription(item.description, 128) }}
         </p>
-        <p>Priority: {{ item.priority }}</p>
+        <p>{{ $t("taskEntity.priority") }}: {{ item.priority }}</p>
         <p>
-          Due date:
-          {{ item.due_date || "No due date" }}
+          {{ $t("taskEntity.dueDate") }}:
+          {{ item.due_date || "-" }}
         </p>
         <p>
-          Reviewer:
-          {{ item.reviewer || "No reviewer" }}
+          {{ $t("taskEntity.reviewer") }}:
+          {{ item.reviewer || "-" }}
         </p>
       </template>
     </Card>
     <div class="flex flex-column gap-2 sm:flex-row">
-      <Button icon="pi pi-pencil" label="Edit" @click="redirectToTaskEdit" />
+      <Button
+        icon="pi pi-pencil"
+        :label="$t('buttons.actions.edit')"
+        @click="redirectToTaskEdit"
+      />
       <Button
         icon="pi pi-trash"
-        label="Delete"
+        :label="$t('buttons.actions.delete')"
         @click="showDeleteTaskModal"
         severity="danger"
       />
     </div>
   </div>
 
-  <Dialog header="Delete task" modal :visible="deleteTaskModalVisible">
-    <p>Are you sure you want to delete this task?</p>
+  <Dialog
+    :header="$t('projectsPages.tasks.deleteModal.title')"
+    modal
+    :visible="deleteTaskModalVisible"
+  >
+    <p>
+      {{ $t("projectsPages.tasks.deleteModal.subtitle") }}
+    </p>
     <div class="flex justify-content-between gap-2">
-      <Button label="Delete" severity="danger" @click="callDeleteTask" />
       <Button
-        label="Cancel"
+        :label="$t('buttons.actions.yes')"
+        severity="danger"
+        @click="callDeleteTask"
+      />
+      <Button
+        :label="$t('buttons.actions.no')"
         severity="secondary"
         @click="deleteTaskModalVisible = false"
       />

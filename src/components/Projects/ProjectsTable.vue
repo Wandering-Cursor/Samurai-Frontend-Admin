@@ -39,83 +39,75 @@ const showAssignProjectModal = (projectId: string) => {
 </script>
 
 <template>
-  <Panel header="Projects">
-    <DataTable :value="projects" showGridlines stripedRows>
-      <template #header>
-        <div class="flex justify-content-end">
+  <DataTable :value="projects" showGridlines stripedRows>
+    <template #header>
+      <div class="flex justify-content-end">
+        <Button
+          icon="pi pi-plus"
+          :label="$t('buttons.actions.create')"
+          @click="
+            () => {
+              router.push('/projects/create');
+            }
+          "
+        />
+      </div>
+    </template>
+    <Column field="project_id" :header="$t('commonEntity.id')">
+      <template #body="slotProps">
+        <p
+          @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).project_id, toast) }"
+          style="color: var(--primary-color); cursor: pointer"
+        >
+          ...{{
+            (slotProps.data as ShortProjectRepresentation).project_id
+              .split("-")
+              .pop()
+          }}
+        </p>
+      </template>
+    </Column>
+    <Column field="name" :header="$t('commonEntity.name')"></Column>
+    <Column field="faculty_id" :header="$t('filters.facultyID')">
+      <template #body="slotProps">
+        <p
+          @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).faculty_id, toast) }"
+          style="color: var(--primary-color); cursor: pointer"
+        >
+          ...{{
+            (slotProps.data as ShortProjectRepresentation).faculty_id
+              .split("-")
+              .pop()
+          }}
+        </p>
+      </template>
+    </Column>
+    <Column field="created_at" :header="$t('commonEntity.createdAt')"></Column>
+    <Column field="updated_at" :header="$t('commonEntity.updatedAt')"></Column>
+    <Column :header="$t('strings.actionsColumn')">
+      <template #body="slotProps">
+        <div class="flex flex-warp gap-2">
+          <RouterLink
+            :to="`/projects/${(slotProps.data as ShortProjectRepresentation).project_id}/edit`"
+          >
+            <Button icon="pi pi-pencil" :label="$t('buttons.actions.edit')" />
+          </RouterLink>
           <Button
-            icon="pi pi-plus"
-            :label="$t('buttons.actions.create')"
-            @click="
-              () => {
-                router.push('/projects/create');
-              }
-            "
+            icon="pi pi-users"
+            :label="$t('projectsPages.list.buttons.assign')"
+            severity="info"
+            @click="() => {showAssignProjectModal((slotProps.data as ShortProjectRepresentation).project_id)}"
           />
         </div>
       </template>
-      <Column field="project_id" :header="$t('commonEntity.id')">
-        <template #body="slotProps">
-          <p
-            @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).project_id, toast) }"
-            style="color: var(--primary-color); cursor: pointer"
-          >
-            ...{{
-              (slotProps.data as ShortProjectRepresentation).project_id
-                .split("-")
-                .pop()
-            }}
-          </p>
-        </template>
-      </Column>
-      <Column field="name" :header="$t('commonEntity.name')"></Column>
-      <Column field="faculty_id" :header="$t('filters.facultyID')">
-        <template #body="slotProps">
-          <p
-            @click="() => { copyToClipboard((slotProps.data as ShortProjectRepresentation).faculty_id, toast) }"
-            style="color: var(--primary-color); cursor: pointer"
-          >
-            ...{{
-              (slotProps.data as ShortProjectRepresentation).faculty_id
-                .split("-")
-                .pop()
-            }}
-          </p>
-        </template>
-      </Column>
-      <Column
-        field="created_at"
-        :header="$t('commonEntity.createdAt')"
-      ></Column>
-      <Column
-        field="updated_at"
-        :header="$t('commonEntity.updatedAt')"
-      ></Column>
-      <Column :header="$t('strings.actionsColumn')">
-        <template #body="slotProps">
-          <div class="flex flex-warp gap-2">
-            <RouterLink
-              :to="`/projects/${(slotProps.data as ShortProjectRepresentation).project_id}/edit`"
-            >
-              <Button icon="pi pi-pencil" :label="$t('buttons.actions.edit')" />
-            </RouterLink>
-            <Button
-              icon="pi pi-users"
-              :label="$t('projectsPages.list.buttons.assign')"
-              severity="info"
-              @click="() => {showAssignProjectModal((slotProps.data as ShortProjectRepresentation).project_id)}"
-            />
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-    <Paginator
-      v-model:page="meta.page"
-      v-model:totalRecords="meta.total"
-      :rows="meta.page_size"
-      @page="onPageChange"
-      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
-      :rowsPerPageOptions="[1, 5, 10, 20, 30]"
-    />
-  </Panel>
+    </Column>
+  </DataTable>
+  <Paginator
+    v-model:page="meta.page"
+    v-model:totalRecords="meta.total"
+    :rows="meta.page_size"
+    @page="onPageChange"
+    template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+    :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+  />
 </template>
