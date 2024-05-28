@@ -97,9 +97,15 @@ const deleteDepartmentAction = () => {
 
 <template>
   <div class="flex flex-column">
-    <div class="flex flex-wrap">
-      <div class="max-w-screen">
-        <DataTable :value="list" showGridlines stripedRows scrollable>
+    <div class="flex flex-wrap gap-4 justify-content-evenly">
+      <div class="flex-grow-1">
+        <DataTable
+          :value="list"
+          showGridlines
+          stripedRows
+          scrollable
+          class="max-w-screen"
+        >
           <template #header>
             <div
               class="flex flex-wrap align-items-center justify-content-between gap-2"
@@ -170,21 +176,20 @@ const deleteDepartmentAction = () => {
             </template>
           </Column>
         </DataTable>
+        <Paginator
+          :rows="metaInfo.page_size"
+          :totalRecords="metaInfo.total"
+          v-on:page="onPageChange"
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+          :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+        />
       </div>
       <FilterPanel
         :filters="filters"
         :filterHandler="onFilter"
         :search-name="$t('filters.departments')"
-        class="flex-grow-1"
       />
     </div>
-    <Paginator
-      :rows="metaInfo.page_size"
-      :totalRecords="metaInfo.total"
-      v-on:page="onPageChange"
-      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
-      :rowsPerPageOptions="[1, 5, 10, 20, 30]"
-    />
   </div>
 
   <Dialog

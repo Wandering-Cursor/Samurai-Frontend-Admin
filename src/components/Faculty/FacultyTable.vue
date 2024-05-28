@@ -73,9 +73,15 @@ const deleteFacultyAction = () => {
 </script>
 
 <template>
-  <div class="flex flex-column">
-    <div class="max-w-screen">
-      <DataTable :value="list" showGridlines stripedRows scrollable>
+  <div class="flex flex-wrap gap-4 justify-content-evenly flex-grow-1">
+    <div class="w-full">
+      <DataTable
+        :value="list"
+        showGridlines
+        stripedRows
+        scrollable
+        class="max-w-screen"
+      >
         <template #header>
           <div
             class="flex flex-wrap align-items-center justify-content-between gap-2"
@@ -151,14 +157,14 @@ const deleteFacultyAction = () => {
           </template>
         </Column>
       </DataTable>
+      <Paginator
+        :rows="$props.metaInfo.page_size"
+        :totalRecords="$props.metaInfo.total"
+        v-on:page="changePageCallback"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+        :rowsPerPageOptions="[1, 5, 10, 20, 30]"
+      />
     </div>
-    <Paginator
-      :rows="$props.metaInfo.page_size"
-      :totalRecords="$props.metaInfo.total"
-      v-on:page="changePageCallback"
-      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
-      :rowsPerPageOptions="[1, 5, 10, 20, 30]"
-    />
   </div>
 
   <Dialog

@@ -51,7 +51,12 @@ onMounted(makeSearch);
 </script>
 
 <template>
-  <Panel :header="$t('projectsPages.list.title')" class="w-full">
+  <Panel class="w-full">
+    <template #header>
+      <div class="flex w-full justify-content-center text-4xl font-bold">
+        {{ $t("projectsPages.list.title") }}
+      </div>
+    </template>
     <div class="flex flex-column gap-4">
       <Panel :header="$t('filters.panelTitle')">
         <ProjectsFilters

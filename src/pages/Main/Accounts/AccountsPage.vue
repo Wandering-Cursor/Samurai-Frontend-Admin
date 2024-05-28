@@ -93,18 +93,17 @@ const filters: SearchFilter[] = [
     <p class="text-4xl font-bold text-center">
       {{ $t("accountListPage.title") }}
     </p>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap gap-4 justify-content-evenly">
       <AccountsTable
         :list="list"
         :metaInfo="metaInfo"
         :pageFilters="pageFilters"
-        class="max-w-screen flex-grow-1"
+        class="max-w-screen"
       />
       <FilterPanel
         :filters="filters"
         :filterHandler="onFilter"
         :search-name="$t('filters.accountSearchName')"
-        class="flex-grow-1"
       />
     </div>
   </div>
