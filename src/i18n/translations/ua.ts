@@ -71,6 +71,7 @@ export const filters = {
     accountSearchName: "Акаунти",
     firstName: "Ім'я",
     lastName: "Прізвище",
+    middleName: "По-батькові",
     fullName: "Повне ім'я",
     state: "Стан",
     permissions: "Дозволи",
@@ -161,6 +162,12 @@ export const entities = {
         createdAt: commonEntity.createdAt,
         updatedAt: commonEntity.updatedAt,
     },
+    project: {
+        title: "Проєкт",
+    },
+    task: {
+        title: "Задача",
+    }
 }
 
 export const label = {

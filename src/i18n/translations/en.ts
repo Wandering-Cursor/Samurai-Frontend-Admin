@@ -76,6 +76,7 @@ export const filters = {
     accountSearchName: "Accounts",
     firstName: "First Name",
     lastName: "Last Name",
+    middleName: "Middle Name",
     fullName: "Legal Name",
     state: "State",
     permissions: "Permissions",
@@ -162,6 +163,12 @@ export const entities = {
         createdAt: commonEntity.createdAt,
         updatedAt: commonEntity.updatedAt,
     },
+    project: {
+        title: "Project",
+    },
+    task: {
+        title: "",
+    }
 }
 
 export const label = {
@@ -229,7 +236,7 @@ export const projectsPages = {
             subtitle: "Assign project to the following users:",
         },
         buttons: {
-            assign: "Призначити",
+            assign: "Assign",
         }
     },
     edit: {

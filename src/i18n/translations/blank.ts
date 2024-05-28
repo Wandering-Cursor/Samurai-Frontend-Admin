@@ -53,6 +53,7 @@ export const filters = {
     accountSearchName: "",
     firstName: "",
     lastName: "",
+    middleName: "",
     fullName: "",
     state: "",
     permissions: "",
@@ -152,6 +153,12 @@ export const entities = {
         createdAt: commonEntity.createdAt,
         updatedAt: commonEntity.updatedAt,
     },
+    project: {
+        title: "",
+    },
+    task: {
+        title: "",
+    }
 }
 
 export const SideMenu = {
