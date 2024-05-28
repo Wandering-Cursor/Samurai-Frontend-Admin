@@ -82,40 +82,62 @@ const deleteFacultyAction = () => {
         <RouterLink to="/organization/faculty/create">
           <Button
             icon="pi pi-plus"
-            v-tooltip="'Create new account'"
-            label="New"
+            :label="$t('buttons.actions.create')"
             raised
             link
           />
         </RouterLink>
       </div>
     </template>
-    <Column key="name" field="name" header="Name" />
-    <Column key="description" field="description" header="Description" />
-    <Column key="department_id" field="department_id" header="Department ID" />
-    <Column key="groups_count" filed="groups_count" header="Groups Count">
+    <Column key="name" field="name" :header="$t('commonEntity.name')" />
+    <Column
+      key="description"
+      field="description"
+      :header="$t('commonEntity.description')"
+    />
+    <Column
+      key="department_id"
+      field="department_id"
+      :header="$t('filters.departmentID')"
+    />
+    <Column
+      key="groups_count"
+      filed="groups_count"
+      :header="$t('filters.groupsCount')"
+    >
       <template #body="slotProps">
         <span>{{ (slotProps.data as Faculty).groups_count }}</span>
       </template>
     </Column>
-    <Column key="created_at" field="created_at" header="Created At" />
-    <Column key="updated_at" field="updated_at" header="Updated At" />
-    <Column key="actions" header="Actions">
+    <Column
+      key="created_at"
+      field="created_at"
+      :header="$t('commonEntity.createdAt')"
+    />
+    <Column
+      key="updated_at"
+      field="updated_at"
+      :header="$t('commonEntity.updatedAt')"
+    />
+    <Column key="actions" :header="$t('strings.actionsColumn')">
       <template #body="slotProps">
         <div class="flex flex-wrap gap-2">
           <CopyToClipboard
             :data="(slotProps.data as Faculty).faculty_id"
-            tooltip="Copy ID"
+            :tooltip="$t('buttons.actions.copyID')"
             icon="pi pi-copy"
           />
           <RouterLink
             :to="`/organization/faculty/${(slotProps.data as Faculty).faculty_id}/edit`"
           >
-            <Button icon="pi pi-pencil" v-tooltip="'Edit faculty'" />
+            <Button
+              icon="pi pi-pencil"
+              v-tooltip="$t('buttons.actions.edit')"
+            />
           </RouterLink>
           <Button
             icon="pi pi-trash"
-            v-tooltip="'Delete faculty'"
+            v-tooltip="$t('buttons.actions.delete')"
             class="p-button-danger"
             @click="
               showDeleteFacultyDialog(
@@ -138,16 +160,17 @@ const deleteFacultyAction = () => {
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    header="Delete faculty"
+    :header="$t('facultiesPages.list.modal.title')"
     :style="{ width: '50%' }"
   >
     <span class="p-text-secondary block mb-5"
-      >Are you sure you want to delete faculty {{ deleteFacultyId }}?</span
+      >{{ $t("facultiesPages.list.modal.subtitle") }}
+      {{ deleteFacultyId }}</span
     >
     <div class="flex flex-row gap-2 justify-content-center">
-      <Button label="Yes" @click="deleteFacultyAction" />
+      <Button :label="$t('buttons.actions.yes')" @click="deleteFacultyAction" />
       <Button
-        label="No"
+        :label="$t('buttons.actions.no')"
         @click="deleteDialogVisible = false"
         severity="secondary"
       />

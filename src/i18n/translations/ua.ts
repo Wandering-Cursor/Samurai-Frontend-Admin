@@ -79,6 +79,8 @@ export const filters = {
     departments: "Підрозділи",
     genericName: "Назва",
     facultiesCount: "К-ть факультетів",
+    groupsCount: "К-ть груп",
+    departmentID: "ID підрозділу",
 }
 
 export const buttons = {
@@ -170,10 +172,26 @@ export const departmentsPages = {
         }
     },
     edit: {
-        title: "",
+        title: "Редагування підрозділу",
     },
     create: {
         title: "Створити новий підрозділ",
+    }
+}
+
+export const facultiesPages = {
+    list: {
+        title: "Список факультетів",
+        modal: {
+            title: "Видалити факультет",
+            subtitle: "Ви впевнені, що хочете видалити цей факультет?",
+        }
+    },
+    edit: {
+        title: "Редагування факультету",
+    },
+    create: {
+        title: "Створити новий факультет",
     }
 }
 
@@ -191,4 +209,5 @@ export const UaTranslation = {
     entities: entities,
     label: label,
     commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
 }

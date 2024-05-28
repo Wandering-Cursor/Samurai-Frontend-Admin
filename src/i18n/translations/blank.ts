@@ -61,6 +61,8 @@ export const filters = {
     departments: "",
     genericName: "",
     facultiesCount: "",
+    groupsCount: "",
+    departmentID: "",
 }
 
 export const strings = {
@@ -177,6 +179,22 @@ export const departmentsPages = {
     }
 }
 
+export const facultiesPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
 export const BlankTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -191,4 +209,5 @@ export const BlankTranslation = {
     entities: entities,
     label: label,
     commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
 }

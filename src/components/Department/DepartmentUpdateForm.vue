@@ -73,7 +73,7 @@ const submitForm = () => {
   <Card class="p-2 w-full">
     <template #header>
       <h3 class="text-center">
-        {{ $t("label.department") }}: {{ $props.department_id }}
+        {{ $t("departmentsPages.edit.title") }}: {{ $props.department_id }}
       </h3>
     </template>
     <template #content>

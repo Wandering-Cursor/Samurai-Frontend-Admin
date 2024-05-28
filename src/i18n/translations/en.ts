@@ -84,6 +84,8 @@ export const filters = {
     departments: "Departments",
     genericName: "Name",
     facultiesCount: "Faculties Count",
+    groupsCount: "Groups Count",
+    departmentID: "Department ID",
 }
 
 export const buttons = {
@@ -171,10 +173,26 @@ export const departmentsPages = {
         }
     },
     edit: {
-        title: "",
+        title: "Editing department",
     },
     create: {
         title: "Create new department",
+    }
+}
+
+export const facultiesPages = {
+    list: {
+        title: "List of Faculties",
+        modal: {
+            title: "Delete Faculty",
+            subtitle: "Are you sure you want to delete this faculty?",
+        }
+    },
+    edit: {
+        title: "Editing faculty",
+    },
+    create: {
+        title: "Create new faculty",
     }
 }
 
@@ -192,4 +210,6 @@ export const EnTranslation = {
     entities: entities,
     label: label,
     commonEntity: commonEntity,
+    facultiesPages: facultiesPages,
+
 }
