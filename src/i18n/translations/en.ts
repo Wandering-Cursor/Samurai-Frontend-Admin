@@ -81,6 +81,9 @@ export const filters = {
     permissions: "Permissions",
     connections: "Connections",
     emailRegistrationCodes: "Email Registration Codes",
+    departments: "Departments",
+    genericName: "Name",
+    facultiesCount: "Faculties Count",
 }
 
 export const buttons = {
@@ -89,6 +92,10 @@ export const buttons = {
         create: "New",
         save: "Save",
         delete: "Delete",
+        edit: "Edit",
+        copyID: "Copy ID",
+        yes: "Yes",
+        no: "No",
     }
 }
 
@@ -115,6 +122,9 @@ export const message = {
 }
 
 export const commonEntity = {
+    id: "ID",
+    name: "Name",
+    description: "Description",
     createdAt: "Created At",
     updatedAt: "Updated At",
 }
@@ -152,6 +162,22 @@ export const label = {
     permission: "Permission",
 }
 
+export const departmentsPages = {
+    list: {
+        title: "List of Departments",
+        modal: {
+            title: "Delete Department",
+            subtitle: "Are you sure you want to delete this department?",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "Create new department",
+    }
+}
+
 export const EnTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -159,9 +185,11 @@ export const EnTranslation = {
     accountListPage: accountListPage,
     connectionsPage: connectionsPage,
     permissionsPage: permissionsPage,
+    departmentsPages: departmentsPages,
     filters: filters,
     buttons: buttons,
     strings: strings,
     entities: entities,
     label: label,
+    commonEntity: commonEntity,
 }

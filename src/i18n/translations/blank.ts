@@ -58,6 +58,9 @@ export const filters = {
     permissions: "",
     connections: "",
     emailRegistrationCodes: "",
+    departments: "",
+    genericName: "",
+    facultiesCount: "",
 }
 
 export const strings = {
@@ -83,10 +86,17 @@ export const buttons = {
         create: "",
         save: "",
         delete: "",
-    }
+        edit: "",
+        copyID: "",
+        yes: "",
+        no: "",
+    },
 }
 
 export const commonEntity = {
+    id: "",
+    name: "",
+    description: "",
     createdAt: "",
     updatedAt: "",
 }
@@ -151,6 +161,22 @@ export const label = {
     permission: "",
 }
 
+export const departmentsPages = {
+    list: {
+        title: "",
+        modal: {
+            title: "",
+            subtitle: "",
+        }
+    },
+    edit: {
+        title: "",
+    },
+    create: {
+        title: "",
+    }
+}
+
 export const BlankTranslation = {
     sideMenu: SideMenu,
     message: message,
@@ -158,9 +184,11 @@ export const BlankTranslation = {
     accountListPage: accountListPage,
     connectionsPage: connectionsPage,
     permissionsPage: permissionsPage,
+    departmentsPages: departmentsPages,
     filters: filters,
     buttons: buttons,
     strings: strings,
     entities: entities,
     label: label,
+    commonEntity: commonEntity,
 }
