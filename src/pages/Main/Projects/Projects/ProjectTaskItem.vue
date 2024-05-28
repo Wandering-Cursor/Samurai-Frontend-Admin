@@ -76,13 +76,13 @@ const getDescription = (
           {{ $t("commonEntity.description") }}:
           {{ getDescription(item.description, 128) }}
         </p>
-        <p>{{ $t("taskEntity.priority") }}: {{ item.priority }}</p>
+        <p>{{ $t("entities.task.priority") }}: {{ item.priority }}</p>
         <p>
-          {{ $t("taskEntity.dueDate") }}:
+          {{ $t("entities.task.dueDate") }}:
           {{ item.due_date || "-" }}
         </p>
         <p>
-          {{ $t("taskEntity.reviewer") }}:
+          {{ $t("entities.task.reviewer") }}:
           {{ item.reviewer || "-" }}
         </p>
       </template>

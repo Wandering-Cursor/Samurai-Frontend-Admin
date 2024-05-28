@@ -170,6 +170,9 @@ export const entities = {
     },
     task: {
         title: "",
+        priority: "Priority",
+        dueDate: "Due Date",
+        reviewer: "Reviewer",
     }
 }
 

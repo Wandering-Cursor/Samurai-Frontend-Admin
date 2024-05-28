@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SidePanel from "@/components/SidePanel/SidePanel.vue";
 import { useHead } from "@unhead/vue";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 useHead({
   title: "Main Page",
@@ -11,7 +11,21 @@ useHead({
   ],
 });
 
-const isSideMenuVisible = ref(true);
+const isSideMenuVisible = ref(false);
+
+watch(isSideMenuVisible, () => {
+  setLocalStorage();
+});
+
+const setLocalStorage = () => {
+  localStorage.setItem("isSideMenuVisible", isSideMenuVisible.value.toString());
+};
+
+onMounted(() => {
+  localStorage.getItem("isSideMenuVisible") === "false"
+    ? (isSideMenuVisible.value = false)
+    : (isSideMenuVisible.value = true);
+});
 </script>
 
 <template>
@@ -20,10 +34,14 @@ const isSideMenuVisible = ref(true);
       <SidePanel />
     </template>
   </Sidebar>
-  <Button
-    @click="isSideMenuVisible = !isSideMenuVisible"
-    class="absolute top-0 left-0 p-button-secondary"
-    icon="pi pi-bars"
-  />
+  <Menubar>
+    <template #start>
+      <Button
+        @click="isSideMenuVisible = !isSideMenuVisible"
+        class="p-button-secondary"
+        icon="pi pi-bars"
+      />
+    </template>
+  </Menubar>
   <router-view />
 </template>
